@@ -37,7 +37,6 @@ const Signin = () => {
           backgroundColor: "white",
           padding: "5rem",
           borderRadius: "24px",
-
         }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
