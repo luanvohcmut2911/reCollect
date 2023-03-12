@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function AppProvider() {
+export const AppContext = React.createContext();
+
+export default function AppProvider({children}) {
   return (
-    <div>AppProvider</div>
+    <AppContext.Provider value={{
+      
+    }} >
+      {children}
+    </AppContext.Provider>
   )
 };
