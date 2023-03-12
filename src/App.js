@@ -5,6 +5,7 @@ import Homepage from './Pages/Homepage';
 import AuthProvider from './Context/AuthProvider';
 import AppProvider from './Context/AppProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <AuthProvider>
         <AppProvider>
           <Routes>
+            <Route path='/' element={<LandingPage />} />
             <Route path='/signin' element = {<Signin />} />
             <Route path='/signup' element = {<Signup />} />
             <Route path='/home' element= {<Homepage />} />
