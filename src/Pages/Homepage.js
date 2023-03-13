@@ -1,7 +1,9 @@
-import { React, useState } from 'react'
+import { React } from 'react'
 import NavBar from '../Components/NavBar';
-import { Layout, Typography, Card, FloatButton, Image, Avatar, Dropdown, Button, Modal } from 'antd';
-import { SwapOutlined, EllipsisOutlined, UnorderedListOutlined, StopOutlined, FlagOutlined } from '@ant-design/icons';
+import EndBar from '../Components/EndBar';
+import EventCard from '../Components/EventCard';
+import ProductCard from '../Components/ProductCard';
+import { Layout, Typography, FloatButton, Image, Pagination } from 'antd';
 
 // const handleMenuClick = (e) => {
 //   alert('Click on menu item.');
@@ -35,111 +37,14 @@ import { SwapOutlined, EllipsisOutlined, UnorderedListOutlined, StopOutlined, Fl
 
 export default function Homepage() {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const EventCard = () => {
-    return (
-      <Card
-        hoverable
-        style={{
-          margin: "1.2rem",
-          width: 277.3,
-          height: 300,
-        }}
-        cover={
-          <img alt="event" style={{
-            borderBottomLeftRadius: "24px",
-            borderBottomRightRadius: "24px",
-            width: 277.3,
-            height: 200
-          }} src="https://picsum.photos/501" />
-        }
-      >
-        <Card.Meta
-          title="Old books donation on Nguyen Van Binh Street, HCMC"
-          description={<a href="/home">Donate now</a>}
-        />
-      </Card>
-    )
-  }
-
-  const ProductCard = ({ pictureSize }) => {
-    return (
-      <Card
-        hoverable
-        style={{
-          margin: "1.2rem",
-          width: 200,
-          borderRadius: "24px"
-        }}
-        cover={
-          <img alt="event" style={{
-            borderBottomLeftRadius: "24px",
-            borderBottomRightRadius: "24px",
-            // width: 200,
-            // height: 250,
-          }} src={`https://picsum.photos/${pictureSize}`} />
-        }
-        actions={[
-          <Button icon={<SwapOutlined key="Trade" />} href="/home">
-            Trade</Button>,
-          <Button icon={<EllipsisOutlined key="More" />} onClick={showModal}> More </Button>,
-        ]}
-      >
-        <Card.Meta
-          avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-          title="Old XBox Series X controller"
-          description="5 year old XBox Series X controller"
-        />
-        <Modal title="Product Name" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <div>
-            <Typography.Title level={3}>Product Info</Typography.Title>
-            <p>5 year old XBox Series X controller</p>
-            <p>5 year old XBox Series X controller</p>
-            <p>5 year old XBox Series X controller</p>
-            <p>5 year old XBox Series X controller</p>
-            <p>5 year old XBox Series X controller</p>
-          </div>
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            alignContent: "center"
-          }}>
-            <Button>
-              <UnorderedListOutlined />
-              Add to Watchlist
-            </Button>
-            <Button>
-              <StopOutlined />
-              Not interested
-            </Button>
-            <Button>
-              <FlagOutlined />
-              Report
-            </Button>
-          </div>
-
-        </Modal>
-      </Card>
-    )
-  }
-
   return (
     <div>
-      <NavBar />
+      <Layout>
+        <NavBar />
+      </Layout>
       <FloatButton.BackTop />
       <Layout className="ongoing-events">
-        <Typography.Title style={{paddingLeft: "1.2rem"}}>Ongoing Events</Typography.Title>
+        <Typography.Title style={{ paddingLeft: "1.2rem" }}>Ongoing Events</Typography.Title>
         <div className="spotlight-event"
           style={{
             display: "flex",
@@ -185,16 +90,35 @@ export default function Homepage() {
           <EventCard />
           <EventCard />
           <EventCard />
+          <EventCard />
+          <EventCard />
+          <EventCard />
+          <EventCard />
+          <EventCard />
+        </div>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "1.2rem"
+        }}>
+          <Pagination
+            total={85}
+            showSizeChanger
+            showTotal={(total) => `Total ${total} items`}
+            pageSize={5}
+          />
         </div>
       </Layout>
       <Layout className="find-your-product">
-        <Typography.Title style={{paddingLeft: "1.2rem"}}> Find your products </Typography.Title>
+        <Typography.Title style={{ paddingLeft: "1.2rem" }}> Find your products </Typography.Title>
         <div style={{
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
           justifyContent: "center"
         }}>
+
           <ProductCard pictureSize={500} />
           <ProductCard pictureSize={200} />
           <ProductCard pictureSize={300} />
@@ -214,7 +138,21 @@ export default function Homepage() {
           <ProductCard pictureSize={232} />
           <ProductCard pictureSize={2323} />
         </div>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "1.2rem"
+        }}>
+          <Pagination
+            total={85}
+            showSizeChanger
+            showTotal={(total) => `Total ${total} items`}
+          />
+        </div>
       </Layout>
+      <EndBar />
     </div>
+
   )
 }

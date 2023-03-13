@@ -1,7 +1,16 @@
 import React from 'react'
 
-export default function AuthProvider() {
+export const AuthContext = React.createContext();
+
+export default function AuthProvider({children}) {
+  const [user, setUser] = React.useState(null);
+
   return (
-    <div>AuthProvider</div>
+    <AuthContext.Provider value={{
+      user,
+      setUser
+    }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
