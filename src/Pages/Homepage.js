@@ -151,7 +151,7 @@ export default function Homepage() {
           />
         </div>
       </Layout>
-      <EndBar />
+      <EndBar color='green' />
     </div>
 
   )

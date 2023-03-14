@@ -6,6 +6,8 @@ import AuthProvider from './Context/AuthProvider';
 import AppProvider from './Context/AppProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
+import Profile from './Pages/Profile';
+import ErrorPage from './Pages/ErrorPage';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
             <Route path='/signin' element = {<Signin />} />
             <Route path='/signup' element = {<Signup />} />
             <Route path='/home' element= {<Homepage />} />
-          </Routes>
+            <Route path='/profile' element= {<Profile />} />
+            <Route path='/*' element={<ErrorPage />} />
+          </Routes> 
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>

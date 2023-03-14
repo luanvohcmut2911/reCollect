@@ -19,15 +19,15 @@ const { Search } = Input;
 const { Header } = Layout;
 
 const MenuStyled = styled(Menu)`
+  background-color: #10393B;
+  .ant-menu-item{
+    margin: 1rem;
+  }
   .ant-menu-item-selected {
-    background-color: #10393b !important;
+    margin: 1rem;
+    background-color: white !important;
+    color: #10393B !important;
   }
-  .ant-menu-item {
-    margin: 2rem;
-  }
-  // &&& .ant-menu .ant-layout-header .ant-layout {
-  //   background: red !important;
-  // }
 `;
 
 const RightStyled = styled.div`
@@ -48,8 +48,13 @@ const TextStyled = styled.div`
 export default function NavBar() {
   const navigate = useNavigate();
   return (
-    <Header>
-      <Row>
+    <Header style={{
+      margin: 0,
+      padding: 0
+    }}>
+      <Row style={{
+        backgroundColor: '#10393B'
+      }} >
         <Col span={4}>
           <a href="/home">
             <LogoIcon
@@ -98,7 +103,11 @@ export default function NavBar() {
             <Popover
               content={
                 <div>
-                  <TextStyled>Profile</TextStyled>
+                  <TextStyled
+                    onClick={() => {
+                      navigate("/profile");
+                    }}
+                  >Profile</TextStyled>
                   <TextStyled
                     onClick={() => {
                       navigate("/");

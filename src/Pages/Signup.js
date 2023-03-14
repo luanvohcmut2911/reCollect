@@ -53,9 +53,9 @@ export default function Signup() {
         name="normal-login"
         style={{
           width: "500px",
-          height: "80vh",
+          height: "85vh",
           backgroundColor: "white",
-          padding: "1.5rem 2.5rem 5rem 2.5rem",
+          padding: "1.5rem 2.5rem 6rem 2.5rem",
           borderRadius: "24px",
         }}
         layout="vertical"
@@ -153,6 +153,7 @@ export default function Signup() {
                   display: "flex",
                   alignItems: "center",
                   float: "right",
+                  backgroundColor: '#10393B'
                 }}
                 onClick={() => {
                   setStep(2);
@@ -250,6 +251,7 @@ export default function Signup() {
                   display: "flex",
                   alignItems: "center",
                   float: "right",
+                  backgroundColor: '#10393B'
                 }}
                 onClick={() => {
                   setStep(2);

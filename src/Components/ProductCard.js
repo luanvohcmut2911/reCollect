@@ -25,8 +25,6 @@ const ProductCard = ({ pictureSize }) => {
                 <img alt="event" style={{
                     borderBottomLeftRadius: "24px",
                     borderBottomRightRadius: "24px",
-                    // width: 200,
-                    // height: 250,
                 }} src={`https://picsum.photos/${pictureSize}`} />
             }
             actions={[
@@ -57,7 +55,7 @@ const ProductCard = ({ pictureSize }) => {
                 }}>
                     <Button>
                         <UnorderedListOutlined />
-                        Add to Watchlist
+                        Add to Watch list
                     </Button>
                     <Button>
                         <StopOutlined />
