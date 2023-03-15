@@ -1,8 +1,14 @@
 import { React, useState, useEffect } from 'react'
-import { Layout, Typography, Carousel, Image, Avatar, Button, Space, Tag, Table } from 'antd';
+import {
+    Layout, Typography, Carousel, Image, Avatar,
+    Button, Space, Tag, Table, Modal,
+    Drawer, List, Skeleton, Divider, Checkbox
+} from 'antd';
 import { AntDesignOutlined } from '@ant-design/icons';
 import NavBar from '../Components/NavBar';
 import EndBar from '../Components/EndBar';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import SuccessModal from '../Components/SuccessModal';
 
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -28,6 +34,7 @@ export function useWindowDimensions() {
 
     return windowDimensions;
 }
+
 const columns = [
     {
         title: "Item",
@@ -45,7 +52,7 @@ const columns = [
         key: 'condition',
     }
 ];
-const data = [
+const yourItems = [
     {
         key: '1',
         name: 'Charger',
@@ -54,12 +61,30 @@ const data = [
     },
     {
         key: '2',
+        name: 'Charger',
+        age: 5,
+        condition: 'Used for 5 years - Scratches a little',
+    },
+    {
+        key: '3',
+        name: 'Charger',
+        age: 5,
+        condition: 'Used for 5 years - Scratches a little',
+    },
+    {
+        key: '4',
+        name: 'Charger',
+        age: 5,
+        condition: 'Used for 5 years - Scratches a little',
+    },
+    {
+        key: '5',
         name: 'Box',
         age: 5,
         condition: 'Old XBox box, still usable',
     },
     {
-        key: '3',
+        key: '6',
         name: 'Monitor',
         age: 3,
         condition: 'Additional monitor bought outside of XBox, used for 3 years',
@@ -68,8 +93,45 @@ const data = [
 
 const ItemInfo = () => {
     const { width } = useWindowDimensions();
-    
-
+    const [open, setOpen] = useState(false);
+    const [openSecondModal, setOpenSecondModal] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [itemCount, setItemCount] = useState(0);
+    const loadMoreData = () => {
+        if (loading) {
+            return;
+        }
+        setLoading(true);
+        fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
+            .then((res) => res.json())
+            .then((body) => {
+                setData([...data, ...body.results]);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    };
+    const onChooseYourItem = (e) => {
+        console.log(`checked = ${e.target.checked}`);
+        if (e.target.checked) {
+            setItemCount(itemCount + 1);
+        } else {
+            setItemCount(itemCount - 1);
+        }
+    };
+    useEffect(() => {
+        loadMoreData();
+    }, []);
+    const showDrawer = () => {
+        setOpenDrawer(true);
+    };
+    const onCloseDrawer = () => {
+        setOpenDrawer(false);
+    };
     return (
         <Layout>
             <NavBar />
@@ -210,15 +272,110 @@ const ItemInfo = () => {
                             marginRight: "0.2rem"
                         }}>
                             <Typography.Title level={3}> Additional Items </Typography.Title>
-                            <Table columns={columns} dataSource={data} />
+                            <Table columns={columns} dataSource={yourItems} />
                         </div>
                         <Button width="100%" size="large" style={{
                             backgroundColor: "#10393B", color: "white",
                             width: "100%",
                             height: "50px",
-                        }}> Request Trade </Button>
+                        }} onClick={() => setOpen(true)}> Request Trade </Button>
                     </div>
                 </div>
+                <Modal
+                    title="Send a request for this item?"
+                    centered
+                    open={openSecondModal}
+                    onOk={() => {
+                        setOpenSecondModal(false);
+                        setOpen(false);
+                        setOpenSuccessModal(true);
+                    }}
+                    onCancel={() => setOpenSecondModal(false)}
+                >
+                    <Typography.Text>
+                        Here is our community guideline for making request:
+                        <ul>
+                            <li> Be responsible for your trade request.</li>
+                            <li> Your trade response may or may not be accepted by the other user; however, if it was accepted, please make sure to come to an mutual agreement for both sides before making a transaction. </li>
+                            <li> Please be caution that your succeeded trade request will be signed digitally on both sides by YOU and the other user. If any violation occurs, we will handle the situation based on the contract and the laws.</li>
+                        </ul>
+                    </Typography.Text>
+                </Modal>
+                <Modal
+                    title="Choose an item to make the offer"
+                    centered
+                    open={open}
+                    onOk={() => {
+                        setOpenSecondModal(true)
+                    }}
+                    onCancel={() => setOpen(false)}
+                    width={1000}
+                >
+                    <div>
+                        <Typography.Text>
+                            You can only choose the item you have uploaded onto reCollect.
+                            If you want to choose another item, please go upload your item.
+                        </Typography.Text>
+                        <Typography.Title level={5} type="warning">
+                            Number of items selected: {itemCount}
+                        </Typography.Title>
+                        <InfiniteScroll
+                            dataLength={data.length}
+                            next={loadMoreData}
+                            hasMore={data.length < 50}
+                            loader={
+                                <Skeleton
+                                    avatar
+                                    paragraph={{
+                                        rows: 1,
+                                    }}
+                                    active
+                                />
+                            }
+                            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                            scrollableTarget="scrollableDiv"
+                        >
+                            <List
+                                dataSource={data}
+                                renderItem={(item) => (
+                                    <List.Item key={item.email}>
+                                        <List.Item.Meta
+                                            avatar={<Avatar src={item.picture.large} />}
+                                            title={<a href="https://ant.design">{item.name.last}</a>}
+                                            description={item.email}
+                                        />
+                                        <div>
+                                            <Checkbox onChange={onChooseYourItem}></Checkbox>
+                                            <Button style={{
+                                                margin: "20px"
+                                            }} onClick={showDrawer}> More </Button>
+                                        </div>
+                                    </List.Item>
+                                )}
+                            />
+                            <Drawer
+                                title="Drawer with extra actions"
+                                placement="right"
+                                width={500}
+                                onClose={onCloseDrawer}
+                                open={openDrawer}
+                                extra={
+                                    <Space>
+                                        <Button onClick={onCloseDrawer}>Cancel</Button>
+                                        <Button type="primary" onClick={onCloseDrawer}>
+                                            OK
+                                        </Button>
+                                    </Space>
+                                }
+                            >
+                                <p>Some contents...</p>
+                                <p>Some contents...</p>
+                                <p>Some contents...</p>
+                            </Drawer>
+                        </InfiniteScroll>
+                    </div>
+                </Modal>
+                <SuccessModal openSuccessModal={openSuccessModal} setOpenSuccessModal={setOpenSuccessModal} />
             </div>
             <EndBar />
         </Layout >
