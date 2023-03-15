@@ -12,7 +12,7 @@ const googleProvider = new GoogleAuthProvider();
 const WrapperStyled = styled.div`
   margin: 0;
   padding: 0;
-  minWidth: 100vw;
+  minwidth: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -43,20 +43,18 @@ const onFinish = (values) => {
 //   console.log("Failed:", errorInfo);
 // };
 const Signin = () => {
-  const handleGoogleLogin = async (provider)=>{
+  const handleGoogleLogin = async (provider) => {
     const result = await signInWithPopup(auth, provider);
-    try{
+    try {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
       console.log(token);
       console.log(user);
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
-
+  };
 
   return (
     <WrapperStyled>
@@ -87,11 +85,9 @@ const Signin = () => {
             <Form.Item
               label={<Typography.Text strong>Email:</Typography.Text>}
               name="email"
-              rules={[
-                { required: true, message: "Please enter your email! " },
-              ]}
+              rules={[{ required: true, message: "Please enter your email! " }]}
               style={{
-                paddingTop: '1.5rem'
+                paddingTop: "1.5rem",
               }}
             >
               <InputStyled
@@ -142,7 +138,7 @@ const Signin = () => {
                     display: "flex",
                     alignItems: "center",
                     float: "right",
-                    backgroundColor: '#10393B'
+                    backgroundColor: "#10393B",
                   }}
                 >
                   <Typography.Text
@@ -163,14 +159,14 @@ const Signin = () => {
                     display: "flex",
                     alignItems: "center",
                     float: "right",
-                    backgroundColor: 'white',
-                    borderColor: '#10393B',
-                    marginRight: '1rem'
+                    backgroundColor: "white",
+                    borderColor: "#10393B",
+                    marginRight: "1rem",
                   }}
                 >
                   <Typography.Text
                     style={{
-                      color: '#10393B',
+                      color: "#10393B",
                       fontSize: "20px",
                     }}
                   >
@@ -210,8 +206,8 @@ const Signin = () => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onClick={()=>{
-                  handleGoogleLogin(googleProvider)
+                onClick={() => {
+                  handleGoogleLogin(googleProvider);
                 }}
               >
                 <GoogleIcon />

@@ -21,14 +21,14 @@ const { Search } = Input;
 const { Header } = Layout;
 
 const MenuStyled = styled(Menu)`
-  background-color: #10393B;
-  .ant-menu-item{
+  background-color: #10393b;
+  .ant-menu-item {
     margin: 1rem;
   }
   .ant-menu-item-selected {
     margin: 1rem;
     background-color: white !important;
-    color: #10393B !important;
+    color: #10393b !important;
   }
 `;
 
@@ -43,29 +43,33 @@ const TextStyled = styled.div`
   font-size: 20px;
   &:hover {
     background-color: grey;
-    cursor: pointer
+    cursor: pointer;
   }
 `;
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const handleSignOut = async (auth)=>{
+  const handleSignOut = async (auth) => {
     const logOut = await signOut(auth);
     try {
       console.log(logOut);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
-    <Header style={{
-      margin: 0,
-      padding: 0
-    }}>
-      <Row style={{
-        backgroundColor: '#10393B'
-      }} >
+    <Header
+      style={{
+        margin: 0,
+        padding: 0,
+      }}
+    >
+      <Row
+        style={{
+          backgroundColor: "#10393B",
+        }}
+      >
         <Col span={4}>
           <a href="/home">
             <LogoIcon
@@ -118,10 +122,12 @@ export default function NavBar() {
                     onClick={() => {
                       navigate("/profile");
                     }}
-                  >Profile</TextStyled>
+                  >
+                    Profile
+                  </TextStyled>
                   <TextStyled
-                    onClick={()=>{
-                      handleSignOut(auth)
+                    onClick={() => {
+                      handleSignOut(auth);
                     }}
                   >
                     Logout

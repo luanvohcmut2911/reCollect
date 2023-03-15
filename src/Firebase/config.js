@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC3EuohbTozOK9kkOy0F22RcFdFE-all_8",
@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: "recollect-380404.appspot.com",
   messagingSenderId: "701986446380",
   appId: "1:701986446380:web:11f2b9eaf44389cef40589",
-  measurementId: "G-M1PSGW8Y4T"
+  measurementId: "G-M1PSGW8Y4T",
 };
 
 // Initialize Firebase

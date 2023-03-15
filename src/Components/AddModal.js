@@ -3,7 +3,7 @@ import { Modal, Row, Col, Form, Input, Typography, Button, Upload } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
-import ImgCrop from 'antd-img-crop';
+import ImgCrop from "antd-img-crop";
 
 const ModalStyled = styled(Modal)`
   .ant-modal-body {
@@ -11,13 +11,21 @@ const ModalStyled = styled(Modal)`
   }
 `;
 
+const UploadStyled = styled(Upload)`
+  display: ${(props) => {
+    if (!props.fileLength) {
+      return "none";
+    }
+    return "";
+  }} !important;
+`;
+
 const { Dragger } = Upload;
 
 export default function AddModal() {
   const { addModalVisible, setAddModalVisible } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
-  const onChange = ({fileList: newFileList})=>{
-    console.log(newFileList);
+  const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
   return (
@@ -26,10 +34,12 @@ export default function AddModal() {
       height="80vh"
       closable={false}
       open={addModalVisible}
-      footer={null}
+      // footer={null}
       onCancel={() => {
         setAddModalVisible(false);
       }}
+      onOK={() => {}}
+      okText="Submit"
     >
       <Row
         style={{
@@ -38,18 +48,19 @@ export default function AddModal() {
       >
         <Col span={16}>
           <ImgCrop>
-            <Dragger style={{
-              maxWidth: '90%',
-              maxHeight: '90%',
-              display:fileList.length===0?'':'none'
-            }}
-            customRequest={({file, onSuccess})=>{
-              setTimeout(()=>{
-                onSuccess("ok");
-              },0)
-            }}
-            fileList={fileList}
-            onChange={onChange}
+            <Dragger
+              style={{
+                maxWidth: "90%",
+                maxHeight: "90%",
+                display: fileList.length === 0 ? "" : "none",
+              }}
+              customRequest={({ file, onSuccess }) => {
+                setTimeout(() => {
+                  onSuccess("ok");
+                }, 0);
+              }}
+              fileList={fileList}
+              onChange={onChange}
             >
               <div
                 style={{
@@ -72,31 +83,38 @@ export default function AddModal() {
                     color: "white",
                     marginBottom: "1rem",
                   }}
-                >Select from your computer</Button>
+                >
+                  Select from your computer
+                </Button>
               </div>
-            </Dragger>     
+            </Dragger>
           </ImgCrop>
           <ImgCrop>
-          <Upload
+            <UploadStyled
+              fileLength={fileList.length}
               style={{
-                // display:''
+                display: fileList.length === 0 ? "none" : "",
               }}
-              customRequest={({file, onSuccess})=>{
-                setTimeout(()=>{
+              customRequest={({ file, onSuccess }) => {
+                setTimeout(() => {
                   onSuccess("ok");
-                },0)
+                }, 0);
               }}
-              listType='picture-card'
+              listType="picture-card"
               fileList={fileList}
               onChange={onChange}
             >
-              
-              {fileList.length<5 && '+ Upload'}
-            </Upload>
+              {fileList.length < 5 && "+ Upload"}
+            </UploadStyled>
           </ImgCrop>
         </Col>
         <Col span={8}>
-          <Form layout="vertical">
+          <Form
+            layout="vertical"
+            onFinish={(value) => {
+              console.log(value);
+            }}
+          >
             <Form.Item
               label={<Typography.Text>Type of item</Typography.Text>}
               rules={[
@@ -117,9 +135,14 @@ export default function AddModal() {
             <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
               <Input placeholder="Weight of item" suffix="kg" />
             </Form.Item>
+            {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
+              sau nay lam tiep
+            </Form.Item> */}
           </Form>
         </Col>
       </Row>
     </ModalStyled>
   );
 }
+
+// chua xong submit
