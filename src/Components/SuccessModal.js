@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Result, Button } from 'antd'
+import { Modal, Result } from 'antd'
 export default function SuccessModal({openSuccessModal,setOpenSuccessModal}) {
     return (
         <Modal

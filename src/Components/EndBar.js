@@ -5,70 +5,74 @@ import GoogleIcon from '../icons/GoogleIcon';
 import FacebookIcon from '../icons/FacebookIcon';
 import GmailIcon from '../icons/GmailIcon';
 import PhoneIcon from '../icons/PhoneIcon';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 const {Footer} = Layout;
 
-const TypographyStyle = styled(Typography.Text)`
-  color: white
-`
 
-export default function EndBar() {
+
+export default function EndBar(props) {
+  const {color} = props;
+  console.log(color);
   return (
     <Footer style={{
-      backgroundColor: "#10393B",
-      color: "white"
+      backgroundColor: color==='white'? 'white': "#10393B",
+      // color: "white"
     }}>
       <Row>
         <Col span={1}></Col>
         <Col span={15}>
-          <LogoIcon color="white" style= {{
+          <LogoIcon color={color==='white'? 'black': "white"} style= {{
             marginLeft: '0rem'
           }} />
-          <TypographyStyle>
+          <Typography.Text style={{color: color==='white'? 'black': "white"}}>
             Minus aut soluta nihil similique earum.
-          </TypographyStyle>
+          </Typography.Text>
         </Col>
         <Col span={7}>
           <Typography.Title level={1} style={{
             margin: 0,
-            color: "white"
+            color: color==='white'? 'black': "white"
           }}>Contact us</Typography.Title>
           <div>
-            <TypographyStyle style={{
+            <Typography.Text style={{
+              color: color==='white'? 'black': "white",
               display:'flex',
               alignItems: 'center'
             }}>
               <GoogleIcon />
               abc@gmail.com
-            </TypographyStyle>  
+            </Typography.Text>  
           </div>
           <div>
-            <TypographyStyle style={{
+            <Typography.Text style={{
+              color: color==='white'? 'black': "white",
               display:'flex',
               alignItems: 'center',
             }}>
               <FacebookIcon />
               abc@gmail.com
-            </TypographyStyle>  
+            </Typography.Text>  
           </div>
           <div>
-            <TypographyStyle style={{
+            <Typography.Text style={{
+              color: color==='white'? 'black': "white",
               display:'flex',
               alignItems: 'center',
             }}>
               <GmailIcon />
               abc@gmail.com
-            </TypographyStyle>  
+            </Typography.Text>  
           </div>
           <div>
-            <TypographyStyle style={{
+            <Typography.Text style={{
+              color: color==='white'? 'black': "white",
               display:'flex',
               alignItems: 'center',
             }}>
               <PhoneIcon  />
               abc@gmail.com
-            </TypographyStyle>  
+            </Typography.Text>  
           </div>
         </Col>
         <Col span={1}></Col>

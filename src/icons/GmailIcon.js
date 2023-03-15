@@ -18,8 +18,8 @@ export default function GmailIcon() {
         y2="24.129"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e3e3e3"></stop>
-        <stop offset="1" stop-color="#e2e2e2"></stop>
+        <stop offset="0" stopColor="#e3e3e3"></stop>
+        <stop offset="1" stopColor="#e2e2e2"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWa_ho8QlOYvMuG3_gr1)"
@@ -33,9 +33,9 @@ export default function GmailIcon() {
         y2="37.643"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#f5f5f5"></stop>
-        <stop offset=".03" stop-color="#eee"></stop>
-        <stop offset="1" stop-color="#eee"></stop>
+        <stop offset="0" stopColor="#f5f5f5"></stop>
+        <stop offset=".03" stopColor="#eee"></stop>
+        <stop offset="1" stopColor="#eee"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWb_ho8QlOYvMuG3_gr2)"
@@ -49,8 +49,8 @@ export default function GmailIcon() {
         y2="24"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#d74a39"></stop>
-        <stop offset="1" stop-color="#c73d28"></stop>
+        <stop offset="0" stopColor="#d74a39"></stop>
+        <stop offset="1" stopColor="#c73d28"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWc_ho8QlOYvMuG3_gr3)"
@@ -64,8 +64,8 @@ export default function GmailIcon() {
         y2="38.181"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-opacity=".15"></stop>
-        <stop offset="1" stop-opacity=".03"></stop>
+        <stop offset="0" stopOpacity=".15"></stop>
+        <stop offset="1" stopOpacity=".03"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWd_ho8QlOYvMuG3_gr4)"
@@ -79,8 +79,8 @@ export default function GmailIcon() {
         y2="17.73"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#f5f5f5"></stop>
-        <stop offset="1" stop-color="#f5f5f5"></stop>
+        <stop offset="0" stopColor="#f5f5f5"></stop>
+        <stop offset="1" stopColor="#f5f5f5"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWe_ho8QlOYvMuG3_gr5)"
@@ -94,8 +94,8 @@ export default function GmailIcon() {
         y2="27.811"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#e05141"></stop>
-        <stop offset="1" stop-color="#de4735"></stop>
+        <stop offset="0" stopColor="#e05141"></stop>
+        <stop offset="1" stopColor="#de4735"></stop>
       </linearGradient>
       <path
         fill="url(#6769YB8EDCGhMGPdL9zwWf_ho8QlOYvMuG3_gr6)"
