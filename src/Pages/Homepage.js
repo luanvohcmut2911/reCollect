@@ -56,7 +56,6 @@ export default function Homepage() {
             flexWrap: "wrap"
           }}
         >
-
           <Image
             width={636}
             height={400}
