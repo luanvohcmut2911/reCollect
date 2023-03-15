@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { MessageOutlined, BellOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../Firebase/config";
 
 const items = [
   {
@@ -47,6 +49,15 @@ const TextStyled = styled.div`
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const handleSignOut = async (auth)=>{
+    const logOut = await signOut(auth);
+    try {
+      console.log(logOut);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Header style={{
       margin: 0,
@@ -109,8 +120,8 @@ export default function NavBar() {
                     }}
                   >Profile</TextStyled>
                   <TextStyled
-                    onClick={() => {
-                      navigate("/");
+                    onClick={()=>{
+                      handleSignOut(auth)
                     }}
                   >
                     Logout

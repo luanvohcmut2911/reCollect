@@ -13,7 +13,7 @@ export default function ProfileCard() {
   return (
     <div>
       <Card
-        style={{backgroundColor: 'white', borderRadius: '24px', marginTop: '-4rem', padding: '1rem 0 1rem 0'}}
+        style={{backgroundColor: 'white', borderRadius: '24px', marginTop: '-4rem', padding: '1rem 0 1rem 0', boxShadow: '4px 4px 4px rgba(0, 0, 0, 0.1)'}}
       >
         <WrapperStyled>
           <div style={{display: 'block'}}><Avatar size={100}>A</Avatar></div>

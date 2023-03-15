@@ -14,7 +14,7 @@ export default function Profile() {
     <Layout style={{
       padding: 0,
       margin: 0,
-      backgroundColor: "#9C9C9C",
+      backgroundColor: "white",
       maxWidth: '100vw',
       minHeight: '100vh'
     }}>
@@ -26,7 +26,8 @@ export default function Profile() {
         backgroundColor: '#10393B',
         margin: 0,
         padding: '2rem 0 4rem',
-        color: 'white'
+        color: 'white',
+        borderRadius: '0 0 30px 30px'
       }} > PROFILE </Typography.Title>
       <Content >
         <Row>

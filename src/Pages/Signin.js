@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import GoogleIcon from "../icons/GoogleIcon";
 import background from "../asset/bgSignin.png";
+import { auth } from "../Firebase/config";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 const WrapperStyled = styled.div`
   margin: 0;
@@ -39,6 +43,21 @@ const onFinish = (values) => {
 //   console.log("Failed:", errorInfo);
 // };
 const Signin = () => {
+  const handleGoogleLogin = async (provider)=>{
+    const result = await signInWithPopup(auth, provider);
+    try{
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      console.log(token);
+      console.log(user);
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+
   return (
     <WrapperStyled>
       <Row>
@@ -66,10 +85,10 @@ const Signin = () => {
               </a>
             </Typography.Text>
             <Form.Item
-              label={<Typography.Text strong>Username:</Typography.Text>}
-              name="username"
+              label={<Typography.Text strong>Email:</Typography.Text>}
+              name="email"
               rules={[
-                { required: true, message: "Please enter your username! " },
+                { required: true, message: "Please enter your email! " },
               ]}
               style={{
                 paddingTop: '1.5rem'
@@ -77,7 +96,7 @@ const Signin = () => {
             >
               <InputStyled
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
+                placeholder="abc@gmail.com"
               />
             </Form.Item>
             <Form.Item
@@ -113,26 +132,52 @@ const Signin = () => {
                 position: "relative",
               }}
             >
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{
-                  borderRadius: "50px",
-                  padding: "24px",
-                  display: "flex",
-                  alignItems: "center",
-                  float: "right",
-                }}
-              >
-                <Typography.Text
+              <div>
+                <Button
+                  type="primary"
+                  htmlType="submit"
                   style={{
-                    color: "white",
-                    fontSize: "20px",
+                    borderRadius: "50px",
+                    padding: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                    float: "right",
+                    backgroundColor: '#10393B'
                   }}
                 >
-                  Continue
-                </Typography.Text>
-              </Button>
+                  <Typography.Text
+                    style={{
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                  >
+                    Continue
+                  </Typography.Text>
+                </Button>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{
+                    borderRadius: "50px",
+                    padding: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                    float: "right",
+                    backgroundColor: 'white',
+                    borderColor: '#10393B',
+                    marginRight: '1rem'
+                  }}
+                >
+                  <Typography.Text
+                    style={{
+                      color: '#10393B',
+                      fontSize: "20px",
+                    }}
+                  >
+                    Return
+                  </Typography.Text>
+                </Button>
+              </div>
               <div
                 style={{
                   width: "100%",
@@ -164,6 +209,9 @@ const Signin = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                }}
+                onClick={()=>{
+                  handleGoogleLogin(googleProvider)
                 }}
               >
                 <GoogleIcon />

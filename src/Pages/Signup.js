@@ -4,6 +4,11 @@ import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import GoogleIcon from "../icons/GoogleIcon";
 import background from '../asset/bgSignup.png';
+import { auth } from "../Firebase/config";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
+
 
 const WrapperStyled = styled.div`
   margin: 0;
@@ -44,6 +49,20 @@ const onFinish = (values) => {
 
 export default function Signup() {
   const [step, setStep] = React.useState(1);
+  const handleGoogleLogin = async (provider)=>{
+    const result = await signInWithPopup(auth, provider);
+    try{
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      console.log(token);
+      console.log(user);
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <WrapperStyled>
       <Row>
@@ -81,6 +100,9 @@ export default function Signup() {
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: "1rem",
+              }}
+              onClick={()=>{
+                handleGoogleLogin(googleProvider);
               }}
             >
               <GoogleIcon />
@@ -224,6 +246,22 @@ export default function Signup() {
             >
               <DatePickerStyled
                 placeholder="Date of birth"
+              />
+            </Form.Item>
+            <Form.Item
+              label={<Typography.Text strong>Your phone number:</Typography.Text>}
+              name="phone number"
+              rules={[
+                { required: true, message: "Please input your phone number!" },
+              ]}
+            >
+              <InputStyled
+                type='number'
+                // onChange={(e)=>{
+                //   const regex = new RegExp('^[0-9\\-\\+]{9,15}$');
+                //   console.log(regex.test(e.target.value));
+                // }}
+                placeholder="Your phone number"
               />
             </Form.Item>
             <Form.Item
