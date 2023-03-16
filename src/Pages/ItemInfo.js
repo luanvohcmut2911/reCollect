@@ -147,7 +147,6 @@ const ItemInfo = () => {
                         height: "25rem",
                         width: "25rem",
                         marginBottom: "50px",
-                        alignSelf: "center",
                         margin: "10px",
                         borderRadius: "24px",
                         border: "#10393B"

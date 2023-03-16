@@ -5,7 +5,8 @@ export default function SuccessModal({openSuccessModal,setOpenSuccessModal}) {
         <Modal
             open={openSuccessModal}
             onOk={() => setOpenSuccessModal(false)}
-        >   onCancel={() => setOpenSuccessModal(false)}
+            onCancel={() => setOpenSuccessModal(false)}
+        >   
             <Result
                 status="success"
                 title="Request sent!"
