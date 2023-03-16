@@ -11,6 +11,7 @@ import LandingPage from "./Pages/LandingPage";
 import Profile from "./Pages/Profile";
 import ErrorPage from "./Pages/ErrorPage";
 import AddModal from "./Components/AddModal";
+import UserInfo from "./Pages/UserInfo";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/user-info" element={<UserInfo />} />
             <Route path="/home" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/donate-info" element={<DonateInfo />} />
