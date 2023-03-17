@@ -15,7 +15,7 @@ import img_front from "../asset/AdobeStock_355885536 1.png";
 import placeholder_img from "../asset/Placeholder image.png";
 import placeholder_img2 from "../asset/Placeholder image2.png";
 import placeholder_img3 from "../asset/Placeholder image3.png";
-import EndBar from '../Components/EndBar';
+import EndBar from "../Components/EndBar";
 
 const { Header } = Layout;
 const { Text, Title } = Typography;
@@ -479,7 +479,7 @@ export default function LandingPage() {
           </div>
         </div>
         {/* ----------------------------------- */}
-        <EndBar color='white' />
+        <EndBar color="white" />
       </Layout>
     </div>
   );

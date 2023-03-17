@@ -1,18 +1,25 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Button, Checkbox, Form, Input, Typography, Row, Col } from "antd";
 import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import GoogleIcon from "../icons/GoogleIcon";
 import background from "../asset/bgSignin.png";
 import { auth } from "../Firebase/config";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  getAdditionalUserInfo
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 
 const googleProvider = new GoogleAuthProvider();
 
 const WrapperStyled = styled.div`
   margin: 0;
   padding: 0;
-  minWidth: 100vw;
+  minwidth: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -36,27 +43,67 @@ const InputPasswordStyled = styled(Input.Password)`
   border-radius: 40px;
 `;
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
 // const onFinishFailed = (errorInfo) => {
 //   console.log("Failed:", errorInfo);
 // };
 const Signin = () => {
-  const handleGoogleLogin = async (provider)=>{
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleGoogleLogin = async (provider) => {
     const result = await signInWithPopup(auth, provider);
-    try{
+    try {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
+      const detail = getAdditionalUserInfo(result);
       console.log(token);
-      console.log(user);
-    }
-    catch(err){
+      const {email, photoURL, uid} = user;
+      console.log({
+        email: email,
+        photoURL: photoURL,
+        uid: uid
+      });
+      setUser({
+        email: email,
+        photoURL: photoURL,
+        uid: uid
+      })
+      if(detail.isNewUser){
+        navigate('/user-info');
+      }
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
+  const handleEmailLogin = async (email, password) => {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    try {
+      const user = userCredential.user;
+      const {email, photoURL, uid} = user;
+      console.log({
+        email: email,
+        photoURL: photoURL,
+        uid: uid
+      });
+      setUser({
+        email: email,
+        photoURL: photoURL,
+        uid: uid
+      })
+    } catch (error) {
+      console.log("user not found");
+    }
+  };
+
+  const onFinish = (values) => {
+    const { email, password } = values;
+    handleEmailLogin(email, password);
+  };
 
   return (
     <WrapperStyled>
@@ -87,11 +134,9 @@ const Signin = () => {
             <Form.Item
               label={<Typography.Text strong>Email:</Typography.Text>}
               name="email"
-              rules={[
-                { required: true, message: "Please enter your email! " },
-              ]}
+              rules={[{ required: true, message: "Please enter your email! " }]}
               style={{
-                paddingTop: '1.5rem'
+                paddingTop: "1.5rem",
               }}
             >
               <InputStyled
@@ -142,8 +187,9 @@ const Signin = () => {
                     display: "flex",
                     alignItems: "center",
                     float: "right",
-                    backgroundColor: '#10393B'
+                    backgroundColor: "#10393B",
                   }}
+                  // onClick={handleEmailLogin}
                 >
                   <Typography.Text
                     style={{
@@ -163,14 +209,14 @@ const Signin = () => {
                     display: "flex",
                     alignItems: "center",
                     float: "right",
-                    backgroundColor: 'white',
-                    borderColor: '#10393B',
-                    marginRight: '1rem'
+                    backgroundColor: "white",
+                    borderColor: "#10393B",
+                    marginRight: "1rem",
                   }}
                 >
                   <Typography.Text
                     style={{
-                      color: '#10393B',
+                      color: "#10393B",
                       fontSize: "20px",
                     }}
                   >
@@ -210,8 +256,8 @@ const Signin = () => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onClick={()=>{
-                  handleGoogleLogin(googleProvider)
+                onClick={() => {
+                  handleGoogleLogin(googleProvider);
                 }}
               >
                 <GoogleIcon />
