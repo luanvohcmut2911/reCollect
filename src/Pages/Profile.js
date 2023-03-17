@@ -50,7 +50,7 @@ export default function Profile() {
             justifyContent: "center",
             alignContent: "center",
           }}>
-            <ProfileCard />
+            <ProfileCard profileData={profileData} />
             <ProfileMenu style={{
               alignSelf: "center",
               justifyContent: "center",
