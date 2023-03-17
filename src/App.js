@@ -13,6 +13,7 @@ import ErrorPage from "./Pages/ErrorPage";
 import AddModal from "./Components/AddModal";
 import UserInfo from "./Pages/UserInfo";
 import DonateForm from "./Pages/DonateForm";
+import EventModal from "./Components/EventModal";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/donate-form" element={<DonateForm />} />
           </Routes>
           <AddModal />
+          <EventModal />
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>

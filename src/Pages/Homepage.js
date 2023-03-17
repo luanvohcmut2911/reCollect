@@ -3,7 +3,7 @@ import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
 import ProductCard from "../Components/ProductCard";
-import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd";
+import { Layout, Typography, FloatButton, Image, Pagination } from "antd";
 import { getAll } from "../Firebase/services";
 
 

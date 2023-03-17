@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Menu, Space, Card } from "antd";
+import { Menu, Space, Card, Button } from "antd";
 import styled from "styled-components";
 import ItemAddButton from "../asset/ItemAddButton.png";
 import EventImage from "../asset/EventImage.png";
@@ -61,8 +61,9 @@ const CardStyled = styled(Card)`
 export default function ProfileMenu() {
   const [page, setPage] = useState("1");
   const [itemList, setItemList] = useState([]);
-  const { setAddModalVisible } = useContext(AppContext);
-  const currentUserUid = JSON.parse(localStorage.getItem('data')).uid;
+  const { setAddModalVisible, setEventModalVisible } = useContext(AppContext);
+  const currentUserUid = JSON.parse(localStorage.getItem("data")).uid;
+  const isAdmin = JSON.parse(localStorage.getItem("data")).isAdmin;
   const handleAdd = () => {
     setAddModalVisible(true);
   };
@@ -70,14 +71,14 @@ export default function ProfileMenu() {
     setPage(e.key);
   };
 
-  useEffect(()=>{
-    getAccount('items', {
-      fieldName: 'itemOwner',
-      operator: '==',
-      compareValue: currentUserUid
-    }).then((data)=>{
+  useEffect(() => {
+    getAccount("items", {
+      fieldName: "itemOwner",
+      operator: "==",
+      compareValue: currentUserUid,
+    }).then((data) => {
       setItemList(data);
-    })
+    });
   }, [currentUserUid]);
   return (
     <div>
@@ -101,11 +102,11 @@ export default function ProfileMenu() {
             alt="item"
             onClick={handleAdd}
           />
-          { 
-            itemList.map((i)=>{
-              return <ImageStyled key={i.nameItem} src={i.imageList[0]} alt="item" />
-            })
-          }
+          {itemList.map((i) => {
+            return (
+              <ImageStyled key={i.nameItem} src={i.imageList[0]} alt="item" />
+            );
+          })}
         </Space>
       ) : (
         <Space wrap>
@@ -121,6 +122,9 @@ export default function ProfileMenu() {
           <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
             <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
           </CardStyled>
+          {isAdmin ? <Button onClick={()=>{
+            setEventModalVisible(true);
+          }} >Only Admin can use this button</Button> : ""}
         </Space>
       )}
     </div>

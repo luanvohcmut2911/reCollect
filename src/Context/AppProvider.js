@@ -30,6 +30,7 @@ export const AppContext = React.createContext();
 export default function AppProvider({ children }) {
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
+  const [eventModalVisible, setEventModalVisible] = useState(false);
   const { width, height } = useWindowDimensions();
   const commonBreakPoint = [320, 480, 768, 1024, 1025, 1200];
   return (
@@ -41,7 +42,9 @@ export default function AppProvider({ children }) {
         setOpenSuccessModal,
         width,
         height,
-        commonBreakPoint
+        commonBreakPoint,
+        eventModalVisible,
+        setEventModalVisible
       }}
     >
       {children}
