@@ -1,8 +1,12 @@
 import { db } from "./config";
 import { collection, addDoc, getDocs, where, query, doc } from "firebase/firestore";
+import { v4 } from 'uuid';
 
 export const addDocument = async (collectionName, data) => {
-  const docRef = await addDoc(collection(db, collectionName), data)
+  const docRef = await addDoc(collection(db, collectionName), {
+    ...data,
+    uuid: v4()
+  })
   try {
     console.log("Document written with ID: ", docRef.id);
   } catch (error) {
@@ -13,7 +17,10 @@ export const addDocument = async (collectionName, data) => {
 export const addNewItemForUser = async (collectionName, uid, subCollectionName, data) =>{
   const docRef = doc(db, collectionName, uid);
   const colRef = collection(docRef, subCollectionName);
-  const id = await addDoc(colRef, data);
+  const id = await addDoc(colRef, {
+    ...data,
+    uuid: v4()
+  });
   try {
     console.log(id);
   } catch (error) {
