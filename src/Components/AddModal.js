@@ -53,8 +53,8 @@ export default function AddModal() {
   }
   return (
     <ModalStyled
-      width="50vw"
-      height="50vh"
+      width="60vw"
+      height="100vh"
       closable={false}
       open={addModalVisible}
       footer={null}
@@ -70,7 +70,7 @@ export default function AddModal() {
         justifyContent: "center",
         alignSelf: "center",
         width: "100%",
-        alignItems:"center"
+        alignItems: "center"
       }}>
         <ImgCrop>
           <Dragger
@@ -153,10 +153,21 @@ export default function AddModal() {
                 Short description for your item
               </Typography.Text>
             }
+            rules={[
+              {
+                required: true,
+                message: 'Please input description.',
+              },
+            ]}
           >
             <Input placeholder="Description ..." />
           </Form.Item>
-          <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
+          <Form.Item label={<Typography.Text>Weight</Typography.Text>} rules={[
+            {
+              required: true,
+              message: 'Please input the weight of item.',
+            },
+          ]}>
             <Input placeholder="Weight of item" suffix="kg" />
           </Form.Item>
           <Form.Item>

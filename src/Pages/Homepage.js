@@ -149,13 +149,20 @@ export default function Homepage() {
           }}
         >
           {/* // imageList, itemOwner, nameItem, weight, description */}
-          <ProductCard pictureSize={500} />
-          <ProductCard pictureSize={200} />
-          <ProductCard pictureSize={300} />
-          <ProductCard pictureSize={1000} />
-          <ProductCard pictureSize={1232} />
-          <ProductCard pictureSize={222} />
-          <ProductCard pictureSize={232} />
+          {
+            itemData.map((item) => (
+              <ProductCard
+                pictureSize={500}
+                imageList={item.imageList}
+                nameItem={item.nameItem}
+                weight={item.weight}
+                description={item.description}
+                itemOwner={item.itemOwner}
+                />
+            )
+            )
+          }
+
         </div>
         <div
           style={{

@@ -36,7 +36,7 @@ const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, desc
             borderBottomLeftRadius: "24px",
             borderBottomRightRadius: "24px",
           }}
-          src={`https://picsum.photos/${pictureSize}`}
+          src={imageList[0]}
         />
       }
       onPress={() => {
@@ -56,8 +56,8 @@ const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, desc
     >
       <Card.Meta
         avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-        title="Old XBox Series X controller"
-        description="5 year old XBox Series X controller"
+        title={nameItem}
+        description={itemOwner}
       />
       <Modal
         title="Product Name"
@@ -66,12 +66,25 @@ const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, desc
         onCancel={handleCancel}
       >
         <div>
-          <Typography.Title level={3}>Product Info</Typography.Title>
-          <p>5 year old XBox Series X controller</p>
-          <p>5 year old XBox Series X controller</p>
-          <p>5 year old XBox Series X controller</p>
-          <p>5 year old XBox Series X controller</p>
-          <p>5 year old XBox Series X controller</p>
+          <Typography.Title level={3}>{nameItem}</Typography.Title>
+          <Typography.Title level={4}>Description</Typography.Title>
+          <p>{description}</p>
+          <p>
+            <Typography.Title level={5}>Weight</Typography.Title>
+            {weight}
+          </p>
+          <p>
+            <Typography.Title level={5}>Gallery</Typography.Title>
+            {imageList.map((image) => 
+              <img
+                alt="event"
+                style={{
+                  borderRadius: "24px",
+                }}
+                src={image}
+              />
+            )}
+          </p>
         </div>
         <div
           style={{
