@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ pictureSize }) => {
+const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, description }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {

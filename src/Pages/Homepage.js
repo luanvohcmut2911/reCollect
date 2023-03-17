@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
@@ -9,20 +9,22 @@ import { getAll } from "../Firebase/services";
 
 export default function Homepage() {
   const [itemData, setItemData] = useState([]);
-  const [eventData, setEventData] = useState([]); 
-  useEffect(()=>{
-    getAll('items').then((res)=>{
+  const [eventData, setEventData] = useState([]);
+  useEffect(() => {
+    getAll('items').then((res) => {
       setItemData(res);
       console.log(res);
     })
-    getAll('events').then((res)=>{
+    getAll('events').then((res) => {
       setEventData(res);
       console.log(res);
     })
-  },[]);
-
-  // lay info trong data (items) bo vo component
-  //total = data.length
+  }, []);
+  console.log(itemData);
+  console.log(eventData);
+  /*
+  
+  */
   return (
     <div>
       <Layout>
@@ -146,6 +148,7 @@ export default function Homepage() {
             justifyContent: "center",
           }}
         >
+          {/* // imageList, itemOwner, nameItem, weight, description */}
           <ProductCard pictureSize={500} />
           <ProductCard pictureSize={200} />
           <ProductCard pictureSize={300} />
@@ -153,17 +156,6 @@ export default function Homepage() {
           <ProductCard pictureSize={1232} />
           <ProductCard pictureSize={222} />
           <ProductCard pictureSize={232} />
-          <ProductCard pictureSize={232} />
-          <ProductCard pictureSize={2323} />
-          <ProductCard pictureSize={500} />
-          <ProductCard pictureSize={200} />
-          <ProductCard pictureSize={300} />
-          <ProductCard pictureSize={1000} />
-          <ProductCard pictureSize={1232} />
-          <ProductCard pictureSize={222} />
-          <ProductCard pictureSize={232} />
-          <ProductCard pictureSize={232} />
-          <ProductCard pictureSize={2323} />
         </div>
         <div
           style={{
