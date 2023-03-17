@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Row, Col, Form, Input, Typography, Button, Upload } from "antd";
+import { Modal, Form, Input, Typography, Button, Upload } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
