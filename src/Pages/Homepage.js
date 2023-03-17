@@ -1,9 +1,11 @@
-import { React } from "react";
+import React, {useEffect} from "react";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
 import ProductCard from "../Components/ProductCard";
 import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd";
+import { getAccount } from "../Firebase/services";
+
 
 // const handleMenuClick = (e) => {
 //   alert('Click on menu item.');
@@ -34,6 +36,15 @@ import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd
 // }
 
 export default function Homepage() {
+  useEffect(()=>{
+    getAccount('items', {
+      fieldName: 'itemOwner',
+      operator: '==',
+      compareValue: true
+    }).then((res)=>{
+      console.log(res);
+    })
+  },[]);
   return (
     <div>
       <Layout>

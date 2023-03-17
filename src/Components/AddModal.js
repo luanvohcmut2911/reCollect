@@ -28,7 +28,7 @@ const UploadStyled = styled(Upload)`
 const { Dragger } = Upload;
 
 export default function AddModal() {
-  const currentUserUid = JSON.parse(localStorage.getItem('data')).uid;
+  const currentUserUid = JSON.parse(localStorage.getItem('data'))?.uid;
   const { addModalVisible, setAddModalVisible, width, commonBreakPoint } = useContext(AppContext);
   const windowWidth = width;
   const [fileList, setFileList] = useState([]);
@@ -58,8 +58,6 @@ export default function AddModal() {
       onCancel={() => {
         setAddModalVisible(false);
       }}
-      onOK={() => { }}
-      okText="Submit"
     >
       {
         (windowWidth < commonBreakPoint[2]) ?
@@ -130,9 +128,7 @@ export default function AddModal() {
             </ImgCrop>
             <Form
               layout="vertical"
-              onFinish={(value) => {
-                console.log(value);
-              }}
+              onFinish={onFinish}
             >
               <Form.Item
                 label={<Typography.Text>Type of item</Typography.Text>}
@@ -154,9 +150,9 @@ export default function AddModal() {
               <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
                 <Input placeholder="Weight of item" suffix="kg" />
               </Form.Item>
-              {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
-              sau nay lam tiep
-            </Form.Item> */}
+              <Form.Item>
+                <Button htmlType="submit">Submit</Button>
+              </Form.Item>
             </Form>
           </div>
           :
