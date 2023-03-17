@@ -21,6 +21,27 @@ export const addNewItemForUser = async (collectionName, uid, subCollectionName, 
   }
 }
 
+export const getAll = async(collectionName)=>{
+  const collectionRef = collection(db, collectionName);
+  const docSnap = await getDocs(
+    query(
+      collectionRef
+    )
+  )
+  const arr = [];
+  try {
+    docSnap.forEach((doc)=>{
+      arr.push(doc.data());
+    })
+  } catch (error) {
+    console.log(error);
+  }
+  return (
+    arr
+  )
+}
+
+
 export const getAccount = async (collectionName, condition) =>{
   const collectionRef = collection(db, collectionName);
   const docSnap = await getDocs(
