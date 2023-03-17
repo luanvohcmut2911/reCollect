@@ -15,6 +15,7 @@ import {
   Skeleton,
   Divider,
   Checkbox,
+  message
 } from "antd";
 import { AntDesignOutlined } from "@ant-design/icons";
 import NavBar from "../Components/NavBar";
@@ -22,31 +23,6 @@ import EndBar from "../Components/EndBar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SuccessModal from "../Components/SuccessModal";
 import { AppContext } from "../Context/AppProvider";
-
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-export function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowDimensions;
-}
 
 const columns = [
   {
@@ -105,14 +81,21 @@ const yourItems = [
 ];
 
 const ItemInfo = () => {
-  const { setOpenSuccessModal, openSuccessModal } = useContext(AppContext);
-  const { width } = useWindowDimensions();
+  const { setOpenSuccessModal, openSuccessModal, width } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [itemCount, setItemCount] = useState(0);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const error = () => {
+    messageApi.open({
+      type: 'Error',
+      content: 'Please choose your trade item',
+    });
+  };
   const loadMoreData = () => {
     if (loading) {
       return;
@@ -130,10 +113,12 @@ const ItemInfo = () => {
         setLoading(false);
       });
   };
-  const onChooseYourItem = (e) => {
+  const onChooseYourItem = (e, item) => {
     console.log(`checked = ${e.target.checked}`);
+    console.log(e);
     if (e.target.checked) {
       setItemCount(itemCount + 1);
+      console.log(item);
     } else {
       setItemCount(itemCount - 1);
     }
@@ -149,6 +134,7 @@ const ItemInfo = () => {
   };
   return (
     <Layout>
+      {contextHolder}
       <NavBar />
       <div>
         <div
@@ -161,67 +147,76 @@ const ItemInfo = () => {
             flexWrap: width < 800 ? "wrap" : "nowrap",
           }}
         >
-          <div
-            className="carou-fucking-sel"
-            style={{
-              height: "25rem",
-              width: "25rem",
-              marginBottom: "50px",
-              alignSelf: "center",
-              margin: "10px",
-              borderRadius: "24px",
-              border: "#10393B",
-            }}
-          >
-            <Carousel
-              className="fuckyouANTcarousel"
-              autoplay
-              dotPosition="bottom"
-            >
-              <Image
-                width="100%"
-                height="100%"
-                style={{
-                  borderRadius: "24px",
-                }}
-                src="https://picsum.photos/1000"
-              />
-              <Image
-                width="100%"
-                height="100%"
-                style={{
-                  borderRadius: "24px",
-                }}
-                src="https://picsum.photos/1000"
-              />
-              <Image
-                width="100%"
-                height="100%"
-                style={{
-                  borderRadius: "24px",
-                }}
-                src="https://picsum.photos/1000"
-              />
-              <Image
-                width="100%"
-                height="100%"
-                style={{
-                  borderRadius: "24px",
-                }}
-                src="https://picsum.photos/1000"
-              />
-            </Carousel>
-            <Typography.Title
-              level={3}
-              type="secondary"
+          <div style={{
+            backgroundColor: "#10393B",
+            paddingBottom: "50px",
+            borderBottomRightRadius: "50px",
+            borderBottomLeftRadius: "50px",
+            marginBottom: "50px"
+          }}>
+            <div
+              className="carou-fucking-sel"
               style={{
+                height: "25rem",
+                width: "25rem",
+                marginBottom: "50px",
                 alignSelf: "center",
-                textAlign: "center",
+                margin: "10px",
+                borderRadius: "24px",
+                border: "#10393B",
+                padding: "2rem",
               }}
             >
-              {" "}
-              Old XBox Series X controller{" "}
-            </Typography.Title>
+              <Carousel
+                className="fuckyouANTcarousel"
+                autoplay
+                dotPosition="bottom"
+              >
+                <Image
+                  width="100%"
+                  height="100%"
+                  style={{
+                    borderRadius: "24px",
+                  }}
+                  src="https://picsum.photos/1000"
+                />
+                <Image
+                  width="100%"
+                  height="100%"
+                  style={{
+                    borderRadius: "24px",
+                  }}
+                  src="https://picsum.photos/1000"
+                />
+                <Image
+                  width="100%"
+                  height="100%"
+                  style={{
+                    borderRadius: "24px",
+                  }}
+                  src="https://picsum.photos/1000"
+                />
+                <Image
+                  width="100%"
+                  height="100%"
+                  style={{
+                    borderRadius: "24px",
+                  }}
+                  src="https://picsum.photos/1000"
+                />
+              </Carousel>
+              <Typography.Title
+                level={3}
+                style={{
+                  alignSelf: "center",
+                  textAlign: "center",
+                  color: "#D9D9D9"
+                }}
+              >
+                {" "}
+                Old XBox Series X controller{" "}
+              </Typography.Title>
+            </div>
           </div>
           <div
             style={{
@@ -405,7 +400,9 @@ const ItemInfo = () => {
           centered
           open={open}
           onOk={() => {
-            setOpenSecondModal(true);
+            if (itemCount !== 0) {
+              setOpenSecondModal(true);
+            } else error();
           }}
           onCancel={() => setOpen(false)}
           width={1000}
@@ -437,14 +434,9 @@ const ItemInfo = () => {
               <List
                 dataSource={data}
                 renderItem={(item) => (
-                  <List.Item key={item.email}>
-                    <List.Item.Meta
-                      avatar={<Avatar src={item.picture.large} />}
-                      title={<a href="https://ant.design">{item.name.last}</a>}
-                      description={item.email}
-                    />
-                    <div>
-                      <Checkbox onChange={onChooseYourItem}></Checkbox>
+                  <List.Item key={item.email}
+                    actions={[
+                      <Checkbox onChange={onChooseYourItem}></Checkbox>,
                       <Button
                         style={{
                           margin: "20px",
@@ -453,7 +445,14 @@ const ItemInfo = () => {
                       >
                         {" "}
                         More{" "}
-                      </Button>
+                      </Button>,
+                    ]}>
+                    <List.Item.Meta
+                      avatar={<Avatar src={item.picture.large} />}
+                      title={<a href="https://ant.design">{item.name.last}</a>}
+                      description={item.email}
+                    />
+                    <div>
                     </div>
                   </List.Item>
                 )}

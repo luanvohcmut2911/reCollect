@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu, Layout, Avatar, Row, Col, Input, Popover } from "antd";
 import styled from "styled-components";
-import { MessageOutlined, BellOutlined } from "@ant-design/icons";
+import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/config";
+import { AppContext } from "../Context/AppProvider";
 
 const items = [
   {
     label: "Bartering",
+    key: "Bartering",
+    icon: <SwapOutlined />,
   },
   {
     label: "Donation",
+    key: "donation",
+    icon: <MedicineBoxOutlined />
   },
 ];
 
@@ -22,6 +27,7 @@ const { Header } = Layout;
 
 const MenuStyled = styled(Menu)`
   background-color: #10393b;
+  font-size: 20px;
   .ant-menu-item {
     margin: 1rem;
   }
@@ -49,6 +55,8 @@ const TextStyled = styled.div`
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const { width, commonBreakPoint } = useContext(AppContext);
+  const windowWidth = width;
   const handleSignOut = async (auth) => {
     const logOut = await signOut(auth);
     try {
@@ -77,6 +85,8 @@ export default function NavBar() {
               style={{
                 float: "left",
                 margin: "16px 24px 16px 1rem",
+                width: (windowWidth < commonBreakPoint[3]) ? "" : "150px",
+                height: (windowWidth < commonBreakPoint[3]) ? "" : "27.19px"
               }}
             />
           </a>
@@ -85,6 +95,7 @@ export default function NavBar() {
           <MenuStyled
             style={{
               backgroundColor: "#10393B !important",
+              left: (windowWidth < commonBreakPoint[3]) ? "0px" : ""
             }}
             theme="dark"
             mode="horizontal"
@@ -92,15 +103,23 @@ export default function NavBar() {
           ></MenuStyled>
         </Col>
         <Col span={10}>
-          <Search
-            placeholder="Search..."
-            style={{
-              padding: "1rem",
-            }}
-          />
+          {
+            (windowWidth < commonBreakPoint[3]) ? null : <Search
+              placeholder="Search..."
+              style={{
+                padding: "1rem",
+              }}
+            />
+          }
         </Col>
         <Col span={4}>
           <RightStyled>
+            {(windowWidth < commonBreakPoint[3]) ? <SearchOutlined style={{
+              color: "white",
+              fontSize: "35px",
+              padding: "1rem",
+              float: (windowWidth < commonBreakPoint[3]) ? "left" : ""
+            }} /> : null}
             <MessageOutlined
               style={{
                 color: "white",

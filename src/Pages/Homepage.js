@@ -3,7 +3,7 @@ import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
 import ProductCard from "../Components/ProductCard";
-import { Layout, Typography, FloatButton, Image, Pagination } from "antd";
+import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd";
 
 // const handleMenuClick = (e) => {
 //   alert('Click on menu item.');
@@ -41,7 +41,13 @@ export default function Homepage() {
       </Layout>
       <FloatButton.BackTop />
       <Layout className="ongoing-events">
-        <Typography.Title style={{ paddingLeft: "1.2rem" }}>
+        <Typography.Title style={{
+          paddingLeft: "1.2rem",
+          margin: 0,
+          padding: "30px",
+          backgroundColor: "#10393B",
+          color: "white",
+        }}>
           Ongoing Events
         </Typography.Title>
         <div
@@ -54,6 +60,10 @@ export default function Homepage() {
             alignItems: "center",
             padding: "1.2rem",
             flexWrap: "wrap",
+            backgroundColor: "#10393B",
+            paddingBottom: "50px",
+            borderBottomRightRadius: "50px",
+            borderBottomLeftRadius: "50px",
           }}
         >
           <Image
@@ -68,17 +78,27 @@ export default function Homepage() {
           <div
             style={{
               alignSelf: "center",
-              margin: "1.2rem",
+              margin: "1.1rem",
+
             }}
           >
-            <Typography.Title level={2}>
+            <Typography.Title level={2} style={{
+              color: "white"
+            }}>
               Clothes & shoes donations in Ho Chi Minh City
             </Typography.Title>
-            <Typography.Text>
+            <Typography.Text style={{
+              color: "white"
+            }}>
               {" "}
               The MyStorage donation box, located in front of the MyStorage
               warehouse at 375 Xa Lo Hanoi, is emptied on a bi-weekly basis and
               all contents are donated to Light Charity.
+              <br />
+              <a href="/donate-info" style={{
+                color: "#EF8450",
+                fontStyle: "bold"
+              }}>Donate now </a>
             </Typography.Text>
           </div>
         </div>
@@ -91,6 +111,7 @@ export default function Homepage() {
             justifyContent: "center",
             alignContent: "center",
             alignItems: "center",
+            backgroundColor: "#D9D9D9"
           }}
         >
           <EventCard />
@@ -110,6 +131,9 @@ export default function Homepage() {
             flexDirection: "column",
             alignItems: "center",
             padding: "1.2rem",
+            backgroundColor: "#D9D9D9",
+            borderBottomRightRadius: "2000px",
+            borderBottomLeftRadius: "24px",
           }}
         >
           <Pagination

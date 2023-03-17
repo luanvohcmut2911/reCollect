@@ -53,7 +53,7 @@ const MenuStyled = styled(Menu)`
 `;
 
 const CardStyled = styled(Card)`
-  width: 320px;
+  width: 250px;
   margin: 1rem 1rem 1rem 4rem;
   border-radius: 24px;
 `;

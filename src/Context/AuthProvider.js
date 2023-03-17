@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export const AuthContext = React.createContext();
 
-const unAuthPage = ["/home", "/profile", "/item-info", "/donate-info", "/user-info"];
+const unAuthPage = ["/home", "/profile", "/item-info", "/donate-info", "/user-info", "/donate-form"];
 
 export default function AuthProvider({ children }) {
   const navigate = useNavigate();

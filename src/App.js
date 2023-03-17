@@ -12,6 +12,7 @@ import Profile from "./Pages/Profile";
 import ErrorPage from "./Pages/ErrorPage";
 import AddModal from "./Components/AddModal";
 import UserInfo from "./Pages/UserInfo";
+import DonateForm from "./Pages/DonateForm";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/donate-info" element={<DonateInfo />} />
             <Route path="/item-info" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
+            <Route path="/donate-form" element={<DonateForm />} />
           </Routes>
           <AddModal />
         </AppProvider>

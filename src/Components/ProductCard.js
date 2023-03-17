@@ -7,8 +7,10 @@ import {
   StopOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ pictureSize }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -37,8 +39,13 @@ const ProductCard = ({ pictureSize }) => {
           src={`https://picsum.photos/${pictureSize}`}
         />
       }
+      onPress={() => {
+        navigate("/item-info");
+      }}
       actions={[
-        <Button icon={<SwapOutlined key="Trade" />} href="/home">
+        <Button icon={<SwapOutlined key="Trade" />} href="/item-info" style={{
+          color: "#EF8450"
+        }}>
           Trade
         </Button>,
         <Button icon={<EllipsisOutlined key="More" />} onClick={showModal}>
