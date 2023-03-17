@@ -11,7 +11,6 @@ const { Footer } = Layout;
 
 export default function EndBar(props) {
   const { color } = props;
-  console.log(color);
   return (
     <Footer
       style={{

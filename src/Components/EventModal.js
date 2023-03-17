@@ -32,6 +32,7 @@ export default function EventModal() {
     setFileList(newFileList);
   };
   const onFinish = (values) => {
+    setEventModalVisible(false);
     const imageURL = getImageURL(fileList);
     console.log(values);
     imageURL.then((data) => {
@@ -40,12 +41,6 @@ export default function EventModal() {
         imageList: data,
         itemOwner: currentUserUid,
       });
-      // console.log({
-      //   ...values,
-      //   imageList: data,
-      //   itemOwner: currentUserUid,
-      // });
-      // window.location.reload(false);
     });
   };
   return (

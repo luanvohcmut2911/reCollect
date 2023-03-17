@@ -8,7 +8,7 @@ const unAuthPage = [
   "/",
   "/signin",
   "/signup",
-  "/user-info",
+  // "/user-info",
 ];
 
 export default function AuthProvider({ children }) {

@@ -104,10 +104,9 @@ const ItemInfo = () => {
     }).then((data) => {
       setItemInfoData(data[0]);
     });
-  }, []);
+  }, [uuid]);
 
   useEffect(() => {
-    console.log(itemInfoData?.itemOwner);
     getAccount("users", {
       fieldName: "uid",
       operator: "==",

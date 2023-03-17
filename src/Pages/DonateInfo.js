@@ -34,15 +34,18 @@ function DonateInfo() {
     //   setDonateInfoData(data[0]);
     //   console.log(data);
     // });
-    console.log("dit me may chay di")
     getAccount("events", {
       fieldName: "uuid",
       operator: "==",
       compareValue: uuid
     }).then((data) => {
       setDonateInfoData(data[0])
+      console.log(data);
+    }).catch((err)=>{
+      console.log(err);
     })
-  }, []);
+    // console.log('123');
+  }, [uuid]);
   return (
     <Layout>
       <NavBar />
@@ -68,6 +71,7 @@ function DonateInfo() {
                 paddingBottom: "50px",
                 borderBottomRightRadius: "50px",
                 borderBottomLeftRadius: "50px",
+                width: "100%"
               }}
             >
               <Typography.Title level={3} style={{ color: "white" }}>

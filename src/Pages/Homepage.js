@@ -19,18 +19,19 @@ export default function Homepage() {
       setEventData(res);
     })
   }, []);
-  console.log(itemData);
-  console.log(eventData);
   /*
   
   */
   return (
     <div>
       <Layout>
-        <NavBar />
+        <NavBar style={{
+          position: "sticky !important",
+          top: 0
+        }} />
       </Layout>
       <FloatButton.BackTop />
-      <Layout className="ongoing-events">
+      <Layout id="ongoing-events">
         <Typography.Title style={{
           paddingLeft: "1.2rem",
           margin: 0,
@@ -132,7 +133,7 @@ export default function Homepage() {
           />
         </div>
       </Layout>
-      <Layout className="find-your-product">
+      <Layout id="find-your-product">
         <Typography.Title style={{ paddingLeft: "1.2rem" }}>
           {" "}
           Find your products{" "}

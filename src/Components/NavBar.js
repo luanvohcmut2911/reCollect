@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/config";
 import { AppContext } from "../Context/AppProvider";
+import { StickyContainer, Sticky } from "react-sticky";
 
 const items = [
   {
@@ -67,110 +68,141 @@ export default function NavBar() {
     }
   };
   return (
-    <Header
-      style={{
-        margin: 0,
-        padding: 0,
-      }}
-    >
-      <Row
+    <StickyContainer>
+      <Sticky>
+        {({
+          style,
+
+          // the following are also available but unused in this example
+          isSticky,
+          wasSticky,
+          distanceFromTop,
+          distanceFromBottom,
+          calculatedHeight
+        }) => (
+          <header style={style}>
+            {/* ... */}
+          </header>
+        )}
+      </Sticky>
+      <Header
         style={{
-          backgroundColor: "#10393B",
+          margin: 0,
+          padding: 0,
         }}
       >
-        <Col span={4}>
-          <a href="/home">
-            <LogoIcon
-              color="white"
-              style={{
-                float: "left",
-                margin: "16px 24px 16px 1rem",
-                width: (windowWidth < commonBreakPoint[3]) ? "" : "150px",
-                height: (windowWidth < commonBreakPoint[3]) ? "" : "27.19px"
-              }}
-            />
-          </a>
-        </Col>
-        <Col span={6}>
-          <MenuStyled
-            style={{
-              backgroundColor: "#10393B !important",
-              left: (windowWidth < commonBreakPoint[3]) ? "0px" : ""
-            }}
-            theme="dark"
-            mode="horizontal"
-            items={items}
-          ></MenuStyled>
-        </Col>
-        <Col span={10}>
-          {
-            (windowWidth < commonBreakPoint[3]) ? null : <Search
-              placeholder="Search..."
-              style={{
-                padding: "1rem",
-              }}
-            />
-          }
-        </Col>
-        <Col span={4}>
-          <RightStyled>
-            {(windowWidth < commonBreakPoint[3]) ? <SearchOutlined style={{
-              color: "white",
-              fontSize: "35px",
-              padding: "1rem",
-              float: (windowWidth < commonBreakPoint[3]) ? "left" : ""
-            }} /> : null}
-            <MessageOutlined
-              style={{
-                color: "white",
-                fontSize: "35px",
-                padding: "1rem",
-              }}
-            />
-            <BellOutlined
-              style={{
-                color: "white",
-                fontSize: "35px",
-                padding: "1rem",
-              }}
-            />
-            <Popover
-              content={
-                <div>
-                  <TextStyled
-                    onClick={() => {
-                      navigate("/profile");
-                    }}
-                  >
-                    Profile
-                  </TextStyled>
-                  <TextStyled
-                    onClick={() => {
-                      handleSignOut(auth);
-                    }}
-                  >
-                    Logout
-                  </TextStyled>
-                </div>
-              }
-              trigger="click"
-            >
-              <Avatar
-                size="default"
+        <Row
+          style={{
+            backgroundColor: "#10393B",
+          }}
+        >
+          <Col span={4}>
+            <a href="/home">
+              <LogoIcon
+                color="white"
                 style={{
-                  margin: "1rem",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  color: "black",
-                  cursor: "pointer",
+                  float: "left",
+                  margin: "16px 24px 16px 1rem",
+                  width: (windowWidth < commonBreakPoint[3]) ? "" : "150px",
+                  height: (windowWidth < commonBreakPoint[3]) ? "" : "27.19px"
                 }}
+              />
+            </a>
+          </Col>
+          <Col span={6}>
+            <MenuStyled
+              style={{
+                backgroundColor: "#10393B !important",
+                left: (windowWidth < commonBreakPoint[3]) ? "0px" : ""
+              }}
+              theme="dark"
+              mode="horizontal"
+              items={items}
+              onSelect={(item) => {
+                console.log(item);
+                if (item.key === "Bartering") {
+                  const element = document.getElementById("find-your-product");
+                  console.log(element);
+                  element.scrollIntoView();
+                } else if (item.key === "Donation") {
+                  const element = document.getElementById("ongoing-events");
+                  console.log(element);
+                  element.scrollIntoView();
+                }
+              }}
+            ></MenuStyled>
+          </Col>
+          <Col span={10}>
+            {
+              (windowWidth < commonBreakPoint[3]) ? null : <Search
+                placeholder="Search..."
+                style={{
+                  padding: "1rem",
+                }}
+              />
+            }
+          </Col>
+          <Col span={4}>
+            <RightStyled>
+              {(windowWidth < commonBreakPoint[3]) ? <SearchOutlined style={{
+                color: "white",
+                fontSize: "35px",
+                padding: "1rem",
+                float: (windowWidth < commonBreakPoint[3]) ? "left" : ""
+              }} /> : null}
+              <MessageOutlined
+                style={{
+                  color: "white",
+                  fontSize: "35px",
+                  padding: "1rem",
+                }}
+              />
+              <BellOutlined
+                style={{
+                  color: "white",
+                  fontSize: "35px",
+                  padding: "1rem",
+                }}
+              />
+              <Popover
+                content={
+                  <div>
+                    <TextStyled
+                      onClick={() => {
+                        navigate("/profile");
+                      }}
+                    >
+                      Profile
+                    </TextStyled>
+                    <TextStyled
+                      onClick={() => {
+                        handleSignOut(auth);
+                      }}
+                    >
+                      Logout
+                    </TextStyled>
+                  </div>
+                }
+                trigger="click"
               >
-                A
-              </Avatar>
-            </Popover>
-          </RightStyled>
-        </Col>
-      </Row>
-    </Header>
+                <Avatar
+                  size="default"
+                  style={{
+                    margin: "1rem",
+                    justifyContent: "center",
+                    backgroundColor: "white",
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                >
+                  A
+                </Avatar>
+              </Popover>
+            </RightStyled>
+          </Col>
+        </Row>
+      </Header>
+    </StickyContainer>
+
   );
 }

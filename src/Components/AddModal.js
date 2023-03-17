@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Row, Col, Form, Input, Typography, Button, Upload } from "antd";
+import { Modal, Form, Input, Typography, Button, Upload } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
@@ -35,6 +35,7 @@ export default function AddModal() {
     setFileList(newFileList);
   };
   const onFinish = (values) => {
+    setAddModalVisible(false);
     const imageURL = getImageURL(fileList);
     console.log(values);
     imageURL.then((data) => {
@@ -48,7 +49,7 @@ export default function AddModal() {
         imageList: data,
         itemOwner: currentUserUid
       })
-      // window.location.reload(false);
+      window.location.reload(false);
     })
   }
   return (
