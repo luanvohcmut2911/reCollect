@@ -3,21 +3,20 @@ import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
 import ProductCard from "../Components/ProductCard";
-import { Layout, Typography, FloatButton, Image, Pagination } from "antd";
+import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd";
 import { getAll } from "../Firebase/services";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
+  const navigate = useNavigate();
   const [itemData, setItemData] = useState([]);
   const [eventData, setEventData] = useState([]);
   useEffect(() => {
     getAll('items').then((res) => {
       setItemData(res);
-      console.log(res);
     })
     getAll('events').then((res) => {
       setEventData(res);
-      console.log(res);
     })
   }, []);
   console.log(itemData);
@@ -70,7 +69,6 @@ export default function Homepage() {
             style={{
               alignSelf: "center",
               margin: "1.1rem",
-
             }}
           >
             <Typography.Title level={2} style={{
@@ -83,10 +81,12 @@ export default function Homepage() {
             }}>
               {eventData[0]?.eventDescription}
               <br />
-              <a href="/donate-info" style={{
+              <Button onClick={() => {
+                navigate(`/donate-info/${eventData[0]?.uuid}`)
+              }} style={{
                 color: "#EF8450",
                 fontStyle: "bold"
-              }}>Donate now </a>
+              }}> Donate now </Button>
             </Typography.Text>
           </div>
         </div>
@@ -102,13 +102,14 @@ export default function Homepage() {
             backgroundColor: "#D9D9D9"
           }}
         >
-          {eventData.map((event) => (
+          {eventData.map((event, uuid) => (
             <EventCard
               eventDescription={event.eventDescription}
               eventItems={event.eventItems}
               eventTitle={event.eventTitle}
               imageList={event.imageList}
               itemOwner={event.itemOwner}
+              uuid={event.uuid}
             />
           ))}
         </div>
@@ -146,7 +147,7 @@ export default function Homepage() {
         >
           {/* // imageList, itemOwner, nameItem, weight, description */}
           {
-            itemData.map((item) => (
+            itemData.map((item, uuid) => (
               <ProductCard
                 pictureSize={500}
                 imageList={item.imageList}
@@ -154,6 +155,7 @@ export default function Homepage() {
                 weight={item.weight}
                 description={item.description}
                 itemOwner={item.itemOwner}
+                uuid={item.uuid}
               />
             )
             )

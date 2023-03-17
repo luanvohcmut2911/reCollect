@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ imageList, itemOwner, itemName, weight, description }) => {
+const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -23,7 +23,6 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description }) =>
   };
   return (
     <Card
-      hoverable
       style={{
         margin: "1.2rem",
         width: 200,
@@ -39,13 +38,15 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description }) =>
           src={imageList[0]}
         />
       }
-      onPress={() => {
-        navigate("/item-info");
-      }}
       actions={[
-        <Button icon={<SwapOutlined key="Trade" />} href="/item-info" style={{
+        <Button icon={<SwapOutlined key="Trade" />} style={{
           color: "#EF8450"
-        }}>
+        }}
+          onClick={() => {
+            navigate(`/item-info/${uuid}`)
+          }
+          }
+        >
           Trade
         </Button>,
         <Button icon={<EllipsisOutlined key="More" />} onClick={showModal}>
@@ -75,7 +76,7 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description }) =>
           </p>
           <p>
             <Typography.Title level={5}>Gallery</Typography.Title>
-            {imageList.map((image) => 
+            {imageList.map((image, id) =>
               <img
                 alt="event"
                 style={{

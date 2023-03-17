@@ -1,8 +1,10 @@
 import { React } from "react";
 import { Card, Button } from "antd";
 import Typography from "antd/es/typography/Typography";
+import { useNavigate } from "react-router";
 
-const EventCard = ({ eventDescription, eventItems, eventTitle, imageList }) => {
+const EventCard = ({ eventDescription, eventItems, eventTitle, imageList, uuid }) => {
+  const navigate = useNavigate();
   return (
     <Card
       hoverable
@@ -38,7 +40,9 @@ const EventCard = ({ eventDescription, eventItems, eventTitle, imageList }) => {
             </Typography.Text>
             <br />
             <br />
-            <Button href="/donate-info" style={{
+            <Button onClick={() => {
+              navigate(`/donate-info/${uuid}`)
+            }} style={{
               color: "#EF8450",
               fontStyle: "bold"
             }}> Donate now </Button>

@@ -27,8 +27,8 @@ function App() {
             <Route path="/user-info" element={<UserInfo />} />
             <Route path="/home" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/donate-info" element={<DonateInfo />} />
-            <Route path="/item-info/" element={<ItemInfo />} />
+            <Route path="/donate-info/:uuid" element={<DonateInfo />} />
+            <Route path="/item-info/:uuid" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/donate-form/" element={<DonateForm />} />
           </Routes>
