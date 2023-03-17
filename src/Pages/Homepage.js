@@ -23,13 +23,16 @@ export default function Homepage() {
   
   */
   return (
-    <div>
-      <Layout>
-        <NavBar style={{
-          position: "sticky !important",
-          top: 0
-        }} />
-      </Layout>
+    <div style={{
+      position: 'relative'
+    }}>
+      <div style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 69
+      }}>
+        <NavBar />
+      </div>
       <FloatButton.BackTop />
       <Layout id="ongoing-events">
         <Typography.Title style={{
