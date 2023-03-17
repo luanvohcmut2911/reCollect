@@ -22,7 +22,7 @@ import { getAccount } from "../Firebase/services";
 // ];
 
 function DonateInfo() {
-  const [donateInfoData, setDonateInfoData] = useState({});
+  const [donateInfoData, setDonateInfoData] = useState(null);
   let { uuid } = useParams();
   console.log(uuid);
   useEffect(() => {
@@ -34,6 +34,7 @@ function DonateInfo() {
     //   setDonateInfoData(data[0]);
     //   console.log(data);
     // });
+    console.log("dit me may chay di")
     getAccount("events", {
       fieldName: "uuid",
       operator: "==",
