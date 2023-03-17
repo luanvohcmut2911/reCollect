@@ -29,8 +29,7 @@ const { Dragger } = Upload;
 
 export default function AddModal() {
   const currentUserUid = JSON.parse(localStorage.getItem('data'))?.uid;
-  const { addModalVisible, setAddModalVisible, width, commonBreakPoint } = useContext(AppContext);
-  const windowWidth = width;
+  const { addModalVisible, setAddModalVisible } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -44,224 +43,127 @@ export default function AddModal() {
         imageList: data,
         itemOwner: currentUserUid
       });
-      // setAddModalVisible(false);
-      window.location.reload(false);
+      console.log({
+        ...values,
+        imageList: data,
+        itemOwner: currentUserUid
+      })
+      // window.location.reload(false);
     })
   }
   return (
     <ModalStyled
-      width="70vw"
-      height="100vh"
+      width="50vw"
+      height="50vh"
       closable={false}
       open={addModalVisible}
       footer={null}
       onCancel={() => {
         setAddModalVisible(false);
       }}
-      onOK={() => { }}
-      okText="Submit"
     >
-      {
-        (windowWidth < commonBreakPoint[2]) ?
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "wrap",
-          }}>
-            <ImgCrop>
-              <Dragger
-                style={{
-                  maxWidth: "90%",
-                  maxHeight: "90%",
-                  display: fileList.length === 0 ? "" : "none",
-                }}
-                customRequest={({ file, onSuccess }) => {
-                  setTimeout(() => {
-                    onSuccess("ok");
-                  }, 0);
-                }}
-                fileList={fileList}
-                onChange={onChange}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <img src={InputImage} alt="input" />
-                  <Typography.Title>Drag your photo here</Typography.Title>
-                  <Typography.Text>or</Typography.Text>
-                  <Button
-                    style={{
-                      backgroundColor: "#10393B",
-                      marginTop: "1rem",
-                      border: "#10393B",
-                      width: "80%",
-                      borderRadius: "50px",
-                      color: "white",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    Select from your computer
-                  </Button>
-                </div>
-              </Dragger>
-            </ImgCrop>
-            <ImgCrop>
-              <UploadStyled
-                fileLength={fileList.length}
-                style={{
-                  display: fileList.length === 0 ? "none" : "",
-                }}
-                customRequest={({ file, onSuccess }) => {
-                  setTimeout(() => {
-                    onSuccess("ok");
-                  }, 0);
-                }}
-                listType="picture-card"
-                fileList={fileList}
-                onChange={onChange}
-              >
-                {fileList.length < 5 && "+ Upload"}
-              </UploadStyled>
-            </ImgCrop>
-            <Form
-              layout="vertical"
-              onFinish={onFinish}
-            >
-              <Form.Item
-                label={<Typography.Text>Type of item</Typography.Text>}
-                rules={[
-                  { required: true, message: "Please input type of items" },
-                ]}
-              >
-                <Input placeholder="Type of item ..." />
-              </Form.Item>
-              <Form.Item
-                label={
-                  <Typography.Text>
-                    Short description for your item
-                  </Typography.Text>
-                }
-              >
-                <Input placeholder="Description ..." />
-              </Form.Item>
-              <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
-                <Input placeholder="Weight of item" suffix="kg" />
-              </Form.Item>
-              {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
-              sau nay lam tiep
-            </Form.Item> */}
-              <Form.Item>
-                <Button htmlType="submit">Submit</Button>
-              </Form.Item>
-            </Form>
-          </div>
-          :
-          <Row
+      <div style={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignContent: "center",
+        justifyContent: "center",
+        alignSelf: "center",
+        width: "100%",
+        alignItems:"center"
+      }}>
+        <ImgCrop>
+          <Dragger
             style={{
-              height: "75vh",
+              maxWidth: "90%",
+              maxHeight: "90%",
+              display: fileList.length === 0 ? "" : "none",
             }}
+            customRequest={({ file, onSuccess }) => {
+              setTimeout(() => {
+                onSuccess("ok");
+              }, 0);
+            }}
+            fileList={fileList}
+            onChange={onChange}
           >
-            <Col span={16}>
-              <ImgCrop>
-                <Dragger
-                  style={{
-                    maxWidth: "90%",
-                    maxHeight: "90%",
-                    display: fileList.length === 0 ? "" : "none",
-                  }}
-                  customRequest={({ file, onSuccess }) => {
-                    setTimeout(() => {
-                      onSuccess("ok");
-                    }, 0);
-                  }}
-                  fileList={fileList}
-                  onChange={onChange}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img src={InputImage} alt="input" />
-                    <Typography.Title>Drag your photo here</Typography.Title>
-                    <Typography.Text>or</Typography.Text>
-                    <Button
-                      style={{
-                        backgroundColor: "#10393B",
-                        marginTop: "1rem",
-                        border: "#10393B",
-                        width: "80%",
-                        borderRadius: "50px",
-                        color: "white",
-                        marginBottom: "1rem",
-                      }}
-                    >
-                      Select from your computer
-                    </Button>
-                  </div>
-                </Dragger>
-              </ImgCrop>
-              <ImgCrop>
-                <UploadStyled
-                  fileLength={fileList.length}
-                  style={{
-                    display: fileList.length === 0 ? "none" : "",
-                  }}
-                  customRequest={({ file, onSuccess }) => {
-                    setTimeout(() => {
-                      onSuccess("ok");
-                    }, 0);
-                  }}
-                  listType="picture-card"
-                  fileList={fileList}
-                  onChange={onChange}
-                >
-                  {fileList.length < 5 && "+ Upload"}
-                </UploadStyled>
-              </ImgCrop>
-            </Col>
-            <Col span={8}>
-              <Form
-                layout="vertical"
-                onFinish={(value) => {
-                  console.log(value);
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img src={InputImage} alt="input" />
+              <Typography.Title>Drag your photo here</Typography.Title>
+              <Typography.Text>or</Typography.Text>
+              <Button
+                style={{
+                  backgroundColor: "#10393B",
+                  marginTop: "1rem",
+                  border: "#10393B",
+                  width: "80%",
+                  borderRadius: "50px",
+                  color: "white",
+                  marginBottom: "1rem",
                 }}
               >
-                <Form.Item
-                  label={<Typography.Text>Type of item</Typography.Text>}
-                  rules={[
-                    { required: true, message: "Please input type of items" },
-                  ]}
-                >
-                  <Input placeholder="Type of item ..." />
-                </Form.Item>
-                <Form.Item
-                  label={
-                    <Typography.Text>
-                      Short description for your item
-                    </Typography.Text>
-                  }
-                >
-                  <Input placeholder="Description ..." />
-                </Form.Item>
-                <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
-                  <Input placeholder="Weight of item" suffix="kg" />
-                </Form.Item>
-                {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
-              sau nay lam tiep
-            </Form.Item> */}
-              </Form>
-            </Col>
-          </Row>
-      }
+                Select from your computer
+              </Button>
+            </div>
+          </Dragger>
+        </ImgCrop>
+        <ImgCrop>
+          <UploadStyled
+            fileLength={fileList.length}
+            style={{
+              display: fileList.length === 0 ? "none" : "",
+            }}
+            customRequest={({ file, onSuccess }) => {
+              setTimeout(() => {
+                onSuccess("ok");
+              }, 0);
+            }}
+            listType="picture-card"
+            fileList={fileList}
+            onChange={onChange}
+          >
+            {fileList.length < 5 && "+ Upload"}
+          </UploadStyled>
+        </ImgCrop>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          style={{
+            alignSelf: "right",
+          }}
+        >
+          <Form.Item
+            label={<Typography.Text>Type of item</Typography.Text>}
+            rules={[
+              { required: true, message: "Please input type of items" },
+            ]}
+          >
+            <Input placeholder="Type of item ..." />
+          </Form.Item>
+          <Form.Item
+            label={
+              <Typography.Text>
+                Short description for your item
+              </Typography.Text>
+            }
+          >
+            <Input placeholder="Description ..." />
+          </Form.Item>
+          <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
+            <Input placeholder="Weight of item" suffix="kg" />
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit">Submit</Button>
+          </Form.Item>
+        </Form>
+      </div>
     </ModalStyled>
   );
 }
