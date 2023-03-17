@@ -1,50 +1,28 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import EventCard from "../Components/EventCard";
 import ProductCard from "../Components/ProductCard";
 import { Layout, Typography, FloatButton, Image, Pagination, Button } from "antd";
-import { getAccount } from "../Firebase/services";
+import { getAll } from "../Firebase/services";
 
-
-// const handleMenuClick = (e) => {
-//   alert('Click on menu item.');
-//   console.log('click', e);
-// };
-
-// const DropdownMenuItems = [
-//   {
-//     label: 'Add to Watchlist',
-//     key: '1',
-//     icon: <UnorderedListOutlined />
-//   },
-//   {
-//     label: 'Not interested',
-//     key: '2',
-//     icon: <StopOutlined />
-//   },
-//   {
-//     label: 'Report',
-//     key: '3',
-//     icon: <FlagOutlined />
-//   }
-// ]
-
-// const menuProps = {
-//   DropdownMenuItems,
-//   onClick: handleMenuClick,
-// }
 
 export default function Homepage() {
+  const [itemData, setItemData] = useState([]);
+  const [eventData, setEventData] = useState([]); 
   useEffect(()=>{
-    getAccount('items', {
-      fieldName: 'itemOwner',
-      operator: '==',
-      compareValue: true
-    }).then((res)=>{
+    getAll('items').then((res)=>{
+      setItemData(res);
+      console.log(res);
+    })
+    getAll('events').then((res)=>{
+      setEventData(res);
       console.log(res);
     })
   },[]);
+
+  // lay info trong data (items) bo vo component
+  //total = data.length
   return (
     <div>
       <Layout>
