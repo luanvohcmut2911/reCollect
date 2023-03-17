@@ -92,8 +92,8 @@ const ItemInfo = () => {
   const [itemCount, setItemCount] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [itemInfoData, setItemInfoData] = useState({});
-  const [userData, setUserData] = useState({});
+  const [itemInfoData, setItemInfoData] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   let { uuid } = useParams();
   useEffect(() => {
@@ -104,7 +104,7 @@ const ItemInfo = () => {
     }).then((data) => {
       setItemInfoData(data[0]);
     });
-  }, []);
+  }, [uuid]);
 
   useEffect(() => {
     console.log(itemInfoData?.itemOwner);

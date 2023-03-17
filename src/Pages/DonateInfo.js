@@ -22,26 +22,23 @@ import { getAccount } from "../Firebase/services";
 // ];
 
 function DonateInfo() {
-  const [donateInfoData, setDonateInfoData] = useState({});
+  const [donateInfoData, setDonateInfoData] = useState(null);
   let { uuid } = useParams();
   console.log(uuid);
   useEffect(() => {
-    // getAccount("events", {
-    //   fieldName: "uuid",
-    //   operator: "==",
-    //   compareValue: uuid
-    // }).then((data) => {
-    //   setDonateInfoData(data[0]);
-    //   console.log(data);
-    // });
+    console.log('copium');
     getAccount("events", {
       fieldName: "uuid",
       operator: "==",
       compareValue: uuid
     }).then((data) => {
       setDonateInfoData(data[0])
+      console.log(data);
+    }).catch((err)=>{
+      console.log(err);
     })
-  }, []);
+    // console.log('123');
+  }, [uuid]);
   return (
     <Layout>
       <NavBar />
