@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
   const navigate = useNavigate();
-  const [itemData, setItemData] = useState([]);
-  const [eventData, setEventData] = useState([]);
+  const [itemData, setItemData] = useState(null);
+  const [eventData, setEventData] = useState(null);
   useEffect(() => {
     getAll('items').then((res) => {
       setItemData(res);
@@ -19,8 +19,6 @@ export default function Homepage() {
       setEventData(res);
     })
   }, []);
-  console.log(itemData);
-  console.log(eventData);
   /*
   
   */
