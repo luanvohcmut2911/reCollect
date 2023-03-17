@@ -4,7 +4,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 export const AuthContext = React.createContext();
 
-const unAuthPage = ["/home", "/profile", "/item-info", "/donate-info", "/user-info", "/donate-form"];
+const unAuthPage = [
+  "/",
+  "/signin",
+  "/signup",
+  "/user-info",
+];
 
 export default function AuthProvider({ children }) {
   const navigate = useNavigate();
@@ -14,12 +19,12 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((userInfo) => {
       if (userInfo) {
-        if (!unAuthPage.includes(location.pathname)) {
+        if (unAuthPage.includes(location.pathname)) {
           navigate("/home");
         }
         return;
       }
-      if (unAuthPage.includes(location.pathname)) {
+      if (!unAuthPage.includes(location.pathname)) {
         navigate("/");
       }
     });

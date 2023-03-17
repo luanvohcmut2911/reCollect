@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Layout,
   Typography,
@@ -10,6 +10,8 @@ import {
 } from "antd";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
+import { useParams } from "react-router";
+import { getAccount } from "../Firebase/services";
 
 // const data = [
 //   "Racing car sprays burning fuel into crowd.",
@@ -19,7 +21,27 @@ import EndBar from "../Components/EndBar";
 //   "Los Angeles battles huge wildfires.",
 // ];
 
-function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
+function DonateInfo() {
+  const [donateInfoData, setDonateInfoData] = useState({});
+  let { uuid } = useParams();
+  console.log(uuid);
+  useEffect(() => {
+    // getAccount("events", {
+    //   fieldName: "uuid",
+    //   operator: "==",
+    //   compareValue: uuid
+    // }).then((data) => {
+    //   setDonateInfoData(data[0]);
+    //   console.log(data);
+    // });
+    getAccount("events", {
+      fieldName: "uuid",
+      operator: "==",
+      compareValue: uuid
+    }).then((data) => {
+      setDonateInfoData(data[0])
+    })
+  }, []);
   return (
     <Layout>
       <NavBar />
@@ -33,7 +55,7 @@ function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
           }}
         >
           {" "}
-          {eventTitle}
+          {donateInfoData?.eventTitle}
         </Typography.Title>
         <Space direction="horizontal" wrap>
           <Space direction="vertical" wrap>
@@ -52,7 +74,7 @@ function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
               </Typography.Title>
               <Space direction="vertical" >
                 <Typography.Text style={{ color: "white" }}>
-                  {eventDescription}
+                  {donateInfoData?.eventDescription}
                 </Typography.Text>
                 <Space
                   direction="horizontal"
@@ -95,7 +117,7 @@ function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
                 header={<div>List of items</div>}
                 bordered
                 size={"small"}
-                dataSource={eventItems}
+                dataSource={donateInfoData?.eventItems}
                 renderItem={(item) => (
                   <List.Item>
                     <Typography.Text mark>[ITEM]</Typography.Text> {item}
@@ -121,16 +143,19 @@ function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
               borderBottomLeftRadius: "50px",
             }}
           >
-            {imageList?.map((image) => (
+            {donateInfoData?.imageList.map((image) => (
               <Image
                 width={350}
                 style={{
                   borderRadius: "24px",
                   padding: "1.2em",
                 }}
-                src="https://picsum.photos/601"
-              />
-            ))}
+                src={image}
+              />)
+            )}
+            {/* {imageList?.map((image) => (
+              
+            ))} */}
           </Space>
           <div
             style={{
@@ -143,6 +168,7 @@ function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
 
             }}
           >
+            <br />
             <Pagination
               total={85}
               showSizeChanger

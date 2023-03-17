@@ -23,6 +23,8 @@ import EndBar from "../Components/EndBar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SuccessModal from "../Components/SuccessModal";
 import { AppContext } from "../Context/AppProvider";
+import { useParams } from "react-router";
+import { getAccount } from "../Firebase/services";
 
 const columns = [
   {
@@ -80,7 +82,7 @@ const yourItems = [
   },
 ];
 
-const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
+const ItemInfo = () => {
   const { setOpenSuccessModal, openSuccessModal, width } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
@@ -90,13 +92,37 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
   const [itemCount, setItemCount] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
+  const [itemInfoData, setItemInfoData] = useState({});
+  const [userData, setUserData] = useState({});
+
+  let { uuid } = useParams();
+  useEffect(() => {
+    getAccount("items", {
+      fieldName: "uuid",
+      operator: "==",
+      compareValue: uuid
+    }).then((data) => {
+      setItemInfoData(data[0]);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(itemInfoData?.itemOwner);
+    getAccount("users", {
+      fieldName: "uid",
+      operator: "==",
+      compareValue: itemInfoData?.itemOwner
+    }).then((userData) => {
+      setUserData(userData[0]);
+      console.log(userData[0]);
+    })
+  }, [itemInfoData]);
   const error = () => {
     messageApi.open({
       type: 'Error',
       content: 'Please choose your trade item',
     });
   };
-  
   const loadMoreData = () => {
     if (loading) {
       return;
@@ -173,38 +199,16 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
                 autoplay
                 dotPosition="bottom"
               >
-                <Image
-                  width="100%"
-                  height="100%"
-                  style={{
-                    borderRadius: "24px",
-                  }}
-                  src="https://picsum.photos/1000"
-                />
-                <Image
-                  width="100%"
-                  height="100%"
-                  style={{
-                    borderRadius: "24px",
-                  }}
-                  src="https://picsum.photos/1000"
-                />
-                <Image
-                  width="100%"
-                  height="100%"
-                  style={{
-                    borderRadius: "24px",
-                  }}
-                  src="https://picsum.photos/1000"
-                />
-                <Image
-                  width="100%"
-                  height="100%"
-                  style={{
-                    borderRadius: "24px",
-                  }}
-                  src="https://picsum.photos/1000"
-                />
+                {itemInfoData.imageList?.map((image) => (
+                  <Image
+                    width="100%"
+                    height="100%"
+                    style={{
+                      borderRadius: "24px",
+                    }}
+                    src={image}
+                  />
+                ))}
               </Carousel>
               <Typography.Title
                 level={3}
@@ -214,8 +218,7 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
                   color: "#D9D9D9"
                 }}
               >
-                {" "}
-                Old XBox Series X controller{" "}
+                {itemInfoData?.itemName}
               </Typography.Title>
             </div>
           </div>
@@ -228,7 +231,7 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
           >
             <Typography.Title level={2}>
               {" "}
-              Old XBox Series X controller{" "}
+              {itemInfoData?.itemName}
             </Typography.Title>
             <div
               style={{
@@ -269,12 +272,12 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
                       margin: 0,
                     }}
                   >
-                    {" "}
-                    Tri Nhan Pham
+
+                    {userData.lastName} {" "} {userData.firstName}
                   </Typography.Title>
                   <Typography.Text type="secondary">
                     {" "}
-                    @District 8, HCMC
+                    @{userData.address}
                   </Typography.Text>
                 </div>
               </div>
@@ -325,17 +328,7 @@ const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
                   padding: "5px",
                 }}
               >
-                Mollit laborum enim non ullamco et occaecat velit nulla tempor
-                voluptate adipisicing. Eu reprehenderit eu proident non aliqua
-                occaecat anim qui ipsum veniam. Non exercitation eu in fugiat
-                anim sunt dolor ad deserunt ut do dolore ipsum. Enim fugiat amet
-                tempor eiusmod commodo excepteur culpa. Mollit laborum enim non
-                ullamco et occaecat velit nulla tempor voluptate adipisicing. Eu
-                reprehenderit eu proident non aliqua occaecat anim qui ipsum
-                veniam. Non exercitation eu in fugiat anim sunt dolor ad
-                deserunt ut do dolore ipsum. Enim fugiat amet tempor eiusmod
-                commodo excepteur culpa. Mollit laborum enim non ullamco et
-                occaecat velit nulla tempor
+                {itemInfoData.description}
               </Typography.Text>
             </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Result } from "antd";
+import { Modal, Result, Button } from "antd";
 import { AppContext } from "../Context/AppProvider";
 export default function SuccessModal() {
   const { openSuccessModal, setOpenSuccessModal } =
@@ -17,6 +17,9 @@ export default function SuccessModal() {
         title="Request sent!"
         subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
       />
+      <Button style={{
+        alignContent:"center"
+      }} type="primary"> Chat now </Button>
     </Modal>
   );
 }
