@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, description }) => {
+const ProductCard = ({ imageList, itemOwner, itemName, weight, description }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -56,7 +56,7 @@ const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, desc
     >
       <Card.Meta
         avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-        title={nameItem}
+        title={itemName}
         description={itemOwner}
       />
       <Modal
@@ -66,7 +66,7 @@ const ProductCard = ({ pictureSize, imageList, itemOwner, nameItem, weight, desc
         onCancel={handleCancel}
       >
         <div>
-          <Typography.Title level={3}>{nameItem}</Typography.Title>
+          <Typography.Title level={3}>{itemName}</Typography.Title>
           <Typography.Title level={4}>Description</Typography.Title>
           <p>{description}</p>
           <p>

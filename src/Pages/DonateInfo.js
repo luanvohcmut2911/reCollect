@@ -19,7 +19,7 @@ const data = [
   "Los Angeles battles huge wildfires.",
 ];
 
-function DonateInfo() {
+function DonateInfo({ eventDescription, eventItems, eventTitle, imageList }) {
   return (
     <Layout>
       <NavBar />
@@ -33,7 +33,7 @@ function DonateInfo() {
           }}
         >
           {" "}
-          Clothes & shoes donations in Ho Chi Minh City{" "}
+          {eventTitle}
         </Typography.Title>
         <Space direction="horizontal" wrap>
           <Space direction="vertical" wrap>
@@ -52,19 +52,7 @@ function DonateInfo() {
               </Typography.Title>
               <Space direction="vertical" >
                 <Typography.Text style={{ color: "white" }}>
-                  Pariatur ipsum elit laboris nulla pariatur eiusmod magna
-                  aute. Eu dolor magna quis excepteur esse. Et quis id aliqua
-                  quis non id ipsum. Pariatur cillum nulla id officia velit
-                  laborum aliquip excepteur consectetur proident elit nisi. Do
-                  mollit sit do excepteur consectetur sit aliqua cillum sint.
-                  Et occaecat tempor qui incididunt commodo dolore cupidatat.
-                  Adipisicing officia id nisi fugiat Lorem cupidatat ex ad
-                  consectetur incididunt qui ullamco. Occaecat aute fugiat eu
-                  nostrud duis anim. Consectetur tempor ex quis fugiat tempor
-                  sint et in amet. Ea pariatur ex ut reprehenderit culpa do
-                  aliqua qui eu. Labore incididunt sit in deserunt magna ipsum
-                  culpa eiusmod pariatur in exercitation reprehenderit fugiat
-                  velit. Ex ex sit proident mollit elit.
+                  {eventDescription}
                 </Typography.Text>
                 <Space
                   direction="horizontal"
@@ -107,7 +95,7 @@ function DonateInfo() {
                 header={<div>List of items</div>}
                 bordered
                 size={"small"}
-                dataSource={data}
+                dataSource={eventItems}
                 renderItem={(item) => (
                   <List.Item>
                     <Typography.Text mark>[ITEM]</Typography.Text> {item}
@@ -133,46 +121,16 @@ function DonateInfo() {
               borderBottomLeftRadius: "50px",
             }}
           >
-            <Image
-              width={350}
-              style={{
-                borderRadius: "24px",
-                padding: "1.2em",
-              }}
-              src="https://picsum.photos/601"
-            />
-            <Image
-              width={350}
-              style={{
-                borderRadius: "24px",
-                padding: "1.2em",
-              }}
-              src="https://picsum.photos/602"
-            />
-            <Image
-              width={350}
-              style={{
-                borderRadius: "24px",
-                padding: "1.2em",
-              }}
-              src="https://picsum.photos/603"
-            />
-            <Image
-              width={350}
-              style={{
-                borderRadius: "24px",
-                padding: "1.2em",
-              }}
-              src="https://picsum.photos/604"
-            />
-            <Image
-              width={350}
-              style={{
-                borderRadius: "24px",
-                padding: "1.2em",
-              }}
-              src="https://picsum.photos/604"
-            />
+            {imageList?.map((image) => (
+              <Image
+                width={350}
+                style={{
+                  borderRadius: "24px",
+                  padding: "1.2em",
+                }}
+                src="https://picsum.photos/601"
+              />
+            ))}
           </Space>
           <div
             style={{

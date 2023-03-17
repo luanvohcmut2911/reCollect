@@ -80,7 +80,7 @@ const yourItems = [
   },
 ];
 
-const ItemInfo = () => {
+const ItemInfo = ({ imageList, itemOwner, itemName, weight, description }) => {
   const { setOpenSuccessModal, openSuccessModal, width } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
@@ -96,6 +96,7 @@ const ItemInfo = () => {
       content: 'Please choose your trade item',
     });
   };
+  
   const loadMoreData = () => {
     if (loading) {
       return;

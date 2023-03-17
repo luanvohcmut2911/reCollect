@@ -140,14 +140,19 @@ export default function AddModal() {
           }}
         >
           <Form.Item
+            name="itemName"
             label={<Typography.Text>Type of item</Typography.Text>}
             rules={[
-              { required: true, message: "Please input type of items" },
+              {
+                required: true,
+                message: 'Please input your item name',
+              },
             ]}
           >
-            <Input placeholder="Type of item ..." />
+            <Input placeholder="Type of item..." />
           </Form.Item>
           <Form.Item
+            name="description"
             label={
               <Typography.Text>
                 Short description for your item
@@ -156,18 +161,20 @@ export default function AddModal() {
             rules={[
               {
                 required: true,
-                message: 'Please input description.',
+                message: 'Please input description',
               },
             ]}
           >
             <Input placeholder="Description ..." />
           </Form.Item>
-          <Form.Item label={<Typography.Text>Weight</Typography.Text>} rules={[
-            {
-              required: true,
-              message: 'Please input the weight of item.',
-            },
-          ]}>
+          <Form.Item label={<Typography.Text>Weight</Typography.Text>}
+            name="weight"
+            rules={[
+              {
+                required: true,
+                message: 'Please input weight',
+              },
+            ]}>
             <Input placeholder="Weight of item" suffix="kg" />
           </Form.Item>
           <Form.Item>

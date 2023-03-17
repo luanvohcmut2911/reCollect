@@ -60,7 +60,7 @@ export default function Homepage() {
           <Image
             width={636}
             height={400}
-            src="https://picsum.photos/601"
+            src={eventData[0]?.imageList[0]}
             style={{
               borderRadius: "30px",
             }}
@@ -76,15 +76,12 @@ export default function Homepage() {
             <Typography.Title level={2} style={{
               color: "white"
             }}>
-              Clothes & shoes donations in Ho Chi Minh City
+              {eventData[0]?.eventTitle}
             </Typography.Title>
             <Typography.Text style={{
               color: "white"
             }}>
-              {" "}
-              The MyStorage donation box, located in front of the MyStorage
-              warehouse at 375 Xa Lo Hanoi, is emptied on a bi-weekly basis and
-              all contents are donated to Light Charity.
+              {eventData[0]?.eventDescription}
               <br />
               <a href="/donate-info" style={{
                 color: "#EF8450",
@@ -105,16 +102,15 @@ export default function Homepage() {
             backgroundColor: "#D9D9D9"
           }}
         >
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
+          {eventData.map((event) => (
+            <EventCard
+              eventDescription={event.eventDescription}
+              eventItems={event.eventItems}
+              eventTitle={event.eventTitle}
+              imageList={event.imageList}
+              itemOwner={event.itemOwner}
+            />
+          ))}
         </div>
         <div
           style={{
@@ -154,11 +150,11 @@ export default function Homepage() {
               <ProductCard
                 pictureSize={500}
                 imageList={item.imageList}
-                nameItem={item.nameItem}
+                itemName={item.itemName}
                 weight={item.weight}
                 description={item.description}
                 itemOwner={item.itemOwner}
-                />
+              />
             )
             )
           }

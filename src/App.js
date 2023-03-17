@@ -28,9 +28,9 @@ function App() {
             <Route path="/home" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/donate-info" element={<DonateInfo />} />
-            <Route path="/item-info" element={<ItemInfo />} />
+            <Route path="/item-info/" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
-            <Route path="/donate-form" element={<DonateForm />} />
+            <Route path="/donate-form/" element={<DonateForm />} />
           </Routes>
           <AddModal />
           <EventModal />
