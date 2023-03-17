@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Typography, Layout } from "antd";
+import { Typography, Layout } from "antd";
 import LogoIcon from "../icons/LogoIcon";
 import GoogleIcon from "../icons/GoogleIcon";
 import FacebookIcon from "../icons/FacebookIcon";

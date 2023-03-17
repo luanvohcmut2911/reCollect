@@ -122,7 +122,17 @@ const ItemInfo = () => {
       content: 'Please choose your trade item',
     });
   };
-  const loadMoreData = () => {
+  const onChooseYourItem = (e, item) => {
+    console.log(`checked = ${e.target.checked}`);
+    console.log(e);
+    if (e.target.checked) {
+      setItemCount(itemCount + 1);
+      console.log(item);
+    } else {
+      setItemCount(itemCount - 1);
+    }
+  };
+  useEffect(() => {
     if (loading) {
       return;
     }
@@ -138,20 +148,7 @@ const ItemInfo = () => {
       .catch(() => {
         setLoading(false);
       });
-  };
-  const onChooseYourItem = (e, item) => {
-    console.log(`checked = ${e.target.checked}`);
-    console.log(e);
-    if (e.target.checked) {
-      setItemCount(itemCount + 1);
-      console.log(item);
-    } else {
-      setItemCount(itemCount - 1);
-    }
-  };
-  useEffect(() => {
-    loadMoreData();
-  }, []);
+  }, [loading, data]);
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -410,7 +407,7 @@ const ItemInfo = () => {
             </Typography.Title>
             <InfiniteScroll
               dataLength={data.length}
-              next={loadMoreData}
+              // next={loadMoreData}
               hasMore={data.length < 50}
               loader={
                 <Skeleton
