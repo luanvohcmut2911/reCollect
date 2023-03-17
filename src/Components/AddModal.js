@@ -28,17 +28,17 @@ const UploadStyled = styled(Upload)`
 const { Dragger } = Upload;
 
 export default function AddModal() {
-  const currentUserUid = JSON.parse(localStorage.getItem('data')).uid;
+  const currentUserUid = JSON.parse(localStorage.getItem('data'))?.uid;
   const { addModalVisible, setAddModalVisible, width, commonBreakPoint } = useContext(AppContext);
   const windowWidth = width;
   const [fileList, setFileList] = useState([]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
-  const onFinish = (values)=>{
+  const onFinish = (values) => {
     const imageURL = getImageURL(fileList);
     console.log(values);
-    imageURL.then((data)=>{
+    imageURL.then((data) => {
       addDocument('items', {
         ...values,
         imageList: data,
@@ -46,7 +46,7 @@ export default function AddModal() {
       });
       // setAddModalVisible(false);
       window.location.reload(false);
-    })  
+    })
   }
   return (
     <ModalStyled
@@ -130,9 +130,7 @@ export default function AddModal() {
             </ImgCrop>
             <Form
               layout="vertical"
-              onFinish={(value) => {
-                console.log(value);
-              }}
+              onFinish={onFinish}
             >
               <Form.Item
                 label={<Typography.Text>Type of item</Typography.Text>}
@@ -157,6 +155,9 @@ export default function AddModal() {
               {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
               sau nay lam tiep
             </Form.Item> */}
+              <Form.Item>
+                <Button htmlType="submit">Submit</Button>
+              </Form.Item>
             </Form>
           </div>
           :
