@@ -10,6 +10,7 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((userInfo) => {
       if (userInfo) {
@@ -32,6 +33,8 @@ export default function AuthProvider({ children }) {
       value={{
         user,
         setUser,
+        profileData,
+        setProfileData
       }}
     >
       {children}

@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import { getAccount } from "../Firebase/services";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -47,7 +48,7 @@ const InputPasswordStyled = styled(Input.Password)`
 //   console.log("Failed:", errorInfo);
 // };
 const Signin = () => {
-  const { setUser } = useContext(AuthContext);
+  const { setUser, setProfileData } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleGoogleLogin = async (provider) => {
     const result = await signInWithPopup(auth, provider);
@@ -58,11 +59,6 @@ const Signin = () => {
       const detail = getAdditionalUserInfo(result);
       console.log(token);
       const {email, photoURL, uid} = user;
-      console.log({
-        email: email,
-        photoURL: photoURL,
-        uid: uid
-      });
       setUser({
         email: email,
         photoURL: photoURL,
@@ -70,6 +66,17 @@ const Signin = () => {
       })
       if(detail.isNewUser){
         navigate('/user-info');
+      }
+      else{ // account existed
+        getAccount('users', {
+          fieldName: 'uid',
+          operator: '==',
+          compareValue: uid
+        }).then((data)=>{
+          setProfileData(data[0]);
+          localStorage.setItem('data', JSON.stringify(data[0]));
+          console.log(data[0]);
+        })
       }
     } catch (err) {
       console.log(err);
@@ -84,16 +91,15 @@ const Signin = () => {
     );
     try {
       const user = userCredential.user;
-      const {email, photoURL, uid} = user;
-      console.log({
-        email: email,
-        photoURL: photoURL,
-        uid: uid
-      });
-      setUser({
-        email: email,
-        photoURL: photoURL,
-        uid: uid
+      const {uid} = user;
+      getAccount('users', {
+        fieldName: 'uid',
+        operator: '==',
+        compareValue: uid
+      }).then((data)=>{
+        setProfileData(data[0]);
+        localStorage.setItem('data', JSON.stringify(data[0]));
+        console.log(data[0]);
       })
     } catch (error) {
       console.log("user not found");

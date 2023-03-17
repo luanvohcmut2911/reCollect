@@ -35,18 +35,16 @@ const WrapperStyled = styled.div`
 
 export default function UserInfo() {
   const navigate = useNavigate();
-  const {user} = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext);
   const onFinish = (values) => {
-    console.log(
-      {
-        ...values,
-        ...user
-      }
-    )
-    addDocument('user', {
+    const newProfile = {
       ...values,
-      ...user
-    })
+      ...user,
+      isAdmin: false
+    };
+    setUser(newProfile);
+    addDocument('users', newProfile);
+    localStorage.setItem('data', JSON.stringify(newProfile));
     // add new user to db
     navigate('/home');
   };
@@ -127,7 +125,7 @@ export default function UserInfo() {
                 label={
                   <Typography.Text strong>Your phone number:</Typography.Text>
                 }
-                name="phone number"
+                name="phoneNumber"
                 rules={[
                   {
                     required: true,

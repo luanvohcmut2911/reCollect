@@ -10,6 +10,7 @@ const { Content } = Layout;
 // } = theme.useToken();
 
 export default function Profile() {
+  const profileData = JSON.parse(localStorage.getItem('data'));
   return (
     <Layout
       style={{
@@ -40,7 +41,7 @@ export default function Profile() {
         <Row>
           <Col span={2}></Col>
           <Col span={6}>
-            <ProfileCard />
+            <ProfileCard profileData={profileData} />
           </Col>
           <Col span={16}>
             <ProfileMenu />

@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Card, Typography, Button, Row, Col } from "antd";
 import styled from "styled-components";
+import {UserOutlined} from '@ant-design/icons'
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -9,7 +10,10 @@ const WrapperStyled = styled.div`
   justify-content: center;
 `;
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
+  // console.log(props);
+  const {profileData} = props;
+  // const {firstName, lastName, photoURL, email, address, phoneNumber} = profileData;
   return (
     <div>
       <Card
@@ -23,18 +27,18 @@ export default function ProfileCard() {
       >
         <WrapperStyled>
           <div style={{ display: "block" }}>
-            <Avatar size={100}>A</Avatar>
+            <Avatar size={100}  icon={profileData?.photoURL?<img src={profileData?.photoURL} alt="user" />:<UserOutlined />} />
           </div>
           <Typography.Title
             style={{ display: "block", marginBottom: 0, marginTop: "1rem" }}
           >
-            Nguyen Van A
+            {profileData?.firstName+profileData?.lastName}
           </Typography.Title>
           <Typography.Title
-            style={{ display: "block", marginTop: 0 }}
-            level={2}
+            style={{ display: "flex", marginTop: 0, justifyContent:'center', alignItems: 'center' }}
+            level={4}
           >
-            Nguyen Van A
+            {profileData?.address}
           </Typography.Title>
           <Button
             style={{
@@ -91,7 +95,14 @@ export default function ProfileCard() {
             <Typography.Title level={5} style={{ margin: 0 }}>
               About me:
             </Typography.Title>
-            <Typography.Text>Corrupti neque itaque ducimus.</Typography.Text>
+            <ul>
+              <li>
+                Phone: {profileData?.phoneNumber}
+              </li>
+              <li>
+                Email: {profileData?.email}
+              </li>
+            </ul>
           </div>
         </WrapperStyled>
       </Card>

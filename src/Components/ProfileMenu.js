@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Menu, Space, Card } from "antd";
 import styled from "styled-components";
-import ItemProfile from "../asset/ItemProfile.png";
 import ItemAddButton from "../asset/ItemAddButton.png";
 import EventImage from "../asset/EventImage.png";
 import { AppContext } from "../Context/AppProvider";
+import { getAccount } from "../Firebase/services";
 
 const items = [
   {
@@ -60,13 +60,25 @@ const CardStyled = styled(Card)`
 
 export default function ProfileMenu() {
   const [page, setPage] = useState("1");
+  const [itemList, setItemList] = useState([]);
   const { setAddModalVisible } = useContext(AppContext);
+  const currentUserUid = JSON.parse(localStorage.getItem('data')).uid;
   const handleAdd = () => {
     setAddModalVisible(true);
   };
   const handleChange = (e) => {
     setPage(e.key);
   };
+
+  useEffect(()=>{
+    getAccount('items', {
+      fieldName: 'itemOwner',
+      operator: '==',
+      compareValue: currentUserUid
+    }).then((data)=>{
+      setItemList(data);
+    })
+  }, [currentUserUid]);
   return (
     <div>
       <MenuStyled
@@ -89,19 +101,11 @@ export default function ProfileMenu() {
             alt="item"
             onClick={handleAdd}
           />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
-          <ImageStyled src={ItemProfile} alt="item" />
+          { 
+            itemList.map((i)=>{
+              return <ImageStyled key={i.nameItem} src={i.imageList[0]} alt="item" />
+            })
+          }
         </Space>
       ) : (
         <Space wrap>

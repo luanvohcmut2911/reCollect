@@ -58,11 +58,6 @@ export default function Signup() {
       const detail = getAdditionalUserInfo(result);
       console.log(token);
       const {email, photoURL, uid} = user;
-      console.log({
-        email: email,
-        photoURL: photoURL,
-        uid: uid
-      });
       setUser({
         email: email,
         photoURL: photoURL,
@@ -70,6 +65,9 @@ export default function Signup() {
       })
       if(detail.isNewUser){
         navigate('/user-info');
+      }
+      else{
+        
       }
     } catch (err) {
       console.log(err);

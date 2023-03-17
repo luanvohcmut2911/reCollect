@@ -4,6 +4,11 @@ import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
 import ImgCrop from "antd-img-crop";
+import { addDocument } from "../Firebase/services";
+import { getImageURL } from "../Firebase/getImageURL";
+// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+// import { storage } from "../Firebase/config";
+
 
 const ModalStyled = styled(Modal)`
   .ant-modal-body {
@@ -23,23 +28,35 @@ const UploadStyled = styled(Upload)`
 const { Dragger } = Upload;
 
 export default function AddModal() {
+  const currentUserUid = JSON.parse(localStorage.getItem('data')).uid;
   const { addModalVisible, setAddModalVisible } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+  const onFinish = (values)=>{
+    const imageURL = getImageURL(fileList);
+    console.log(values);
+    imageURL.then((data)=>{
+      addDocument('items', {
+        ...values,
+        imageList: data,
+        itemOwner: currentUserUid
+      });
+      // setAddModalVisible(false);
+      window.location.reload(false);
+    })  
+  }
   return (
     <ModalStyled
       width="60vw"
       height="80vh"
       closable={false}
       open={addModalVisible}
-      // footer={null}
+      footer={null}
       onCancel={() => {
         setAddModalVisible(false);
       }}
-      onOK={() => {}}
-      okText="Submit"
     >
       <Row
         style={{
@@ -111,15 +128,14 @@ export default function AddModal() {
         <Col span={8}>
           <Form
             layout="vertical"
-            onFinish={(value) => {
-              console.log(value);
-            }}
+            onFinish={onFinish}
           >
             <Form.Item
               label={<Typography.Text>Type of item</Typography.Text>}
               rules={[
                 { required: true, message: "Please input type of items" },
               ]}
+              name="nameItem"
             >
               <Input placeholder="Type of item ..." />
             </Form.Item>
@@ -129,15 +145,20 @@ export default function AddModal() {
                   Short description for your item
                 </Typography.Text>
               }
+              name="description"
             >
               <Input placeholder="Description ..." />
             </Form.Item>
-            <Form.Item label={<Typography.Text>Weight</Typography.Text>}>
+            <Form.Item label={<Typography.Text>Weight</Typography.Text>}
+              name="weight"
+            >
               <Input placeholder="Weight of item" suffix="kg" />
             </Form.Item>
-            {/* <Form.Item label={<Typography.Text>Tag</Typography.Text>}>
-              sau nay lam tiep
-            </Form.Item> */}
+            <Form.Item>
+              <Button htmlType="submit" type='primary' style={{
+                float: 'right'
+              }} >Submit</Button>
+            </Form.Item>
           </Form>
         </Col>
       </Row>
