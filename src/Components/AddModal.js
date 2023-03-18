@@ -43,13 +43,12 @@ export default function AddModal() {
         ...values,
         imageList: data,
         itemOwner: currentUserUid
-      });
+      }).then(() => window.location.reload(false));
       console.log({
         ...values,
         imageList: data,
         itemOwner: currentUserUid
       })
-      window.location.reload(false);
     })
   }
   return (
@@ -166,7 +165,7 @@ export default function AddModal() {
               },
             ]}
           >
-            <Input placeholder="Description ..." />
+            <Input.TextArea placeholder="Description ..." />
           </Form.Item>
           <Form.Item label={<Typography.Text>Weight</Typography.Text>}
             name="weight"

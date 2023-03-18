@@ -113,15 +113,6 @@ export default function ProfileMenu() {
           <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
             <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
           </CardStyled>
-          <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
-            <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
-          </CardStyled>
-          <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
-            <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
-          </CardStyled>
-          <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
-            <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
-          </CardStyled>
           {isAdmin ? <Button onClick={()=>{
             setEventModalVisible(true);
           }} >Only Admin can use this button</Button> : ""}

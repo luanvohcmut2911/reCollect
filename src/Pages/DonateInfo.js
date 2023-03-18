@@ -41,7 +41,7 @@ function DonateInfo() {
     }).then((data) => {
       setDonateInfoData(data[0])
       console.log(data);
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
     })
     // console.log('123');
@@ -122,7 +122,7 @@ function DonateInfo() {
                 header={<div>List of items</div>}
                 bordered
                 size={"small"}
-                dataSource={donateInfoData?.eventItems}
+                dataSource={donateInfoData?.eventItems.split(",")}
                 renderItem={(item) => (
                   <List.Item>
                     <Typography.Text mark>[ITEM]</Typography.Text> {item}
@@ -131,56 +131,40 @@ function DonateInfo() {
               />
             </div>
           </Space>
-          <Typography.Title level={3} style={{
-            padding: "1.7rem",
-            marginTop: 0,
-          }}>
-            3. Gallery
-          </Typography.Title>
-          <Space
-            direction="horizontal"
-            wrap
-            style={{
-              justifyContent: "center",
-              backgroundColor: "#D9D9D9",
-              paddingBottom: "50px",
-              borderBottomRightRadius: "50px",
-              borderBottomLeftRadius: "50px",
-            }}
-          >
-            {donateInfoData?.imageList.map((image) => (
-              <Image
-                width={350}
-                style={{
-                  borderRadius: "24px",
-                  padding: "1.2em",
-                }}
-                src={image}
-              />)
-            )}
-            {/* {imageList?.map((image) => (
-              
-            ))} */}
-          </Space>
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              alignSelf: "center",
-              padding: "2rem",
-
-            }}
-          >
+              width: "100%",
+              marginRight: 0
+            }}>
+            <Typography.Title level={3} style={{
+              padding: "1.7rem",
+              marginTop: 0,
+            }}>
+              3. Gallery
+            </Typography.Title>
             <br />
-            <Pagination
-              total={85}
-              showSizeChanger
-              showTotal={(total) => `Total ${total} items`}
-              pageSize={5}
-            />
+            <div
+              style={{
+                justifyContent: "center",
+                paddingBottom: "50px",
+                borderBottomRightRadius: "50px",
+                borderBottomLeftRadius: "50px",
+                width: "100%"
+              }}
+            >
+              {donateInfoData?.imageList.map((image) => (
+                <Image
+                  width={350}
+                  style={{
+                    borderRadius: "24px",
+                    padding: "1.2em",
+                  }}
+                  src={image}
+                />)
+              )}
+            </div>
           </div>
+
         </Space>
       </Layout.Content>
       <Space

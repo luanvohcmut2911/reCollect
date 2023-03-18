@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Layout,
@@ -8,6 +8,7 @@ import {
   Image,
   FloatButton,
 } from "antd";
+import { AppContext } from "../Context/AppProvider";
 import "../App.css";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
@@ -16,7 +17,7 @@ import placeholder_img from "../asset/Placeholder image.png";
 import placeholder_img2 from "../asset/Placeholder image2.png";
 import placeholder_img3 from "../asset/Placeholder image3.png";
 import EndBar from "../Components/EndBar";
-
+import LogoIcon from "../icons/LogoIcon";
 const { Header } = Layout;
 const { Text, Title } = Typography;
 AOS.init({
@@ -41,6 +42,8 @@ AOS.init({
 });
 
 export default function LandingPage() {
+  const { width, commonBreakPoint } = useContext(AppContext);
+  const windowWidth = width;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -51,8 +54,15 @@ export default function LandingPage() {
       <FloatButton.BackTop />
       <Layout className="layout">
         <Header style={{ backgroundColor: "#10393B", padding: "10px" }}>
-          <div className="logo" />
-          <div
+          <LogoIcon
+            color="white"
+            style={{
+              float: "left",
+              margin: "16px 24px 16px 1rem",
+              width: (windowWidth < commonBreakPoint[1]) ? "" : "150px",
+              height: (windowWidth < commonBreakPoint[1]) ? "" : "27.19px"
+            }}
+          />          <div
             className="right"
             style={{
               margin: "0.7rem",
@@ -304,6 +314,22 @@ export default function LandingPage() {
             >
               With reCollect, you can trade your old items with something new
               from other users without throwing them away.{" "}
+              <br />
+              <br />
+              <Typography.Paragraph italic strong style={{
+                fontSize: "1.25rem",
+                borderStyle: "solid",
+                borderColor: "#10393B",
+                padding: "10px",
+                textAlign: "center",
+                borderRadius: "14px",
+                borderWidth: "1px",
+                paddingTop: "20px",
+                paddingBottom: "20px",
+                width: "75%"
+              }}>
+                “Trading old items is like passing a torch from one generation to another.”
+              </Typography.Paragraph>
             </Text>
           </div>
           <Image
@@ -356,9 +382,18 @@ export default function LandingPage() {
                 fontSize: "1.25rem",
               }}
             >
-              In case you don’t need anything in return, you are able to just
+              In case you don't need anything in return, you are able to just
               simply give it away to someone who needs it more.
             </Text>
+            <br />
+            <br />
+            <Typography.Paragraph italic strong style={{
+              fontSize: "1.25rem",
+              border: "#"
+            }}>
+              It's not just a web app, it's a community of people trading and giving. We allow users
+              to either give away or trade their items based on their needs.
+            </Typography.Paragraph>
           </div>
           <Image
             width={800}
@@ -411,6 +446,14 @@ export default function LandingPage() {
               With reCollect, you are able to donate your old items to ongoing
               charity events and charity organizations.
             </Text>
+            <br />
+            <br />
+            <Typography.Paragraph italic strong style={{
+              fontSize: "1.25rem",
+              border: "#"
+            }}>
+              Give old items as well as hopes and dreams to those in needs.
+            </Typography.Paragraph>
           </div>
           <Image
             width={800}

@@ -10,8 +10,8 @@ const EventCard = ({ eventDescription, eventItems, eventTitle, imageList, uuid }
       hoverable
       style={{
         margin: "1.2rem",
-        width: 277.3,
-        height: "auto",
+        width: 300,
+        height: 650,
       }}
       cover={
         <img
@@ -19,8 +19,8 @@ const EventCard = ({ eventDescription, eventItems, eventTitle, imageList, uuid }
           style={{
             borderBottomLeftRadius: "24px",
             borderBottomRightRadius: "24px",
-            width: 277.3,
-            height: 200,
+            width: 300,
+            height: 300,
           }}
           src={imageList[0]}
         />
@@ -32,12 +32,12 @@ const EventCard = ({ eventDescription, eventItems, eventTitle, imageList, uuid }
           <div>
             <Typography.Text type="secondary"> Updated in March 13 </Typography.Text>
             <br />
-            <Typography.Text style={{
+            <div style={{
               padding: "5px",
               paddingBottom: "10px"
             }}>
-              {eventDescription}
-            </Typography.Text>
+              {eventDescription.toString().slice(0, 250)}...              
+            </div>
             <br />
             <br />
             <Button onClick={() => {

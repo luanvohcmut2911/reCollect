@@ -9,7 +9,7 @@ import { getImageURL } from "../Firebase/getImageURL";
 
 const ModalStyled = styled(Modal)`
   .ant-modal-body {
-    height: 80vh;
+    height: 100%;
   }
 `;
 
@@ -40,7 +40,7 @@ export default function EventModal() {
         ...values,
         imageList: data,
         itemOwner: currentUserUid,
-      });
+      }).then(() => window.location.reload(false));
     });
   };
   return (

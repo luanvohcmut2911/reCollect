@@ -87,7 +87,6 @@ const ItemInfo = () => {
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([{
     "gender": "female",
     "name": {
