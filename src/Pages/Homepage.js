@@ -16,8 +16,8 @@ export default function Homepage() {
   const [eventData, setEventData] = useState([]);
   const numEachPage = 4;
   const [minValuePagination, setMinValuePagination] = useState(0);
-  const [maxValuePagination, setMaxValuePagination] = useState(1);
-
+  const [maxValuePagination, setMaxValuePagination] = useState(numEachPage);
+  const [pageEvent, setPageEvent] = useState(1);
   useEffect(() => {
     getAll('items').then((res) => {
       setItemData(res);
@@ -28,6 +28,7 @@ export default function Homepage() {
   }, []);
 
   const handleChangePagination = (value) => {
+    setPageEvent(value);
     setMinValuePagination((value - 1) * numEachPage);
     setMaxValuePagination(value * numEachPage);
   }
@@ -119,7 +120,7 @@ export default function Homepage() {
             backgroundColor: "#D9D9D9"
           }}
         >
-          {eventData && eventData.length > 0 && eventData.slice(minValuePagination, maxValuePagination).map((event, uuid) => (
+          {eventData && eventData.length > 0 && eventData.slice(minValuePagination, maxValuePagination).map((event) => (
             <EventCard
               eventDescription={event.eventDescription}
               eventItems={event.eventItems}
@@ -127,6 +128,7 @@ export default function Homepage() {
               imageList={event.imageList}
               itemOwner={event.itemOwner}
               uuid={event.uuid}
+              key={event.uuid}
             />
           ))}
         </div>
@@ -142,10 +144,10 @@ export default function Homepage() {
           }}
         >
           <Pagination
+            current={pageEvent}
             total={eventData.length}
             showTotal={(total) => `Total ${total} items`}
             defaultPageSize={numEachPage}
-            defaultCurrent={1}
             onChange={handleChangePagination}
           />
         </div>
@@ -165,8 +167,9 @@ export default function Homepage() {
         >
           {/* // imageList, itemOwner, nameItem, weight, description */}
           {
-            itemData.map((item, uuid) => (
+            itemData.map((item) => (
               <ProductCard
+                key={item.uuid}
                 pictureSize={500}
                 imageList={item.imageList}
                 itemName={item.itemName}
