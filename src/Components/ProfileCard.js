@@ -102,6 +102,9 @@ export default function ProfileCard(props) {
               <li>
                 Email: {profileData?.email}
               </li>
+              <li>
+                Facebook: <a href={profileData?.facebookLink} target='blank'>{profileData?.facebookLink}</a>
+              </li>
             </ul>
           </div>
         </WrapperStyled>

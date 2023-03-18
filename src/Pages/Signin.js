@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { Button, Checkbox, Form, Input, Typography, Row, Col } from "antd";
+import { Button, Checkbox, Form, Input, Typography, Row, Col, notification } from "antd";
 import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import GoogleIcon from "../icons/GoogleIcon";
@@ -48,6 +48,12 @@ const InputPasswordStyled = styled(Input.Password)`
 //   console.log("Failed:", errorInfo);
 // };
 const Signin = () => {
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = ()=>{
+    api.error({
+      message: 'Login failed. Your username or password is wrong'
+    })
+  }
   const { setUser, setProfileData } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleGoogleLogin = async (provider) => {
@@ -79,17 +85,17 @@ const Signin = () => {
         })
       }
     } catch (err) {
-      console.log(err);
+      openNotification();
     }
   };
 
   const handleEmailLogin = async (email, password) => {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
     try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       const {uid} = user;
       getAccount('users', {
@@ -99,10 +105,10 @@ const Signin = () => {
       }).then((data)=>{
         setProfileData(data[0]);
         localStorage.setItem('data', JSON.stringify(data[0]));
-        console.log(data[0]);
       })
     } catch (error) {
       console.log("user not found");
+      openNotification();
     }
   };
 
@@ -113,6 +119,7 @@ const Signin = () => {
 
   return (
     <WrapperStyled>
+      {contextHolder}
       <Row>
         <Col span={12}></Col>
         <Col span={12}>

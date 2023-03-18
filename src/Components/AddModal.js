@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Form, Input, Typography, Button, Upload } from "antd";
+import { Modal, Form, Input, Typography, Button, Upload, notification, Select } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
@@ -28,6 +28,12 @@ const UploadStyled = styled(Upload)`
 const { Dragger } = Upload;
 
 export default function AddModal() {
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = () => {
+    api.success({
+      message: 'Item is added successfully !'
+    })
+  }
   const currentUserUid = JSON.parse(localStorage.getItem('data'))?.uid;
   const { addModalVisible, setAddModalVisible } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
@@ -37,19 +43,16 @@ export default function AddModal() {
   const onFinish = (values) => {
     setAddModalVisible(false);
     const imageURL = getImageURL(fileList);
-    console.log(values);
+    openNotification()
     imageURL.then((data) => {
       addDocument('items', {
         ...values,
         imageList: data,
         itemOwner: currentUserUid
-      });
-      console.log({
-        ...values,
-        imageList: data,
-        itemOwner: currentUserUid
+      }).then(()=>{
+        window.location.reload(false);
       })
-      window.location.reload(false);
+      
     })
   }
   return (
@@ -63,6 +66,7 @@ export default function AddModal() {
         setAddModalVisible(false);
       }}
     >
+      {contextHolder}
       <div style={{
         display: "flex",
         flexDirection: "row",
@@ -166,7 +170,7 @@ export default function AddModal() {
               },
             ]}
           >
-            <Input placeholder="Description ..." />
+            <Input.TextArea placeholder="Description ..." />
           </Form.Item>
           <Form.Item label={<Typography.Text>Weight</Typography.Text>}
             name="weight"
@@ -177,6 +181,31 @@ export default function AddModal() {
               },
             ]}>
             <Input placeholder="Weight of item" suffix="kg" />
+          </Form.Item>
+          <Form.Item label={<Typography.Text>This item is for trade or donation</Typography.Text>}
+            name="isTrade"
+            rules={[
+              {
+                required: true,
+                message: 'Please select option',
+              },
+            ]}>
+            <Select 
+              placeholder='Trade or Donate'
+              options={[
+                {
+                  value: true,
+                  label: 'Trade'
+                },
+                {
+                  value: false,
+                  label: 'Donate'
+                }
+              ]}
+              onChange={(value)=>{
+                console.log(value);
+              }}
+            />
           </Form.Item>
           <Form.Item>
             <Button htmlType="submit">Submit</Button>

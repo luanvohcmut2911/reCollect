@@ -57,7 +57,7 @@ export default function UserInfo() {
             name="normal-login"
             style={{
               width: "500px",
-              height: "85vh",
+              height: "90vh",
               backgroundColor: "white",
               padding: "1.5rem 2.5rem 6rem 2.5rem",
               borderRadius: "24px",

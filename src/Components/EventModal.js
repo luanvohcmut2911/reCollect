@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Modal, Form, Input, Typography, Button, Upload } from "antd";
+import { Modal, Form, Input, Typography, Button, Upload, notification } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import styled from "styled-components";
 import InputImage from "../asset/InputImage.png";
@@ -25,6 +25,12 @@ const UploadStyled = styled(Upload)`
 const { Dragger } = Upload;
 
 export default function EventModal() {
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = ()=>{
+    api.success({
+      message: 'Event is added successfully'
+    })
+  }
   const currentUserUid = JSON.parse(localStorage.getItem("data"))?.uid;
   const { eventModalVisible, setEventModalVisible } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
@@ -34,12 +40,14 @@ export default function EventModal() {
   const onFinish = (values) => {
     setEventModalVisible(false);
     const imageURL = getImageURL(fileList);
-    console.log(values);
+    openNotification();
     imageURL.then((data) => {
       addDocument("events", {
         ...values,
         imageList: data,
         itemOwner: currentUserUid,
+      }).then(()=>{
+        window.location.reload(false);
       });
     });
   };
@@ -54,6 +62,7 @@ export default function EventModal() {
         setEventModalVisible(false);
       }}
     >
+      {contextHolder}
       <div
         style={{
           display: "flex",
