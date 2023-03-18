@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Menu, Space, Card, Button } from "antd";
 import styled from "styled-components";
 import ItemAddButton from "../asset/ItemAddButton.png";
-import EventImage from "../asset/EventImage.png";
+// import EventImage from "../asset/EventImage.png";
 import { AppContext } from "../Context/AppProvider";
 import { getAccount } from "../Firebase/services";
 
@@ -52,11 +52,11 @@ const MenuStyled = styled(Menu)`
   }
 `;
 
-const CardStyled = styled(Card)`
-  width: 250px;
-  margin: 1rem 1rem 1rem 4rem;
-  border-radius: 24px;
-`;
+// const CardStyled = styled(Card)`
+//   width: 250px;
+//   margin: 1rem 1rem 1rem 4rem;
+//   border-radius: 24px;
+// `;
 
 export default function ProfileMenu() {
   const [page, setPage] = useState("1");
@@ -110,9 +110,7 @@ export default function ProfileMenu() {
         </Space>
       ) : (
         <Space wrap>
-          <CardStyled hoverable cover={<img src={EventImage} alt="event" />}>
-            <Card.Meta title="Old books donation on Nguyen Van Binh Street, HCMC" />
-          </CardStyled>
+          
           {isAdmin ? <Button onClick={()=>{
             setEventModalVisible(true);
           }} >Only Admin can use this button</Button> : ""}

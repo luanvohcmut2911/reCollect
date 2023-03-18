@@ -143,7 +143,6 @@ export default function Homepage() {
         >
           <Pagination
             total={eventData.length}
-            showSizeChanger
             showTotal={(total) => `Total ${total} items`}
             defaultPageSize={numEachPage}
             defaultCurrent={1}
