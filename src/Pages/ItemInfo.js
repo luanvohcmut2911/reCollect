@@ -88,7 +88,21 @@ const ItemInfo = () => {
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{
+    "gender": "female",
+    "name": {
+      "title": "Ms",
+      "first": "Helene",
+      "last": "Odden"
+    },
+    "email": "helene.odden@example.com",
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/35.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/35.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/35.jpg"
+    },
+    "nat": "NO"
+  }]);
   const [itemCount, setItemCount] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -132,23 +146,23 @@ const ItemInfo = () => {
       setItemCount(itemCount - 1);
     }
   };
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
-      .then((res) => res.json())
-      .then((body) => {
-        setData([...data, ...body.results]);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, [loading, data]);
+  // useEffect(() => {
+  //   if (loading) {
+  //     return;
+  //   }
+  //   setLoading(true);
+  //   fetch(
+  //     "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
+  //   )
+  //     .then((res) => res.json())
+  //     .then((body) => {
+  //       setData([...data, ...body.results]);
+  //       setLoading(false);
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // }, [loading, data]);
   const showDrawer = () => {
     setOpenDrawer(true);
   };

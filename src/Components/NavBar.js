@@ -20,6 +20,11 @@ const items = [
     key: "donation",
     icon: <MedicineBoxOutlined />
   },
+  {
+    label: "Tricks",
+    key: "tricks",
+    icon: <MedicineBoxOutlined />
+  },
 ];
 
 const { Search } = Input;

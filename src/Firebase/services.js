@@ -1,11 +1,12 @@
 import { db } from "./config";
-import { collection, addDoc, getDocs, where, query, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, where, query, doc, serverTimestamp, orderBy } from "firebase/firestore";
 import { v4 } from 'uuid';
 
 export const addDocument = async (collectionName, data) => {
   const docRef = await addDoc(collection(db, collectionName), {
     ...data,
-    uuid: v4()
+    uuid: v4(),
+    createdAt: serverTimestamp()
   })
   try {
     console.log("Document written with ID: ", docRef.id);
@@ -33,7 +34,8 @@ export const getAll = async(collectionName)=>{
   const docSnap = await getDocs(
     query(
       collectionRef
-    )
+    ),
+    orderBy('createdAt')
   )
   const arr = [];
   try {
@@ -50,6 +52,7 @@ export const getAll = async(collectionName)=>{
 
 
 export const getAccount = async (collectionName, condition) =>{
+  // collection().orderBy('createdAt');
   const collectionRef = collection(db, collectionName);
   const docSnap = await getDocs(
     query(

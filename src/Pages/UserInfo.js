@@ -129,12 +129,11 @@ export default function UserInfo() {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your phone number!",
+                    message: "Please enter your phone number!",
                   },
                 ]}
               >
                 <InputStyled
-                  type="number"
                   // onChange={(e)=>{
                   //   const regex = new RegExp('^[0-9\\-\\+]{9,15}$');
                   //   console.log(regex.test(e.target.value));
@@ -143,10 +142,26 @@ export default function UserInfo() {
                 />
               </Form.Item>
               <Form.Item
+                label={
+                  <Typography.Text strong>Your facebook link:</Typography.Text>
+                }
+                name="facebookLink"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your phone number!",
+                  },
+                ]}
+              >
+                <InputStyled
+                  placeholder="https://www.facebook.com/yourusername"
+                />
+              </Form.Item>
+              <Form.Item
                 label={<Typography.Text strong>Your address:</Typography.Text>}
                 name="address"
                 rules={[
-                  { required: true, message: "Please input your address!" },
+                  { required: true, message: "Please enter your address!" },
                 ]}
               >
                 <InputStyled placeholder="Your address" />
