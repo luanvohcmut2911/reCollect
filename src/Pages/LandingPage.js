@@ -45,7 +45,9 @@ export default function LandingPage() {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <div>
+    <div style={{
+      overflowY: 'hidden'
+    }}>
       <FloatButton.BackTop />
       <Layout className="layout">
         <Header style={{ backgroundColor: "#10393B", padding: "10px" }}>
