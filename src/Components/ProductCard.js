@@ -89,6 +89,7 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid
             <Typography.Title level={5}>Gallery</Typography.Title>
             {imageList.map((image, uuid) =>
               <img
+                key={uuid}
                 alt="event"
                 style={{
                   borderRadius: "24px",
