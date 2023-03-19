@@ -11,7 +11,7 @@ import {
 import { AppContext } from "../Context/AppProvider";
 import "../App.css";
 
-import img_front from "../asset/AdobeStock_355885536 1.png";
+// import img_front from "../asset/AdobeStock_355885536 1.png";
 import placeholder_img from "../asset/Placeholder image.png";
 import placeholder_img2 from "../asset/Placeholder image2.png";
 import placeholder_img3 from "../asset/Placeholder image3.png";

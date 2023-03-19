@@ -19,7 +19,7 @@ export default function SuccessModal({ userFacebook }) {
         title="Request sent!"
         subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
       />
-      <a href={userFacebook} style={{
+      <a href={userFacebook} target='blank' style={{
         alignContent: "center"
       }}  type="primary"> Chat now </a>
     </Modal>

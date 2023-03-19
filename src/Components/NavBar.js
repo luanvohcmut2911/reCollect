@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Menu, Layout, Avatar, Row, Col, Input, Popover, Image } from "antd";
+import { Menu, Layout, Avatar, Row, Col, Input, Popover, Badge } from "antd";
 import styled from "styled-components";
 import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined, HomeOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
@@ -177,15 +177,18 @@ export default function NavBar() {
                   color: "white",
                   fontSize: "35px",
                   padding: "1rem",
+                  marginRight: '1rem'
                 }}
               />
-              <BellOutlined
-                style={{
-                  color: "white",
-                  fontSize: "35px",
-                  padding: "1rem",
-                }}
-              />
+              <Badge count={2}>
+                <BellOutlined
+                  style={{
+                    color: "white",
+                    fontSize: "35px",
+                    padding: "0rem",
+                  }}
+                />
+              </Badge>
               <Popover
                 content={
                   <div>
@@ -210,14 +213,14 @@ export default function NavBar() {
                 <Avatar
                   size="default"
                   style={{
-                    margin: "1rem",
+                    margin: "1rem 1rem 1rem 2rem",
                     justifyContent: "center",
                     backgroundColor: "white",
                     color: "black",
                     cursor: "pointer",
                   }}
+                  icon={<img src={profileData?.photoURL} alt='avatar' />}
                 >
-                  <Image preview={false} src={profileData.photoURL} alt="avatar"/>
                 </Avatar>
               </Popover>
             </RightStyled>

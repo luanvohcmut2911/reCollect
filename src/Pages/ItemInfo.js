@@ -14,9 +14,8 @@ import {
   List,
   Skeleton,
   Checkbox,
-  message
+  notification
 } from "antd";
-import { AntDesignOutlined } from "@ant-design/icons";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import SuccessModal from "../Components/SuccessModal";
@@ -81,12 +80,12 @@ const yourItems = [
 ];
 
 const ItemInfo = () => {
-  const { setOpenSuccessModal, openSuccessModal, width, loading, setLoading } = useContext(AppContext);
+  const { setOpenSuccessModal, width, loading, setLoading } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [itemCount, setItemCount] = useState(0);
-  const [messageApi, contextHolder] = message.useMessage();
+  const [api, contextHolder] = notification.useNotification();
 
   const [itemInfoData, setItemInfoData] = useState({});
   const [userData, setUserData] = useState({});
@@ -100,44 +99,37 @@ const ItemInfo = () => {
       compareValue: uuid
     }).then((data) => {
       setItemInfoData(data[0]);
-      setLoading(false);
+      // setLoading(false);
+      getAccount("users", {
+        fieldName: "uid",
+        operator: "==",
+        compareValue: data[0]?.itemOwner
+      }).then((userData) => {
+        setUserData(userData[0]);
+        setLoading(false);
+      })
     });
-  }, [uuid]);
-
-  useEffect(() => {
-    getAccount("users", {
-      fieldName: "uid",
-      operator: "==",
-      compareValue: itemInfoData?.itemOwner
-    }).then((userData) => {
-      setUserData(userData[0]);
-      setLoading(false);
-    })
-  }, [itemInfoData]);
-
-  useEffect(() => {
     getAccount("items", {
       fieldName: "itemOwner",
       operator: "==",
-      compareValue: userData?.uid
+      compareValue: JSON.parse(localStorage.getItem('data'))?.uid
     }).then((itemsOfUserData) => {
       setItemsOfUserData(itemsOfUserData);
       setLoading(false);
     })
-  }, [userData])
+  }, [uuid]);
   const error = () => {
-    messageApi.open({
-      type: 'Error',
-      content: 'Please choose your trade item',
-    });
+    api.warning({
+      message: 'Please choose at least 1 item'
+    })
   };
   const onChooseYourItem = (e, item) => {
-    console.log(`checked = ${e.target.checked}`);
     if (e.target.checked) {
       setItemCount(itemCount + 1);
-      let tmp = itemsChosenToTrade;
-      tmp.push(item);
-      setItemsChosenToTrade(tmp);
+      setItemsChosenToTrade([
+        ...itemsChosenToTrade,
+        item
+      ]);
     } else {
       setItemCount(itemCount - 1);
       let tmp = itemsChosenToTrade;
@@ -196,8 +188,9 @@ const ItemInfo = () => {
                     autoplay
                     dotPosition="bottom"
                   >
-                    {itemInfoData.imageList?.map((image) => (
+                    {itemInfoData.imageList?.map((image, index) => (
                       <Image
+                        key={index}
                         width="100%"
                         height="100%"
                         style={{
@@ -259,7 +252,7 @@ const ItemInfo = () => {
                       style={{
                         margin: "0.2rem",
                       }}
-                      icon={<AntDesignOutlined />}
+                      icon={<img src={userData?.photoURL} alt='avatar' />}
                     />
                     <div
                       style={{
@@ -364,7 +357,16 @@ const ItemInfo = () => {
                     width: "100%",
                     height: "50px",
                   }}
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    if(userData?.uid !== JSON.parse(localStorage.getItem('data'))?.uid){
+                      setOpen(true)
+                    }
+                    else{
+                      api.error({
+                        message: 'Cannot request by yourself'
+                      })
+                    }
+                  }}
                 >
                   {" "}
                   Request Trade{" "}
@@ -380,6 +382,7 @@ const ItemInfo = () => {
             setOpenSecondModal(false);
             setOpen(false);
             setOpenSuccessModal(true);
+            console.log(itemsChosenToTrade);
           }}
           onCancel={() => setOpenSecondModal(false)}
         >
@@ -472,8 +475,9 @@ const ItemInfo = () => {
                       </p>
                       <p>
                         <Typography.Title level={5}>Gallery</Typography.Title>
-                        {item.imageList.map((image, uuid) =>
+                        {item.imageList.map((image, index) =>
                           <img
+                            key={index}
                             alt="event"
                             style={{
                               borderRadius: "24px",
