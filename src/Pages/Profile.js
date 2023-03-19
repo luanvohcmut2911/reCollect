@@ -77,7 +77,7 @@ export default function Profile() {
                 <ProfileCard profileData={profileData} isGuest={isGuest} />
               </Col>
               <Col span={16}>
-                <ProfileMenu />
+                <ProfileMenu profileData={profileData} isGuest={isGuest}/>
               </Col>
             </Row>)
         }

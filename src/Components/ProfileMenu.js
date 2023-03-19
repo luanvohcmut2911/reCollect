@@ -58,11 +58,13 @@ const MenuStyled = styled(Menu)`
 //   border-radius: 24px;
 // `;
 
-export default function ProfileMenu() {
+export default function ProfileMenu(props) {
+  const { profileData, isGuest } = props;
   const [page, setPage] = useState("1");
   const [itemList, setItemList] = useState([]);
   const { setAddModalVisible, setEventModalVisible } = useContext(AppContext);
-  const currentUserUid = JSON.parse(localStorage.getItem("data")).uid;
+  // const currentUserUid = JSON.parse(localStorage.getItem("data")).uid;
+  console.log(profileData);
   const isAdmin = JSON.parse(localStorage.getItem("data")).isAdmin;
   const handleAdd = () => {
     setAddModalVisible(true);
@@ -75,11 +77,12 @@ export default function ProfileMenu() {
     getAccount("items", {
       fieldName: "itemOwner",
       operator: "==",
-      compareValue: currentUserUid,
+      compareValue: profileData?.uid,
     }).then((data) => {
       setItemList(data);
+      console.log(data);
     });
-  }, [currentUserUid]);
+  }, [profileData]);
   return (
     <div>
       <MenuStyled
@@ -97,23 +100,32 @@ export default function ProfileMenu() {
             marginLeft: "2rem",
           }}
         >
-          <ImageAddButtonStyled
-            src={ItemAddButton}
-            alt="item"
-            onClick={handleAdd}
-          />
+          {!isGuest ? (
+            <ImageAddButtonStyled
+              src={ItemAddButton}
+              alt="item"
+              onClick={handleAdd}
+            />
+          ) : (
+            ""
+          )}
           {itemList.map((i) => {
-            return (
-              <ImageStyled key={i.uuid} src={i.imageList[0]} alt="item" />
-            );
+            return <ImageStyled key={i.uuid} src={i.imageList[0]} alt="item" />;
           })}
         </Space>
       ) : (
         <Space wrap>
-          
-          {isAdmin ? <Button onClick={()=>{
-            setEventModalVisible(true);
-          }} >Only Admin can use this button</Button> : ""}
+          {isAdmin ? (
+            <Button
+              onClick={() => {
+                setEventModalVisible(true);
+              }}
+            >
+              Only Admin can use this button
+            </Button>
+          ) : (
+            ""
+          )}
         </Space>
       )}
     </div>
