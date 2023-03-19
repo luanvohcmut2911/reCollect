@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -26,12 +27,18 @@ export function useWindowDimensions() {
 }
 
 export const AppContext = React.createContext();
-
 export default function AppProvider({ children }) {
+  const navigate = useNavigate();
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [eventModalVisible, setEventModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { width, height } = useWindowDimensions();
+  const betweenPagesNav = ({ componentId }) => {
+    navigate("/home");
+    const productElement = document.getElementById(componentId);
+    productElement.scrollIntoView();
+  }
   const commonBreakPoint = [320, 480, 768, 1024, 1025, 1200];
   return (
     <AppContext.Provider
@@ -44,7 +51,10 @@ export default function AppProvider({ children }) {
         height,
         commonBreakPoint,
         eventModalVisible,
-        setEventModalVisible
+        setEventModalVisible,
+        loading,
+        setLoading,
+        betweenPagesNav
       }}
     >
       {children}

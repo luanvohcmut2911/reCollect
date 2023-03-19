@@ -58,15 +58,17 @@ export default function Profile() {
             }} />
           </div>
           :
-          <Row>
-            <Col span={2}></Col>
-            <Col span={6}>
-              <ProfileCard profileData={profileData} />
-            </Col>
-            <Col span={16}>
-              <ProfileMenu />
-            </Col>
-          </Row>}
+          (
+            <Row>
+              <Col span={2}></Col>
+              <Col span={6}>
+                <ProfileCard profileData={profileData} />
+              </Col>
+              <Col span={16}>
+                <ProfileMenu />
+              </Col>
+            </Row>)
+        }
       </Content>
       <EndBar />
     </Layout>

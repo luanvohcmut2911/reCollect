@@ -12,7 +12,7 @@ import { getImageURL } from "../Firebase/getImageURL";
 
 const ModalStyled = styled(Modal)`
   .ant-modal-body {
-    height: 80vh;
+    height: 100%;
   }
 `;
 

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { Menu, Layout, Avatar, Row, Col, Input, Popover } from "antd";
+import { Menu, Layout, Avatar, Row, Col, Input, Popover, Image } from "antd";
 import styled from "styled-components";
-import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined } from "@ant-design/icons";
+import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined, HomeOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
@@ -11,19 +11,19 @@ import { StickyContainer, Sticky } from "react-sticky";
 
 const items = [
   {
+    label: "Donation",
+    key: "Donation",
+    icon: <MedicineBoxOutlined />
+  },
+  {
     label: "Bartering",
     key: "Bartering",
     icon: <SwapOutlined />,
   },
   {
-    label: "Donation",
-    key: "donation",
-    icon: <MedicineBoxOutlined />
-  },
-  {
-    label: "Tricks",
-    key: "tricks",
-    icon: <MedicineBoxOutlined />
+    label: "About",
+    key: "About",
+    icon: <QuestionCircleOutlined />
   },
 ];
 
@@ -60,8 +60,9 @@ const TextStyled = styled.div`
 `;
 
 export default function NavBar() {
+  const profileData = JSON.parse(localStorage.getItem('data'));
   const navigate = useNavigate();
-  const { width, commonBreakPoint } = useContext(AppContext);
+  const { width, commonBreakPoint, betweenPagesNav } = useContext(AppContext);
   const windowWidth = width;
   const handleSignOut = async (auth) => {
     const logOut = await signOut(auth);
@@ -103,15 +104,23 @@ export default function NavBar() {
         >
           <Col span={4}>
             <a href="/home">
-              <LogoIcon
-                color="white"
-                style={{
-                  float: "left",
-                  margin: "16px 24px 16px 1rem",
-                  width: (windowWidth < commonBreakPoint[3]) ? "" : "150px",
-                  height: (windowWidth < commonBreakPoint[3]) ? "" : "27.19px"
-                }}
-              />
+              {windowWidth < commonBreakPoint[3] ?
+                <HomeOutlined
+                  style={{
+                    color:"white",
+                    float: "left",
+                    margin: "10px",
+                    fontSize: "40px"
+                  }} />
+                :
+                <LogoIcon
+                  color="white"
+                  style={{
+                    float: "left",
+                    margin: "16px 24px 16px 1rem",
+                  }}
+                />}
+
             </a>
           </Col>
           <Col span={6}>
@@ -124,15 +133,23 @@ export default function NavBar() {
               mode="horizontal"
               items={items}
               onSelect={(item) => {
-                console.log(item);
                 if (item.key === "Bartering") {
                   const element = document.getElementById("find-your-product");
-                  console.log(element);
-                  element.scrollIntoView();
+                  if (element) {
+                    element.scrollIntoView();
+                  } else {
+                    betweenPagesNav("find-your-product");
+                  }
+
                 } else if (item.key === "Donation") {
                   const element = document.getElementById("ongoing-events");
-                  console.log(element);
-                  element.scrollIntoView();
+                  if (element) {
+                    element.scrollIntoView();
+                  } else {
+                    navigate("/home");
+                  }
+                } else if (item.key === "About") {
+                  navigate("/about");
                 }
               }}
             ></MenuStyled>
@@ -200,7 +217,7 @@ export default function NavBar() {
                     cursor: "pointer",
                   }}
                 >
-                  A
+                  <Image preview={false} src={profileData.photoURL} alt="avatar"/>
                 </Avatar>
               </Popover>
             </RightStyled>

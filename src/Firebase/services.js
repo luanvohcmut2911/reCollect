@@ -15,7 +15,7 @@ export const addDocument = async (collectionName, data) => {
   }
 };
 
-export const addNewItemForUser = async (collectionName, uid, subCollectionName, data) =>{
+export const addNewItemForUser = async (collectionName, uid, subCollectionName, data) => {
   const docRef = doc(db, collectionName, uid);
   const colRef = collection(docRef, subCollectionName);
   const id = await addDoc(colRef, {
@@ -25,11 +25,11 @@ export const addNewItemForUser = async (collectionName, uid, subCollectionName, 
   try {
     console.log(id);
   } catch (error) {
-    
+
   }
 }
 
-export const getAll = async(collectionName)=>{
+export const getAll = async (collectionName) => {
   const collectionRef = collection(db, collectionName);
   const docSnap = await getDocs(
     query(
@@ -39,7 +39,7 @@ export const getAll = async(collectionName)=>{
   )
   const arr = [];
   try {
-    docSnap.forEach((doc)=>{
+    docSnap.forEach((doc) => {
       arr.push(doc.data());
     })
   } catch (error) {
@@ -51,7 +51,7 @@ export const getAll = async(collectionName)=>{
 }
 
 
-export const getAccount = async (collectionName, condition) =>{
+export const getAccount = async (collectionName, condition) => {
   // collection().orderBy('createdAt');
   const collectionRef = collection(db, collectionName);
   const docSnap = await getDocs(
@@ -66,9 +66,8 @@ export const getAccount = async (collectionName, condition) =>{
   )
   const arr = [];
   try {
-    docSnap.forEach((doc)=>{
+    docSnap.forEach((doc) => {
       arr.push(doc.data());
-      console.log(doc.data());
     })
   } catch (error) {
     console.log(error);
@@ -78,3 +77,23 @@ export const getAccount = async (collectionName, condition) =>{
   )
 }
 
+// export const getDocsFromQuery = async (collectionName, field, operator, condition) => {
+//   const collectionRef = collection(db, collectionName);
+//   const docSnap = await getDocs(
+//     query(
+//       collectionRef
+//     ),
+//     where(field, operator, condition)
+//   )
+//   const arr = [];
+//   try {
+//     docSnap.forEach((doc) => {
+//       arr.push(doc.data());
+//     })
+//   } catch (error) {
+//     console.log(error);
+//   }
+//   return (
+//     arr
+//   )
+// }

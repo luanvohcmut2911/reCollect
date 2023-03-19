@@ -13,14 +13,12 @@ import {
   Drawer,
   List,
   Skeleton,
-  Divider,
   Checkbox,
   message
 } from "antd";
 import { AntDesignOutlined } from "@ant-design/icons";
 import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
-import InfiniteScroll from "react-infinite-scroll-component";
 import SuccessModal from "../Components/SuccessModal";
 import { AppContext } from "../Context/AppProvider";
 import { useParams } from "react-router";
@@ -83,31 +81,17 @@ const yourItems = [
 ];
 
 const ItemInfo = () => {
-  const { setOpenSuccessModal, openSuccessModal, width } = useContext(AppContext);
+  const { setOpenSuccessModal, openSuccessModal, width, loading, setLoading } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [openSecondModal, setOpenSecondModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [data, setData] = useState([{
-    "gender": "female",
-    "name": {
-      "title": "Ms",
-      "first": "Helene",
-      "last": "Odden"
-    },
-    "email": "helene.odden@example.com",
-    "picture": {
-      "large": "https://randomuser.me/api/portraits/women/35.jpg",
-      "medium": "https://randomuser.me/api/portraits/med/women/35.jpg",
-      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/35.jpg"
-    },
-    "nat": "NO"
-  }]);
   const [itemCount, setItemCount] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
   const [itemInfoData, setItemInfoData] = useState({});
   const [userData, setUserData] = useState({});
-
+  const [itemsOfUserData, setItemsOfUserData] = useState([]);
+  const [itemsChosenToTrade, setItemsChosenToTrade] = useState([]);
   let { uuid } = useParams();
   useEffect(() => {
     getAccount("items", {
@@ -116,6 +100,7 @@ const ItemInfo = () => {
       compareValue: uuid
     }).then((data) => {
       setItemInfoData(data[0]);
+      setLoading(false);
     });
   }, [uuid]);
 
@@ -126,9 +111,20 @@ const ItemInfo = () => {
       compareValue: itemInfoData?.itemOwner
     }).then((userData) => {
       setUserData(userData[0]);
-      console.log(userData[0]);
+      setLoading(false);
     })
   }, [itemInfoData]);
+
+  useEffect(() => {
+    getAccount("items", {
+      fieldName: "itemOwner",
+      operator: "==",
+      compareValue: userData?.uid
+    }).then((itemsOfUserData) => {
+      setItemsOfUserData(itemsOfUserData);
+      setLoading(false);
+    })
+  }, [userData])
   const error = () => {
     messageApi.open({
       type: 'Error',
@@ -137,31 +133,21 @@ const ItemInfo = () => {
   };
   const onChooseYourItem = (e, item) => {
     console.log(`checked = ${e.target.checked}`);
-    console.log(e);
     if (e.target.checked) {
       setItemCount(itemCount + 1);
-      console.log(item);
+      let tmp = itemsChosenToTrade;
+      tmp.push(item);
+      setItemsChosenToTrade(tmp);
     } else {
       setItemCount(itemCount - 1);
+      let tmp = itemsChosenToTrade;
+      let index = tmp.indexOf(item);
+      if (index !== -1) {
+        tmp.splice(index, 1);
+        setItemsChosenToTrade(tmp);
+      }
     }
   };
-  // useEffect(() => {
-  //   if (loading) {
-  //     return;
-  //   }
-  //   setLoading(true);
-  //   fetch(
-  //     "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-  //   )
-  //     .then((res) => res.json())
-  //     .then((body) => {
-  //       setData([...data, ...body.results]);
-  //       setLoading(false);
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // }, [loading, data]);
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -203,32 +189,38 @@ const ItemInfo = () => {
                 padding: "2rem",
               }}
             >
-              <Carousel
-                className="fuckyouANTcarousel"
-                autoplay
-                dotPosition="bottom"
-              >
-                {itemInfoData.imageList?.map((image) => (
-                  <Image
-                    width="100%"
-                    height="100%"
+              {!loading ?
+                <div>
+                  <Carousel
+                    className="fuckyouANTcarousel"
+                    autoplay
+                    dotPosition="bottom"
+                  >
+                    {itemInfoData.imageList?.map((image) => (
+                      <Image
+                        width="100%"
+                        height="100%"
+                        style={{
+                          borderRadius: "24px",
+                        }}
+                        src={image}
+                      />
+                    ))}
+                  </Carousel>
+                  <Typography.Title
+                    level={3}
                     style={{
-                      borderRadius: "24px",
+                      alignSelf: "center",
+                      textAlign: "center",
+                      color: "#D9D9D9"
                     }}
-                    src={image}
-                  />
-                ))}
-              </Carousel>
-              <Typography.Title
-                level={3}
-                style={{
-                  alignSelf: "center",
-                  textAlign: "center",
-                  color: "#D9D9D9"
-                }}
-              >
-                {itemInfoData?.itemName}
-              </Typography.Title>
+                  >
+                    {/* {itemInfoData?.itemName} */
+                      (itemInfoData === null) ? null : itemInfoData.itemName
+                    }
+                  </Typography.Title>
+                </div>
+                : <Skeleton />}
             </div>
           </div>
           <div
@@ -238,133 +230,146 @@ const ItemInfo = () => {
               padding: "2rem",
             }}
           >
-            <Typography.Title level={2}>
-              {" "}
-              {itemInfoData?.itemName}
-            </Typography.Title>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                padding: "0.2rem",
-                margin: "0.2rem",
-                alignItems: "center",
-              }}
-            >
-              <Avatar
-                size={{
-                  xs: 40,
-                  sm: 50,
-                  md: 50,
-                  lg: 50,
-                  xl: 50,
-                  xxl: 50,
-                }}
-                style={{
-                  margin: "0.2rem",
-                }}
-                icon={<AntDesignOutlined />}
-              />
-              <div
-                style={{
-                  textAlign: "left",
-                  padding: "5px",
-                  paddingLeft: "10px",
-                }}
-              >
+            {
+              !loading
+                ?
                 <div>
-                  <Typography.Title
-                    level={5}
+                  <Typography.Title level={2}>
+                    {" "}
+                    {itemInfoData?.itemName}
+                  </Typography.Title>
+                  <div
                     style={{
-                      fontSize: "20px",
-                      fontStyle: "bold",
-                      margin: 0,
+                      display: "flex",
+                      flexWrap: "wrap",
+                      padding: "0.2rem",
+                      margin: "0.2rem",
+                      alignItems: "center",
                     }}
                   >
+                    <Avatar
+                      size={{
+                        xs: 40,
+                        sm: 50,
+                        md: 50,
+                        lg: 50,
+                        xl: 50,
+                        xxl: 50,
+                      }}
+                      style={{
+                        margin: "0.2rem",
+                      }}
+                      icon={<AntDesignOutlined />}
+                    />
+                    <div
+                      style={{
+                        textAlign: "left",
+                        padding: "5px",
+                        paddingLeft: "10px",
+                      }}
+                    >
+                      <div>
+                        <Typography.Title
+                          level={5}
+                          style={{
+                            fontSize: "20px",
+                            fontStyle: "bold",
+                            margin: 0,
+                          }}
+                        >
 
-                    {userData.lastName} {" "} {userData.firstName}
-                  </Typography.Title>
-                  <Typography.Text type="secondary">
-                    {" "}
-                    @{userData.address}
-                  </Typography.Text>
+                          {userData?.lastName} {" "} {userData?.firstName}
+                        </Typography.Title>
+                        <Typography.Text type="secondary">
+                          {" "}
+                          @{userData?.address}
+                        </Typography.Text>
+                      </div>
+                    </div>
+                    <Button
+                      style={{
+                        marginLeft: "2rem",
+                      }}
+                    >
+                      {" "}
+                      Follow{" "}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <Button
+                : <Skeleton />
+            }
+
+            {!loading
+              ?
+              <div
+                className="item-description"
                 style={{
-                  marginLeft: "2rem",
+                  marginLeft: "0.2rem",
+                  marginRight: "0.2rem",
                 }}
               >
-                {" "}
-                Follow{" "}
-              </Button>
-            </div>
-
-            <div
-              className="item-description"
-              style={{
-                marginLeft: "0.2rem",
-                marginRight: "0.2rem",
-              }}
-            >
-              <Typography.Title level={5} type="secondary">
-                {" "}
-                Updated March 09, 2023{" "}
-              </Typography.Title>
-              <Typography.Text type="secondary">
-                {" "}
-                Reviewed and managed by{" "}
-                <Tag color="#87d068">NguyenKuteBaoKhanh</Tag>
-                <br />
-                <Space
-                  size={[0, 8]}
-                  wrap
+                <Typography.Title level={5} type="secondary">
+                  {" "}
+                  Updated March 09, 2023{" "}
+                </Typography.Title>
+                <Typography.Text type="secondary">
+                  {" "}
+                  Reviewed and managed by{" "}
+                  <Tag color="#87d068">NguyenKuteBaoKhanh</Tag>
+                  <br />
+                  <Space
+                    size={[0, 8]}
+                    wrap
+                    style={{
+                      padding: "1rem",
+                    }}
+                  >
+                    <Tag color="magenta">#magenta</Tag>
+                    <Tag color="gold">#gold</Tag>
+                    <Tag color="green">#green</Tag>
+                    <Tag color="cyan">#cyan</Tag>
+                    <Tag color="blue">#blue</Tag>
+                    <Tag color="purple">#purple</Tag>
+                  </Space>
+                </Typography.Text>
+                <Typography.Title level={3}> Description </Typography.Title>
+                <Typography.Text
                   style={{
-                    padding: "1rem",
+                    padding: "5px",
                   }}
                 >
-                  <Tag color="magenta">#magenta</Tag>
-                  <Tag color="gold">#gold</Tag>
-                  <Tag color="green">#green</Tag>
-                  <Tag color="cyan">#cyan</Tag>
-                  <Tag color="blue">#blue</Tag>
-                  <Tag color="purple">#purple</Tag>
-                </Space>
-              </Typography.Text>
-              <Typography.Title level={3}> Description </Typography.Title>
-              <Typography.Text
-                style={{
-                  padding: "5px",
-                }}
-              >
-                {itemInfoData.description}
-              </Typography.Text>
-            </div>
+                  {itemInfoData?.description}
+                </Typography.Text>
+              </div>
+              : <Skeleton />}
 
-            <div
-              className="additional-items"
-              style={{
-                marginLeft: "0.2rem",
-                marginRight: "0.2rem",
-              }}
-            >
-              <Typography.Title level={3}> Additional Items </Typography.Title>
-              <Table columns={columns} dataSource={yourItems} />
-            </div>
-            <Button
-              width="100%"
-              size="large"
-              style={{
-                backgroundColor: "#10393B",
-                color: "white",
-                width: "100%",
-                height: "50px",
-              }}
-              onClick={() => setOpen(true)}
-            >
-              {" "}
-              Request Trade{" "}
-            </Button>
+            {!loading ?
+              <div>
+                <div
+                  className="additional-items"
+                  style={{
+                    marginLeft: "0.2rem",
+                    marginRight: "0.2rem",
+                  }}
+                >
+                  <Typography.Title level={3}> Additional Items </Typography.Title>
+                  <Table columns={columns} dataSource={yourItems} />
+                </div>
+                <Button
+                  width="100%"
+                  size="large"
+                  style={{
+                    backgroundColor: "#10393B",
+                    color: "white",
+                    width: "100%",
+                    height: "50px",
+                  }}
+                  onClick={() => setOpen(true)}
+                >
+                  {" "}
+                  Request Trade{" "}
+                </Button>
+              </div> : <Skeleton />}
           </div>
         </div>
         <Modal
@@ -418,28 +423,13 @@ const ItemInfo = () => {
             <Typography.Title level={5} type="warning">
               Number of items selected: {itemCount}
             </Typography.Title>
-            <InfiniteScroll
-              dataLength={data.length}
-              // next={loadMoreData}
-              hasMore={data.length < 50}
-              loader={
-                <Skeleton
-                  avatar
-                  paragraph={{
-                    rows: 1,
-                  }}
-                  active
-                />
-              }
-              endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-              scrollableTarget="scrollableDiv"
-            >
-              <List
-                dataSource={data}
-                renderItem={(item) => (
-                  <List.Item key={item.email}
+            <List
+              dataSource={itemsOfUserData}
+              renderItem={(item) => (
+                <div>
+                  <List.Item key={item.uuid}
                     actions={[
-                      <Checkbox onChange={onChooseYourItem}></Checkbox>,
+                      <Checkbox onChange={(e) => onChooseYourItem(e, item)}></Checkbox>,
                       <Button
                         style={{
                           margin: "20px",
@@ -451,40 +441,56 @@ const ItemInfo = () => {
                       </Button>,
                     ]}>
                     <List.Item.Meta
-                      avatar={<Avatar src={item.picture.large} />}
-                      title={<a href="https://ant.design">{item.name.last}</a>}
-                      description={item.email}
+                      title={item.itemName}
+                      description={item.weight + "kg"}
                     />
                     <div>
                     </div>
                   </List.Item>
-                )}
-              />
-              <Drawer
-                title="Drawer with extra actions"
-                placement="right"
-                width={500}
-                onClose={onCloseDrawer}
-                open={openDrawer}
-                extra={
-                  <Space>
-                    <Button onClick={onCloseDrawer}>Cancel</Button>
-                    <Button type="primary" onClick={onCloseDrawer}>
-                      OK
-                    </Button>
-                  </Space>
-                }
-              >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-              </Drawer>
-            </InfiniteScroll>
+                  <Drawer
+                    title={item.itemName}
+                    placement="right"
+                    width={500}
+                    onClose={onCloseDrawer}
+                    open={openDrawer}
+                    extra={
+                      <Space>
+                        <Button onClick={onCloseDrawer}>Cancel</Button>
+                        <Button type="primary" onClick={onCloseDrawer}>
+                          OK
+                        </Button>
+                      </Space>
+                    }
+                  >
+                    <div>
+                      <Typography.Title level={3}>{item.itemName}</Typography.Title>
+                      <Typography.Title level={4}>Description</Typography.Title>
+                      <p>{item.description}</p>
+                      <p>
+                        <Typography.Title level={5}>Weight</Typography.Title>
+                        {item.weight}
+                      </p>
+                      <p>
+                        <Typography.Title level={5}>Gallery</Typography.Title>
+                        {item.imageList.map((image, uuid) =>
+                          <img
+                            alt="event"
+                            style={{
+                              borderRadius: "24px",
+                            }}
+                            src={image}
+                          />
+                        )}
+                      </p>
+                    </div>
+                  </Drawer>
+                </div>
+              )}
+            />
           </div>
         </Modal>
         <SuccessModal
-          openSuccessModal={openSuccessModal}
-          setOpenSuccessModal={setOpenSuccessModal}
+          userFacebook={userData?.facebookLink}
         />
       </div>
       <EndBar />

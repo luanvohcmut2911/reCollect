@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Card, Typography, Button, Row, Col } from "antd";
 import styled from "styled-components";
-import {UserOutlined} from '@ant-design/icons'
+import { UserOutlined } from '@ant-design/icons'
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const WrapperStyled = styled.div`
 
 export default function ProfileCard(props) {
   // console.log(props);
-  const {profileData} = props;
+  const { profileData } = props;
   // const {firstName, lastName, photoURL, email, address, phoneNumber} = profileData;
   return (
     <div>
@@ -27,15 +27,15 @@ export default function ProfileCard(props) {
       >
         <WrapperStyled>
           <div style={{ display: "block" }}>
-            <Avatar size={100}  icon={profileData?.photoURL?<img src={profileData?.photoURL} alt="user" />:<UserOutlined />} />
+            <Avatar size={100} icon={profileData?.photoURL ? <img src={profileData?.photoURL} alt="user" /> : <UserOutlined />} />
           </div>
           <Typography.Title
             style={{ display: "block", marginBottom: 0, marginTop: "1rem" }}
           >
-            {profileData?.firstName + ' ' +profileData?.lastName}
+            {profileData?.firstName + " " + profileData?.lastName}
           </Typography.Title>
           <Typography.Title
-            style={{ display: "flex", marginTop: 0, justifyContent:'center', alignItems: 'center' }}
+            style={{ display: "flex", marginTop: 0, justifyContent: 'center', alignItems: 'center' }}
             level={4}
           >
             {profileData?.address}
@@ -72,7 +72,10 @@ export default function ProfileCard(props) {
               alignContent: "space-between",
             }}
           >
-            <Row>
+            <Row style={{
+              display: "flex",
+              flexDirection: "column",
+            }}>
               <Col span={12}>Following</Col>
               <Col span={12}>
                 <div style={{ float: "right" }}>123</div>
@@ -91,21 +94,17 @@ export default function ProfileCard(props) {
               </Col>
             </Row>
           </div>
-          <div style={{ width: "80%" }}>
+          <div style={{ width: "70%" }}>
             <Typography.Title level={5} style={{ margin: 0 }}>
               About me:
             </Typography.Title>
-            <ul>
-              <li>
-                Phone: {profileData?.phoneNumber}
-              </li>
-              <li>
-                Email: {profileData?.email}
-              </li>
-              <li>
-                Facebook: <a href={profileData?.facebookLink} target='blank'>{profileData?.facebookLink}</a>
-              </li>
-            </ul>
+            <Typography.Text>
+              Phone: {profileData?.phoneNumber}
+              <br />
+              Email: {profileData?.email}
+              <br />
+              Facebook: <a href={profileData?.facebookLink} target='blank'>{profileData?.facebookLink}</a>
+            </Typography.Text>
           </div>
         </WrapperStyled>
       </Card>
