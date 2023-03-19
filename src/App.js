@@ -14,6 +14,7 @@ import AddModal from "./Components/AddModal";
 import UserInfo from "./Pages/UserInfo";
 import DonateForm from "./Pages/DonateForm";
 import EventModal from "./Components/EventModal";
+import About from "./Pages/About";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/item-info/:uuid" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/donate-form/" element={<DonateForm />} />
+            <Route path="/about" element={<About />} />
           </Routes>
           <AddModal />
           <EventModal />

@@ -55,7 +55,7 @@ export default function EndBar(props) {
           </Typography.Paragraph>
         </div>
         <div style={{
-          flex: "38%",
+          flex: "39%",
           margin: "5px",
           marginLeft: "0px"
         }}>

@@ -1,17 +1,27 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Card, Button, Avatar, Typography, Modal } from "antd";
 import {
   SwapOutlined,
   EllipsisOutlined,
-  UnorderedListOutlined,
-  StopOutlined,
-  FlagOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { getAccount } from "../Firebase/services";
 
 const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid }) => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    getAccount("users", {
+      fieldName: "uid",
+      operator: "==",
+      compareValue: itemOwner
+    }).then((userData) => {
+      setUserData(userData[0]);
+    })
+  }, []);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -21,11 +31,12 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
   return (
     <Card
       style={{
-        margin: "1.2rem",
-        width: 200,
+        margin: "2rem",
+        width: 300,
         borderRadius: "24px",
       }}
       cover={
@@ -56,9 +67,9 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid
       ]}
     >
       <Card.Meta
-        avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
+        avatar={<Avatar src={userData.photoURL} />}
         title={itemName}
-        description={itemOwner}
+        description={userData.lastName + " " + userData.firstName}
       />
       <Modal
         title="Product Name"
@@ -76,7 +87,7 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid
           </p>
           <p>
             <Typography.Title level={5}>Gallery</Typography.Title>
-            {imageList.map((image, id) =>
+            {imageList.map((image, uuid) =>
               <img
                 alt="event"
                 style={{
@@ -95,18 +106,6 @@ const ProductCard = ({ imageList, itemOwner, itemName, weight, description, uuid
             alignContent: "center",
           }}
         >
-          <Button>
-            <UnorderedListOutlined />
-            Add to Watch list
-          </Button>
-          <Button>
-            <StopOutlined />
-            Not interested
-          </Button>
-          <Button>
-            <FlagOutlined />
-            Report
-          </Button>
         </div>
       </Modal>
     </Card>
