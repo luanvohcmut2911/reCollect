@@ -21,7 +21,7 @@ import EndBar from "../Components/EndBar";
 import SuccessModal from "../Components/SuccessModal";
 import { AppContext } from "../Context/AppProvider";
 import { useParams } from "react-router";
-import { getAccount } from "../Firebase/services";
+import { getAccount, addDocument } from "../Firebase/services";
 
 const columns = [
   {
@@ -382,7 +382,18 @@ const ItemInfo = () => {
             setOpenSecondModal(false);
             setOpen(false);
             setOpenSuccessModal(true);
-            console.log(itemsChosenToTrade);
+            addDocument('requests', {
+              fromUser: JSON.parse(localStorage.getItem('data'))?.uid,
+              fromUserFirstName: JSON.parse(localStorage.getItem('data'))?.firstName,
+              fromUserLastName: JSON.parse(localStorage.getItem('data'))?.lastName,
+              itemTrade: itemsChosenToTrade.map((item)=>{
+                return item.uuid;
+              }),
+              toUser: userData?.uid
+            }).then(()=>{
+              console.log('added to requests collection successfully');
+              window.location.reload(false);
+            })
           }}
           onCancel={() => setOpenSecondModal(false)}
         >

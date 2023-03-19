@@ -1,18 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Layout, Row, Col, Typography } from "antd";
 import { AppContext } from "../Context/AppProvider";
 import NavBar from "../Components/NavBar";
 import ProfileCard from "../Components/ProfileCard";
 import ProfileMenu from "../Components/ProfileMenu";
 import EndBar from "../Components/EndBar";
+import { useParams } from 'react-router-dom';
+import { getAccount } from '../Firebase/services';
 const { Content } = Layout;
 
-// const {
-//   token: { colorBgContainer },
-// } = theme.useToken();
 
 export default function Profile() {
-  const profileData = JSON.parse(localStorage.getItem('data'));
+  const {uid} = useParams();
+  const [ isGuest, setIsGuest ] = useState(false);
+  const [ profileData, setProfileData ] = useState([]);
+  useEffect(()=>{
+    getAccount('users', {
+      fieldName: 'uid',
+      operator: '==',
+      compareValue: uid
+    }).then((data)=>{
+      setProfileData(data[0]);
+      console.log(uid!==JSON.parse(localStorage.getItem('data')).uid)
+      setIsGuest(uid!==JSON.parse(localStorage.getItem('data')).uid);
+    })
+  }, [uid]);
   const { width, commonBreakPoint } = useContext(AppContext);
   const windowWidth = width;
   return (
@@ -50,7 +62,7 @@ export default function Profile() {
             justifyContent: "center",
             alignContent: "center",
           }}>
-            <ProfileCard profileData={profileData} />
+            <ProfileCard profileData={profileData} isGuest={isGuest} />
             <ProfileMenu style={{
               alignSelf: "center",
               justifyContent: "center",
@@ -62,7 +74,7 @@ export default function Profile() {
             <Row>
               <Col span={2}></Col>
               <Col span={6}>
-                <ProfileCard profileData={profileData} />
+                <ProfileCard profileData={profileData} isGuest={isGuest} />
               </Col>
               <Col span={16}>
                 <ProfileMenu />

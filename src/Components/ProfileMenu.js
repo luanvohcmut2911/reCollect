@@ -104,7 +104,7 @@ export default function ProfileMenu() {
           />
           {itemList.map((i) => {
             return (
-              <ImageStyled key={i.nameItem} src={i.imageList[0]} alt="item" />
+              <ImageStyled key={i.uuid} src={i.imageList[0]} alt="item" />
             );
           })}
         </Space>

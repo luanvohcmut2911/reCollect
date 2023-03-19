@@ -27,7 +27,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/user-info" element={<UserInfo />} />
             <Route path="/home" element={<Homepage />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:uid" element={<Profile />} />
             <Route path="/donate-info/:uuid" element={<DonateInfo />} />
             <Route path="/item-info/:uuid" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
