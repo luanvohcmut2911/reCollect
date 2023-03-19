@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Menu, Layout, Avatar, Row, Col, Input, Popover, Image } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Menu, Layout, Avatar, Row, Col, Input, Popover, Badge, List } from "antd";
 import styled from "styled-components";
 import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined, HomeOutlined, QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
@@ -8,6 +8,8 @@ import { signOut } from "firebase/auth";
 import { auth } from "../Firebase/config";
 import { AppContext } from "../Context/AppProvider";
 import { StickyContainer, Sticky } from "react-sticky";
+import { getAccount } from '../Firebase/services';
+// import useFirestore from "../hooks/useFirestore";
 
 const items = [
   {
@@ -60,6 +62,18 @@ const TextStyled = styled.div`
 `;
 
 export default function NavBar() {
+  const [message, setMessage] = useState([]);
+  useEffect(()=>{
+    getAccount('requests', {
+      fieldName: 'toUser',
+      operator: '==',
+      compareValue: JSON.parse(localStorage.getItem('data')).uid
+    }).then((data)=>{
+      console.log(data);
+      setMessage(data);
+    })
+  }, []);
+  console.log(message);
   const profileData = JSON.parse(localStorage.getItem('data'));
   const navigate = useNavigate();
   const { width, commonBreakPoint, betweenPagesNav } = useContext(AppContext);
@@ -78,13 +92,6 @@ export default function NavBar() {
       <Sticky>
         {({
           style,
-
-          // the following are also available but unused in this example
-          isSticky,
-          wasSticky,
-          distanceFromTop,
-          distanceFromBottom,
-          calculatedHeight
         }) => (
           <header style={style}>
             {/* ... */}
@@ -177,21 +184,46 @@ export default function NavBar() {
                   color: "white",
                   fontSize: "35px",
                   padding: "1rem",
+                  marginRight: '1rem'
                 }}
               />
-              <BellOutlined
-                style={{
-                  color: "white",
-                  fontSize: "35px",
-                  padding: "1rem",
-                }}
-              />
+              <Popover
+                title={message.length===0?'You have no message!':'You have new messages!'}
+                placement="bottomRight"
+                content={
+                  <List
+                    size='small'
+                    dataSource={message}
+                    renderItem={(item)=>{
+                      return <List.Item
+                        onClick={()=>{
+                          navigate(`/profile/${item.fromUser}`)
+                        }}
+                        style={{
+                          cursor: 'pointer'
+                        }}
+                      >{item.fromUserFirstName + item.fromUserLastName} want to trade with you</List.Item>
+                    }}
+                  />
+
+                }
+                trigger="click">
+                <Badge count={message.length}>
+                  <BellOutlined
+                    style={{
+                      color: "white",
+                      fontSize: "35px",
+                      padding: "0rem",
+                    }}
+                  />
+                </Badge>
+              </Popover>
               <Popover
                 content={
                   <div>
                     <TextStyled
                       onClick={() => {
-                        navigate("/profile");
+                        navigate(`/profile/${JSON.parse(localStorage.getItem('data'))?.uid}`);
                       }}
                     >
                       Profile
@@ -210,7 +242,7 @@ export default function NavBar() {
                 <Avatar
                   size="default"
                   style={{
-                    margin: "1rem",
+                    margin: "1rem 1rem 1rem 2rem",
                     justifyContent: "center",
                     backgroundColor: "white",
                     color: "black",

@@ -11,8 +11,9 @@ const WrapperStyled = styled.div`
 `;
 
 export default function ProfileCard(props) {
-  // console.log(props);
-  const { profileData } = props;
+  console.log(props);
+  const { profileData, isGuest } = props;
+  console.log(isGuest);
   // const {firstName, lastName, photoURL, email, address, phoneNumber} = profileData;
   return (
     <div>
@@ -40,6 +41,19 @@ export default function ProfileCard(props) {
           >
             {profileData?.address}
           </Typography.Title>
+          {
+            isGuest?<Button
+            style={{
+              backgroundColor: "#10393B",
+              border: "#10393B",
+              width: "80%",
+              borderRadius: "50px",
+              color: "white",
+              marginBottom: "1rem",
+            }}
+          >
+            Follow
+          </Button>:
           <Button
             style={{
               backgroundColor: "#10393B",
@@ -52,6 +66,7 @@ export default function ProfileCard(props) {
           >
             Edit Profile
           </Button>
+            }
           <Button
             style={{
               backgroundColor: "white",
@@ -72,10 +87,7 @@ export default function ProfileCard(props) {
               alignContent: "space-between",
             }}
           >
-            <Row style={{
-              display: "flex",
-              flexDirection: "column",
-            }}>
+            <Row>
               <Col span={12}>Following</Col>
               <Col span={12}>
                 <div style={{ float: "right" }}>123</div>

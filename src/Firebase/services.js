@@ -1,5 +1,5 @@
 import { db } from "./config";
-import { collection, addDoc, getDocs, where, query, doc, serverTimestamp, orderBy } from "firebase/firestore";
+import { collection, addDoc, getDocs, where, query, doc, serverTimestamp, orderBy, onSnapshot } from "firebase/firestore";
 import { v4 } from 'uuid';
 
 export const addDocument = async (collectionName, data) => {
@@ -77,23 +77,8 @@ export const getAccount = async (collectionName, condition) => {
   )
 }
 
-// export const getDocsFromQuery = async (collectionName, field, operator, condition) => {
-//   const collectionRef = collection(db, collectionName);
-//   const docSnap = await getDocs(
-//     query(
-//       collectionRef
-//     ),
-//     where(field, operator, condition)
-//   )
-//   const arr = [];
-//   try {
-//     docSnap.forEach((doc) => {
-//       arr.push(doc.data());
-//     })
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   return (
-//     arr
-//   )
-// }
+// export const listenUpdate = onSnapshot(collection(db, 'requests'), (snapshot)=>{
+//   snapshot.docs.forEach((doc)=>{
+//     console.log(doc.data());
+//   })
+// })

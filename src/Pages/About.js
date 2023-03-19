@@ -11,7 +11,7 @@ import {
 import { AppContext } from "../Context/AppProvider";
 import "../App.css";
 
-import img_front from "../asset/AdobeStock_355885536 1.png";
+// import img_front from "../asset/AdobeStock_355885536 1.png";
 import placeholder_img from "../asset/Placeholder image.png";
 import placeholder_img2 from "../asset/Placeholder image2.png";
 import placeholder_img3 from "../asset/Placeholder image3.png";
@@ -266,44 +266,63 @@ export default function About() {
                             Responsible Consumption and Production/ No poverty
                         </Title>
                         <Title level={2} type={"secondary"}>
-                            Goal 12, Goal 1 of Sustainable Development Goals (SDG)
+                            Goal 12, Goal 1 of <a href="https://www.un.org/sustainabledevelopment/">Sustainable Development Goals (SDGs) </a>
                         </Title>
                         <Text
                             style={{
                                 fontSize: "1.25rem",
                             }}
-                        >
-                            We aim to contribute our parts to Goal 12 - Responsible Consumption and Production and
-                            Goal 1 - No poverty:
+                        >   <Text italic style={{
+                            fontSize: "1.25rem",
+                        }}>
+                                We aim to contribute our parts to these goals from SDGs by creating a community allows people to nurture literacy on responsible consumption/production patterns and the state of poverty in the world.
+                            </Text>
+
                             <ul>
                                 <li>
-                                    
+                                    <Typography.Title level={4} style={{
+                                        marginBottom: 0
+                                    }}>Goal 12 - Responsible Consumption and Production
+                                    </Typography.Title>
+                                    <br />
+                                    Ensuring sustainable consumption and production patterns, which is key to sustain the livelihoods of current and future generations.
+                                    <br />
+                                    Unsustainable patterns of consumption and production are root causes of the triple planetary crises of climate change, biodiversity loss and pollution. These crises, and related environmental degradation, threaten human well-being and achievement of the Sustainable Development Goals.
+                                    <br />
+                                    Governments and all citizens should work together to improve resource efficiency, reduce waste and pollution, and shape a new circular economy.
                                 </li>
                                 <li>
-                                    
-                                </li>
+                                    <Typography.Title level={4} style={{
+                                        marginBottom: 0
+                                    }}>Goal 1 - No poverty
+                                    </Typography.Title>
+                                    <br />
+                                    Eradicating extreme poverty for all people everywhere by 2030 is a pivotal goal of the 2030 Agenda for Sustainable Development. Between 2015 and 2018, global poverty continued its historical decline, with the poverty rate falling from 10.1 per cent in 2015 to 8.6 per cent in 2018.
+                                    <br />
+                                    Nowcasts suggest that owing to the COVID-19 pandemic, the global poverty rate increased sharply from 8.3 per cent in 2019 to 9.2 per cent in 2020, representing the first increase in extreme poverty since 1998 and the largest increase since 1990 and setting back poverty reduction by about three years.                                    <br />
+                                    The impact of the COVID-19 pandemic reversed the steady progress of poverty reduction over the past 25 years. This unprecedented reversal is being further exacerbated by rising inflation and the impacts of the war in Ukraine. It is estimated that these combined crises will lead to an additional 75 million–95 million people living in extreme poverty in 2022, compared with pre-pandemic projections.                                </li>
                             </ul>
 
                         </Text>
                         <br />
                         <br />
-                        <Typography.Paragraph italic strong style={{
-                            fontSize: "1.25rem",
-                            border: "#"
+                        <div style={{
+                            flex: "50%",
+                            display: "flex",
+                            justifyContent: "space-around",
+                            flexWrap: "wrap",
+                            alignContent: "center",
+                            alignSelf: "center",
+                            justifyItems: "center",
+                            paddingRight: "10px"
                         }}>
-                            It's not just a web app, it's a community of people trading and giving. We allow users
-                            to either give away or trade their items based on their needs.
-                        </Typography.Paragraph>
+                            <iframe width="400" height="315" src="https://www.youtube.com/embed/o08ykAqLOxk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe width="400" height="315" src="https://www.youtube.com/embed/j7c9b9A2AHc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe width="400" height="315" src="https://www.youtube.com/embed/uDpIAcT3mqU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe width="400" height="315" src="https://www.youtube.com/embed/puEWxGStQrE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
                     </div>
-                    <Image
-                        width={800}
-                        src={placeholder_img2}
-                        style={{
-                            borderRadius: "24px",
-                            padding: "5px",
-                            paddingRight: "20px",
-                        }}
-                    />
+
                 </div>
                 {/* ----------------------------------- */}
                 <div
@@ -327,24 +346,37 @@ export default function About() {
                                 fontSize: "3rem",
                             }}
                         >
-                            Donate, spread love
+                            reduce, reuse, reCollect
+                        </Title>
+                        <Title level={2} type={"secondary"}>
+                            The Circular Economy
                         </Title>
                         <Text
                             style={{
                                 fontSize: "1.25rem",
                             }}
                         >
-                            With reCollect, you are able to donate your old items to ongoing
-                            charity events and charity organizations.
+                            Circular Economy -  an economic system that is designed to keep resources in use for as long as possible, extracting the maximum value from them before recovering and regenerating products and materials at the end of their lifecycle. It is based on the principles of designing out waste and pollution, keeping products and materials in use, and regenerating natural systems.
+                            <br />
+                            <br />
+                            In a circular economy, products are designed to be durable, repairable, and recyclable, and materials are reused and recycled as much as possible. Waste is minimized and resources are conserved, reducing the environmental impact of production and consumption.
+                            <br />
+                            <br />
+                            The circular economy is often contrasted with the traditional linear economy, which is based on a take-make-dispose model. In the linear economy, resources are extracted, products are manufactured, used, and then discarded as waste, leading to environmental degradation and resource depletion.
+                            <br />
+                            <br />
+                            Inspired by such theory, reCollect can help reduce waste by giving old items a new life.
+                            You'll also be able to save money by trading items instead of buying new ones.
+                            And, by promoting sustainable consumption, you'll be doing your part to help the environment.
+                            Many benefits arise from using reCollect:
+                            <ul>
+                                <li>Reduce waste: By using reCollect, users can trade their unused items with others instead of throwing them away, reducing the amount of waste sent to landfills.</li>
+                                <li>Save money: Instead of buying new items, users can trade for items they need on reCollect, saving money on new purchases.</li>
+                                <li>Connect with others: reCollect creates a community of people who are interested in sustainable consumption and production, providing a space for users to connect with like-minded individuals.</li>
+                                <li>Promote sustainability: By encouraging the reuse of items and reducing waste, reCollect promotes sustainable practices that can help to reduce the negative impact of human activity on the environment.</li>
+                                <li>Increase awareness: By providing information and resources on responsible consumption and production, reCollect can help to increase awareness and educate users on the importance of sustainable living.</li>
+                            </ul>
                         </Text>
-                        <br />
-                        <br />
-                        <Typography.Paragraph italic strong style={{
-                            fontSize: "1.25rem",
-                            border: "#"
-                        }}>
-                            Give old items as well as hopes and dreams to those in needs.
-                        </Typography.Paragraph>
                     </div>
                     <Image
                         width={800}
@@ -398,7 +430,7 @@ export default function About() {
                             size="large"
                             href="/signup"
                         >
-                            Sign Up Now
+                            Let's go!
                         </Button>
                     </div>
                 </div>

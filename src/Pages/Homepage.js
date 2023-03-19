@@ -254,6 +254,7 @@ export default function Homepage() {
                       description={item.description}
                       itemOwner={item.itemOwner}
                       uuid={item.uuid}
+                      key={item.uuid}
                     />
                   )
                   )
