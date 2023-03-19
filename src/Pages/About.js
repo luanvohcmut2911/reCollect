@@ -140,7 +140,7 @@ export default function About() {
                 >
                     <Card
                         style={{
-                            width: "80%",
+                            width: "90%",
                             height: "auto",
                             margin: 30,
                             backgroundColor: "#EF8450",
@@ -176,7 +176,7 @@ export default function About() {
                                 fontSize: "1.5rem",
                             }}
                         >
-                            It's not just a web app, it's a community of people <mark>trading and giving.</mark> 
+                            It's not just a web app, it's a community of people <mark>trading and giving.</mark>
                         </Title>
                     </Card>
                 </div>
@@ -187,11 +187,12 @@ export default function About() {
                         background: colorBgContainer,
                         display: "flex",
                         flexWrap: "wrap",
+                        marginLeft: "2rem"
                     }}
                 >
                     <div
                         style={{
-                            flex: "33.3%",
+                            flex: "50%",
                             padding: "5px",
                             paddingRight: "20px",
                             alignSelf: "center",
@@ -211,20 +212,30 @@ export default function About() {
                         >
                             "After all, we already have what we all need! We just have to go to a supermarket or a local convenience store to buy, then why trade?"
                             <br />
+                            <br />
                             You must thinking why would you take the effort to go and trade items with people instead of buying a new one and throw away the old one.
-                            However, 
-
+                            However, great environmental impacts occur if we produce too much and dispose too much for our need of convenience.
+                            <br />
+                            <br />
+                            Take Fast Fashion for example, here's a video introduction on Fast Fashion by TEDx speakers Patrick Woodyard, Co-Founder & CEO of Nisolo.
+                            His experience using business as a force for good has led him across the globe ranging from Kenya and Uganda to Argentina and Peru.
+                            <br />
+                            <br />
                         </Text>
                     </div>
-                    <Image
-                        width={700}
-                        src={placeholder_img}
-                        style={{
-                            flex: "66.6%",
-                            padding: "5px",
-                            borderRadius: "24px",
-                        }}
-                    />
+                    <div style={{
+                        flex: "50%",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        alignSelf: "center",
+                        justifyItems: "center",
+                        paddingRight: "10px"
+                    }}>
+                        <iframe width="350" height="315" src="https://www.youtube.com/embed/mPM9lhackHw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="350" height="315" src="https://www.youtube.com/embed/tLfNUD0-8ts" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="350" height="315" src="https://www.youtube.com/embed/BiSYoeqb_VY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="350" height="315" src="https://www.youtube.com/embed/5r8V4QWwxf0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
                 </div>
                 {/* ----------------------------------- */}
                 <div
@@ -234,6 +245,7 @@ export default function About() {
                         display: "flex",
                         flexDirection: "row-reverse",
                         flexWrap: "wrap",
+                        paddingRight: "20px",
                     }}
                 >
                     <div
@@ -251,15 +263,27 @@ export default function About() {
                                 fontSize: "3rem",
                             }}
                         >
-                            Give away
+                            Responsible Consumption and Production/ No poverty
+                        </Title>
+                        <Title level={2} type={"secondary"}>
+                            Goal 12, Goal 1 of Sustainable Development Goals (SDG)
                         </Title>
                         <Text
                             style={{
                                 fontSize: "1.25rem",
                             }}
                         >
-                            In case you don't need anything in return, you are able to just
-                            simply give it away to someone who needs it more.
+                            We aim to contribute our parts to Goal 12 - Responsible Consumption and Production and
+                            Goal 1 - No poverty:
+                            <ul>
+                                <li>
+                                    
+                                </li>
+                                <li>
+                                    
+                                </li>
+                            </ul>
+
                         </Text>
                         <br />
                         <br />

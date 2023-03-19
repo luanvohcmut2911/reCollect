@@ -34,6 +34,7 @@ export default function AppProvider({ children }) {
   const [eventModalVisible, setEventModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const { width, height } = useWindowDimensions();
+  const [center, setCenter] = useState({lat: 0, lng: 0});
   const betweenPagesNav = ({ componentId }) => {
     navigate("/home");
     const productElement = document.getElementById(componentId);
@@ -54,7 +55,9 @@ export default function AppProvider({ children }) {
         setEventModalVisible,
         loading,
         setLoading,
-        betweenPagesNav
+        betweenPagesNav,
+        center,
+        setCenter
       }}
     >
       {children}

@@ -12,6 +12,7 @@ import NavBar from "../Components/NavBar";
 import EndBar from "../Components/EndBar";
 import { useParams } from "react-router";
 import { getAccount } from "../Firebase/services";
+import Maps from "../apis/googleMapsAPI/Maps"
 
 // const data = [
 //   "Racing car sprays burning fuel into crowd.",
@@ -185,19 +186,12 @@ function DonateInfo() {
             meet-up destination.
           </Typography.Text>
         </Space>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.49524122255!2d106.69876695099104!3d10.773330262157684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f4743648f3d%3A0x16ce95918cb14834!2sSaigon%20Centre!5e0!3m2!1svi!2s!4v1678703624556!5m2!1svi!2s"
-          width={"100%"}
-          height={"400px"}
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="map-api"
-        ></iframe>
+        <Maps center={donateInfoData?.location} />
       </Space>
       <EndBar />
     </Layout>
   );
 }
-
+// lat: 10.7814503
+// lng:  106.6551703                                                                                          
 export default DonateInfo;

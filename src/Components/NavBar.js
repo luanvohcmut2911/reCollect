@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Menu, Layout, Avatar, Row, Col, Input, Popover, Image } from "antd";
 import styled from "styled-components";
-import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined, HomeOutlined, QuestionCircleOutlined } from "@ant-design/icons";
+import { MessageOutlined, BellOutlined, SwapOutlined, MedicineBoxOutlined, SearchOutlined, HomeOutlined, QuestionCircleOutlined, UserOutlined } from "@ant-design/icons";
 import LogoIcon from "../icons/LogoIcon";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
@@ -149,7 +149,7 @@ export default function NavBar() {
                     navigate("/home");
                   }
                 } else if (item.key === "About") {
-                  navigate("/about");
+                  navigate("/education");
                 }
               }}
             ></MenuStyled>
@@ -216,8 +216,8 @@ export default function NavBar() {
                     color: "black",
                     cursor: "pointer",
                   }}
+                  icon={profileData?.photoURL ? <img src={profileData?.photoURL} alt="user" /> : <UserOutlined />}
                 >
-                  <Image preview={false} src={profileData.photoURL} alt="avatar"/>
                 </Avatar>
               </Popover>
             </RightStyled>

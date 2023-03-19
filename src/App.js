@@ -15,7 +15,7 @@ import UserInfo from "./Pages/UserInfo";
 import DonateForm from "./Pages/DonateForm";
 import EventModal from "./Components/EventModal";
 import About from "./Pages/About";
-
+import GoogleMaps from "./apis/googleMapsAPI/GoogleMaps"
 function App() {
   return (
     <BrowserRouter>
@@ -32,7 +32,8 @@ function App() {
             <Route path="/item-info/:uuid" element={<ItemInfo />} />
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/donate-form/" element={<DonateForm />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/education" element={<About />} />
+            <Route path="/maptesting" element={<GoogleMaps />} />
           </Routes>
           <AddModal />
           <EventModal />

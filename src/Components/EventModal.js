@@ -6,6 +6,7 @@ import InputImage from "../asset/InputImage.png";
 import ImgCrop from "antd-img-crop";
 import { addDocument } from "../Firebase/services";
 import { getImageURL } from "../Firebase/getImageURL";
+import GoogleMapsBox from "../apis/googleMapsAPI/GoogleMaps";
 
 const ModalStyled = styled(Modal)`
   .ant-modal-body {
@@ -26,13 +27,13 @@ const { Dragger } = Upload;
 
 export default function EventModal() {
   const [api, contextHolder] = notification.useNotification();
-  const openNotification = ()=>{
+  const openNotification = () => {
     api.success({
       message: 'Event is added successfully'
     })
   }
   const currentUserUid = JSON.parse(localStorage.getItem("data"))?.uid;
-  const { eventModalVisible, setEventModalVisible } = useContext(AppContext);
+  const { eventModalVisible, setEventModalVisible, center } = useContext(AppContext);
   const [fileList, setFileList] = useState([]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -45,8 +46,9 @@ export default function EventModal() {
       addDocument("events", {
         ...values,
         imageList: data,
+        location: center,
         itemOwner: currentUserUid,
-      }).then(()=>{
+      }).then(() => {
         window.location.reload(false);
       });
     });
@@ -170,6 +172,10 @@ export default function EventModal() {
             name="eventItems"
           >
             <Input.TextArea placeholder="Separate with (,) ..." />
+          </Form.Item>
+          <Form.Item>
+            <GoogleMapsBox />
+            {console.log(center)}
           </Form.Item>
           <Form.Item>
             <Button htmlType="submit">Submit</Button>
