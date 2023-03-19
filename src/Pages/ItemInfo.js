@@ -190,7 +190,7 @@ const ItemInfo = () => {
                   >
                     {itemInfoData.imageList?.map((image, index) => (
                       <Image
-                        key={index}
+                        key={image}
                         width="100%"
                         height="100%"
                         style={{
@@ -486,9 +486,9 @@ const ItemInfo = () => {
                       </p>
                       <p>
                         <Typography.Title level={5}>Gallery</Typography.Title>
-                        {item.imageList.map((image, index) =>
+                        {item.imageList.map((image) =>
                           <img
-                            key={index}
+                            key={image}
                             alt="event"
                             style={{
                               borderRadius: "24px",
