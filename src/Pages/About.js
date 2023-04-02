@@ -378,7 +378,7 @@ export default function About() {
                             </ul>
                         </Text>
                     </div>
-                    <Image
+                    {/* <Image
                         width={800}
                         src={placeholder_img3}
                         style={{
@@ -386,7 +386,7 @@ export default function About() {
                             padding: "5px",
                             borderRadius: "24px",
                         }}
-                    />
+                    /> */}
                 </div>
                 {/* ----------------------------------- */}
                 <div

@@ -63,12 +63,12 @@ const TextStyled = styled.div`
 
 export default function NavBar() {
   const [message, setMessage] = useState([]);
-  useEffect(()=>{
+  useEffect(() => {
     getAccount('requests', {
       fieldName: 'toUser',
       operator: '==',
       compareValue: JSON.parse(localStorage.getItem('data')).uid
-    }).then((data)=>{
+    }).then((data) => {
       console.log(data);
       setMessage(data);
     })
@@ -114,7 +114,7 @@ export default function NavBar() {
               {windowWidth < commonBreakPoint[3] ?
                 <HomeOutlined
                   style={{
-                    color:"white",
+                    color: "white",
                     float: "left",
                     margin: "10px",
                     fontSize: "40px"
@@ -130,7 +130,7 @@ export default function NavBar() {
 
             </a>
           </Col>
-          <Col span={6}>
+          <Col span={16}>
             <MenuStyled
               style={{
                 backgroundColor: "#10393B !important",
@@ -161,7 +161,7 @@ export default function NavBar() {
               }}
             ></MenuStyled>
           </Col>
-          <Col span={10}>
+          {/* <Col span={10}>
             {
               (windowWidth < commonBreakPoint[3]) ? null : <Search
                 placeholder="Search..."
@@ -170,33 +170,33 @@ export default function NavBar() {
                 }}
               />
             }
-          </Col>
+          </Col> */}
           <Col span={4}>
             <RightStyled>
-              {(windowWidth < commonBreakPoint[3]) ? <SearchOutlined style={{
+              {/* {(windowWidth < commonBreakPoint[3]) ? <SearchOutlined style={{
                 color: "white",
                 fontSize: "35px",
                 padding: "1rem",
                 float: (windowWidth < commonBreakPoint[3]) ? "left" : ""
-              }} /> : null}
-              <MessageOutlined
+              }} /> : null} */}
+              {/* <MessageOutlined
                 style={{
                   color: "white",
                   fontSize: "35px",
                   padding: "1rem",
                   marginRight: '1rem'
                 }}
-              />
+              /> */}
               <Popover
-                title={message.length===0?'You have no message!':'You have new messages!'}
+                title={message.length === 0 ? 'You have no message!' : 'You have new messages!'}
                 placement="bottomRight"
                 content={
                   <List
                     size='small'
                     dataSource={message}
-                    renderItem={(item)=>{
+                    renderItem={(item) => {
                       return <List.Item
-                        onClick={()=>{
+                        onClick={() => {
                           navigate(`/profile/${item.fromUser}`)
                         }}
                         style={{

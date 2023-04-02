@@ -425,6 +425,10 @@ export default function LandingPage() {
               alignSelf: "center",
               paddingRight: "20px",
             }}
+            data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-duration="2000"
+            data-aos-easing="ease-in-sine"
           >
             <Title
               style={{
@@ -434,7 +438,6 @@ export default function LandingPage() {
               data-aos-offset="300"
               data-aos-duration="2000"
               data-aos-easing="ease-in-sine"
-              Z
             >
               Donate, spread love
             </Title>
@@ -442,6 +445,10 @@ export default function LandingPage() {
               style={{
                 fontSize: "1.25rem",
               }}
+              data-aos="fade-right"
+              data-aos-offset="300"
+              data-aos-duration="2000"
+              data-aos-easing="ease-in-sine"
             >
               With reCollect, you are able to donate your old items to ongoing
               charity events and charity organizations.
@@ -451,7 +458,12 @@ export default function LandingPage() {
             <Typography.Paragraph italic strong style={{
               fontSize: "1.25rem",
               border: "#"
-            }}>
+            }}
+              data-aos="fade-right"
+              data-aos-offset="300"
+              data-aos-duration="2000"
+              data-aos-easing="ease-in-sine"
+            >
               Give old items as well as hopes and dreams to those in needs.
             </Typography.Paragraph>
           </div>

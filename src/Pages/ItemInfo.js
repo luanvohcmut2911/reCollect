@@ -358,10 +358,10 @@ const ItemInfo = () => {
                     height: "50px",
                   }}
                   onClick={() => {
-                    if(userData?.uid !== JSON.parse(localStorage.getItem('data'))?.uid){
+                    if (userData?.uid !== JSON.parse(localStorage.getItem('data'))?.uid) {
                       setOpen(true)
                     }
-                    else{
+                    else {
                       api.error({
                         message: 'Cannot request by yourself'
                       })
@@ -381,21 +381,24 @@ const ItemInfo = () => {
           onOk={() => {
             setOpenSecondModal(false);
             setOpen(false);
-            setOpenSuccessModal(true);
             addDocument('requests', {
               fromUser: JSON.parse(localStorage.getItem('data'))?.uid,
               fromUserFirstName: JSON.parse(localStorage.getItem('data'))?.firstName,
               fromUserLastName: JSON.parse(localStorage.getItem('data'))?.lastName,
-              itemTrade: itemsChosenToTrade.map((item)=>{
+              itemTrade: itemsChosenToTrade.map((item) => {
                 return item.uuid;
               }),
               toUser: userData?.uid
-            }).then(()=>{
+            }).then(() => {
               console.log('added to requests collection successfully');
-              window.location.reload(false);
+              
+              // window.location.reload(false);
             })
+            setOpenSuccessModal(true);
           }}
-          onCancel={() => setOpenSecondModal(false)}
+          onCancel={() => {
+            setOpenSecondModal(false)
+          }}
         >
           <Typography.Text>
             Here is our community guideline for making request:
@@ -417,6 +420,7 @@ const ItemInfo = () => {
             </ul>
           </Typography.Text>
         </Modal>
+
         <Modal
           title="Choose an item to make the offer"
           centered

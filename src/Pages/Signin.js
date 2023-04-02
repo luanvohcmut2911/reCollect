@@ -43,7 +43,6 @@ const InputPasswordStyled = styled(Input.Password)`
   padding-bottom: 1rem;
   border-radius: 40px;
 `;
-
 // const onFinishFailed = (errorInfo) => {
 //   console.log("Failed:", errorInfo);
 // };
