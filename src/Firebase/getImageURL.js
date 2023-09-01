@@ -2,21 +2,21 @@ import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { storage } from "./config";
 
 const getLink = (image) => {
-  const storageRef = ref(storage, "images/"+image.name);
-  return new Promise((resolve)=>{
+  const storageRef = ref(storage, "images/" + image.name);
+  return new Promise((resolve) => {
     uploadString(storageRef, image.thumbUrl.split(',')[1], 'base64')
-    .then(() => {
-      getDownloadURL(storageRef) //3
-        .then((url) => {
-          resolve(url);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then(() => {
+        getDownloadURL(storageRef) //3
+          .then((url) => {
+            resolve(url);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   })
 };
 
